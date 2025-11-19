@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/jpg" href="img/bookworm-removebg.png">
+    <link rel="stylesheet" href="css/style_welcome_login.css">
+    <title>Login - Bookworm's Paradise</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Bebas+Neue&family=Imperial+Script&family=Pixelify+Sans:wght@400..700&family=Beau+Rivage&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-card">
+        <div class="tabs">
+            <button id="btnLogin" onclick="Login()" class="tab">Đăng nhập</button>
+            <button id="btnRegister" onclick="Register()" class="tab">Đăng ký</button>
+        </div>
+
+        <form class="form" action="login.php" id="registerForm" method="post" enctype="multipart/form-data">
+            <label for="username">Tên đăng nhập:</label><br>
+            <input type="text" id="username" placeholder="nguyenvana" required pattern="[A-Za-z0-9_]+" title="Không được chứa khoảng trắng hoặc ký tự đặc biệt"><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" placeholder="nguyenvana@gmail.com" required><br>
+
+             <div class="password-wrapper">
+                <label for="signupPassword">Mật khẩu:</label><br>
+                <input type="password" id="signupPassword" placeholder="Mật khẩu" required pattern="^(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,14}$" title="Mật khẩu phải có chữ hoa, số, dài 6->14 ký tự">                
+                <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('signupPassword', this)"></i>
+            </div>
+            
+            <div class="password-wrapper">
+                <label for="confirmPassword">Nhập lại mật khẩu:</label><br>
+                <input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+                <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('confirmPassword', this)"></i>
+             </div>
+            
+            <div class="forgot">
+                <input type="checkbox" id="checkbox" value="yes" required><label for="checkbox">Tôi đồng ý với điều khoản sử dụng</label>
+            </div>
+
+            <button type="submit" class="gradient_button" style="width: 100%;">
+                Đăng ký
+            </button>
+        </form>
+
+        <form class="form" action="login.php" id="loginForm" method="post" enctype="multipart/form-data">
+            <label for="loginUsername">Tên đăng nhập hoặc Email:</label><br>
+            <input type="text" id="loginUsername" required><br>
+
+            <div class="password-wrapper">
+                <label for="loginPassword">Mật khẩu:</label><br>
+                <input type="password" id="loginPassword" required>
+                <i class="fa-solid fa-eye toggle-password" onclick="togglePassword('loginPassword', this)"></i>
+            </div>
+
+            <div class="forgot">
+                <a href="#">Quên mật khẩu?</a>
+            </div>
+
+            <button type="submit" class="gradient_button" style="width: 100%;">
+                Đăng nhập
+            </button>
+
+        </form>
+
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Login();
+        });
+
+        function Login() {
+            document.getElementById("btnLogin").classList.add("active");
+            document.getElementById("loginForm").classList.add("active");
+            document.getElementById("btnRegister").classList.remove("active");
+            document.getElementById("registerForm").classList.remove("active");
+        }
+
+        function Register() {
+            document.getElementById("btnRegister").classList.add("active");
+            document.getElementById("registerForm").classList.add("active");
+            document.getElementById("btnLogin").classList.remove("active");
+            document.getElementById("loginForm").classList.remove("active");
+        }
+
+        function togglePassword(inputId, icon) {
+            const password = document.getElementById(inputId);
+            if (password.type === "password") {
+                password.type = "text";
+                icon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                password.type = "password";
+                icon.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        }
+
+
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Ngăn form submit mặc định
+
+            const username = this.loginUsername.value;
+            const password = this.loginPassword.value;
+
+            if (username === "admin" && password === "123") {
+                alert("Đăng nhập thành công!");
+                window.location.href = "welcome.html";
+            } else {
+                alert("Tên đăng nhập hoặc mật khẩu sai!");
+            }
+        });
+
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Ngăn form submit mặc định
+
+            const password = this.signupPassword.value;
+            const confirmPassword = this.confirmPassword.value;
+
+            if (password !== confirmPassword) {
+                alert("Mật khẩu không khớp!");
+                return;
+            } else {
+                alert("Đăng ký thành công! Chào mừng bạn đến với bookworm's paradise.");
+                window.location.href = "welcome.html";
+            }
+        });
+    </script>
+</body>
+</html>
