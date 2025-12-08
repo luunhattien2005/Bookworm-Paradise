@@ -1,0 +1,173 @@
+.authPage {
+    position: fixed;
+    inset: 0px;
+    background-image: url(./img/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    overflow: hidden;
+    display: flex;
+}
+
+/* Auth jsx */
+.authContainer {
+    border: 2px solid white;
+    border-radius: 20px;
+    padding: 30px;
+    min-width: 380px;
+    max-width: fit-content;
+    min-height: 100px;
+    max-height: fit-content;
+    background-color: hsl(0, 0%, 100%);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 20%;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.tabContainer {
+    display: flex;
+}
+
+.tab {
+    flex: 1;
+    padding: 12px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 20px;
+    background: none;
+    cursor: pointer;
+    color: hsl(0, 0%, 50%);
+    transition: 0.3s;
+}
+
+.tab:hover {
+    background-color: hsl(0, 0%, 80%);
+}
+
+.tabActive {
+    color: hsl(0, 0%, 0%);
+    border-bottom: 3px solid hsl(212, 72%, 59%);
+}
+
+.input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 18px;
+    border: 2px solid hsl(0, 0%, 87%);
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.input:focus {
+    border-color: #4A90E2;
+    outline: none;
+}
+
+.validInput {
+    border-color: hsl(117, 100%, 59%) !important;
+}
+
+.passwordWrapper {
+    position: relative;
+}
+
+.togglePassword {
+  position: absolute;
+  right: 15px;
+  top: 60%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: hsl(0, 0%, 40%);
+}
+
+.smallContainer {
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.smallContainer:hover {
+    cursor: pointer;
+}
+
+.smallContainer * {
+    font-size: 14px;
+    color: hsl(0, 100%, 65%);
+    text-decoration: none;
+}
+
+.gradientButton {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.3s ease;
+}
+
+/* gradient overlay */
+.gradientButton::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -85%; 
+    width: 150%; 
+    height: 100%;
+    background: linear-gradient(
+        90deg, 
+        rgba(255, 255, 255, 0.8) 0%, 
+        rgba(0, 0, 0, 0.2) 100%
+    );
+    transition: all 0.7s ease;
+    transform: skewX(-12deg); 
+}
+
+
+.gradientButton:hover::before {
+    left: 65%; 
+}
+
+.gradientButton:hover {
+    color: white;
+    background-color: black;
+}
+
+/* Forgot password modal */
+#forgotModal {
+    left: 0%;
+}
+
+#modalHeaderWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+#modalHeaderWrapper h1 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+#modal_p {
+    color: hsl(0, 0%, 80%);
+    font-size: 14;
+}
+
+#modalHeaderWrapper button {
+    border: none;
+    background: none;
+}
