@@ -1,10 +1,11 @@
 * {
     padding: 0;
+    margin: 0;
     box-sizing: border-box;
     font-family: "Be Vietnam Pro", sans-serif;
     font-weight: 400;
     font-size: 18px;
-    outline: 1px dashed blue;
+    outline: 1px dashed blue; /* Uncomment để show hitbox */
 }
 
 .card {

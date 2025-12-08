@@ -1,4 +1,4 @@
-.authPage {
+.background {
     position: fixed;
     inset: 0px;
     background-image: url(./img/background.jpg);
@@ -170,4 +170,16 @@
 #modalHeaderWrapper button {
     border: none;
     background: none;
+}
+
+/* Welcome jsx */
+.welContainer {
+    padding: 10px;
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    border: 2px solid white;
+    color: white;
 }

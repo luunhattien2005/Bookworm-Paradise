@@ -10,7 +10,7 @@ export default function Auth() {
     const redirectTo = location.state?.form?.pathname || "/home"
 
     return(
-        <div className={styles.authPage}>
+        <div className={styles.background}>
             <div className={styles.authContainer}>
                 <div className={styles.tabContainer}>
                     <button className={`${styles.tab} ${activeTab === "login" ? styles.tabActive : ""}`} onClick={() => setActiveTab("login")}>Login</button>
