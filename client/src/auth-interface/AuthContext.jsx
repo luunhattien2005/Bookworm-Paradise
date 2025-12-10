@@ -6,7 +6,6 @@ export function AuthProvider({children}) {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
     const img_url = "https://dummyimage.com/50/000/fff"
-    const [logoutToHome, setLogoutToHome] = useState(false)
     
     // Load từ localStorage khi mở website
     useEffect(() => {
@@ -41,13 +40,10 @@ export function AuthProvider({children}) {
     // Hàm đăng xuất
     const logout = (callback) => {
         setUser(null);
-        // setLogoutToHome(true);
         localStorage.removeItem("user");
-
-        // setTimeout(() => setLogoutToHome(false), 10);
     };
 
-    const value = { user, loading, logoutToHome, login, signup, logout };
+    const value = { user, loading, login, signup, logout };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
