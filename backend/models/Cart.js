@@ -12,22 +12,24 @@ const CartItemSchema = new mongoose.Schema({
         required: true,
         min: 1,
         default: 1
-    }
+    },
+
+    subTotal: { type: mongoose.Decimal128 },
 }, { _id: false }); // _id: false stops Mongoose from creating a unique ID for every single item line
 
 
-// 2. Your Main Cart Schema
+// 2.  Main Cart Schema
 const CartSchema = new mongoose.Schema({
+    cartID: { type: String, required: true, unique: true, minlength: 5, maxlength: 5 },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Customer',
         required: true
     },
 
     items: [CartItemSchema],
 
-    // Optional: Add a timestamp to know when they last updated the cart
-    // updatedAt: { type: Date, default: Date.now }
+    totalAmount: { type: mongoose.Decimal128, default: 0 },
 });
 
 module.exports = mongoose.model('Cart', CartSchema);

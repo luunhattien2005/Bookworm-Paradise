@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema({
+    reviewID: { type: String, required: true, unique: true, minlength: 5, maxlength: 5 },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',     // Links to your User model
+        ref: 'Customer',     // Links to your User model
         required: true
     },
 
@@ -21,8 +22,7 @@ const reviewSchema = new mongoose.Schema({
     },
 
     comment: {
-        type: String,
-        required: true
+        type: String
     },
 
     reviewDate: {

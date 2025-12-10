@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const orderItemSchema = new mongoose.Schema({
+    orderItemID: { type: String, required: true, unique: true, minlength: 5, maxlength: 5 },
     bookId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Book',     // Links to Book model
@@ -12,16 +13,22 @@ const orderItemSchema = new mongoose.Schema({
         min: 1
     },
     price: {
-        type: Number,
+        type: mongoose.Decimal128,
+        required: true
+    },
+    subTotal: {
+        type: mongoose.Decimal128,
         required: true
     }
 }, { _id: false }); // Optional: suppresses creating an _id for each line item
 
 // 2. The Main Order Schema
 const orderSchema = new mongoose.Schema({
+    orderID: { type: String, required: true, unique: true, minlength: 5, maxlength: 5 },
+
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',     // Links to User model
+        ref: 'Customer',     // Links to User model
         required: true
     },
 
