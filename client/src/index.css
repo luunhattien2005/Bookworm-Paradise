@@ -5,6 +5,7 @@
     font-family: "Be Vietnam Pro", sans-serif;
     font-weight: 400;
     font-size: 18px;
+    color: inherit;
     outline: 1px dashed blue; /* Uncomment để show hitbox */
 }
 
