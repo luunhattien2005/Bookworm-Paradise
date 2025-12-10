@@ -41,10 +41,10 @@ export function AuthProvider({children}) {
     // Hàm đăng xuất
     const logout = (callback) => {
         setUser(null);
-        setLogoutToHome(true);
+        // setLogoutToHome(true);
         localStorage.removeItem("user");
 
-        setTimeout(() => setLogoutToHome(false), 10);
+        // setTimeout(() => setLogoutToHome(false), 10);
     };
 
     const value = { user, loading, logoutToHome, login, signup, logout };
