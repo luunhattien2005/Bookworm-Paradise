@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
 
 const AccountSchema = new mongoose.Schema({
-    // UserID: BỎ (MongoDB tự tạo _id)
-    
-    // username này chính là Email (như nhóm đã chốt)
+    // username là Email 
     username: { type: String, required: true, unique: true }, 
     password: { type: String, required: true },
     fullname: { type: String, required: true },
