@@ -2,7 +2,7 @@ const Account = require('../models/Account');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
-// Cấu hình gửi mail (Lấy từ .env)
+// Cấu hình gửi mail (Lấy từ file .env)
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -18,11 +18,16 @@ const accountController = {
         try {
             const { username, password, fullname, phone, address } = req.body;
 
+            // Kiểm tra trùng email 
             const existingUser = await Account.findOne({ username });
             if (existingUser) return res.status(400).json({ message: "Email này đã tồn tại!" });
 
             const newAccount = new Account({
-                username, password, fullname, phone, address,
+                username, 
+                password, 
+                fullname, 
+                phone, 
+                address,
                 role: 'customer' // Mặc định là khách
             });
 
@@ -33,17 +38,24 @@ const accountController = {
         }
     },
 
-    // 2. Đăng nhập (Cấp Token)
+    // 2. Đăng nhập 
     login: async (req, res) => {
         try {
             const { username, password } = req.body;
             const user = await Account.findOne({ username });
             
+            // 1. Check tài khoản tồn tại
             if (!user) return res.status(404).json({ message: "Tài khoản không tồn tại" });
+            
+            // 2. Check mật khẩu
             if (user.password !== password) return res.status(401).json({ message: "Sai mật khẩu!" });
-            if (user.isBanned) return res.status(403).json({ message: "Tài khoản đã bị xóa!" });
+            
+            // 3. Check có bị Ban
+            if (user.isBanned) {
+                return res.status(403).json({ message: "Tài khoản của bạn đã bị khóa bởi Admin!" });
+            }
 
-            // Tạo Token
+            // d. Tạo Token (Thẻ bài)
             const token = jwt.sign(
                 { id: user._id, role: user.role },
                 process.env.JWT_SECRET,
@@ -70,14 +82,15 @@ const accountController = {
     forgotPassword: async (req, res) => {
         try {
             const { email } = req.body;
+            // username chính là email
             const user = await Account.findOne({ username: email });
             if (!user) return res.status(404).json({ message: "Email chưa đăng ký!" });
 
-            // Tạo pass ngẫu nhiên 6 ký tự
+            // Tạo mật khẩu mới ngẫu nhiên 6 ký tự
             const newPassword = Math.random().toString(36).slice(-6);
             user.password = newPassword;
             
-            // Xóa token cũ nếu có (để sạch sẽ)
+            // Dọn dẹp token cũ nếu có
             user.resetPasswordToken = undefined;
             user.resetPasswordExpire = undefined;
             
@@ -88,18 +101,18 @@ const accountController = {
                 from: process.env.EMAIL_USER,
                 to: email,
                 subject: 'Mật khẩu mới - Bookworm Paradise',
-                text: `Mật khẩu mới của bạn là: ${newPassword}`
+                text: `Chào bạn, mật khẩu mới của bạn là: ${newPassword}. Vui lòng đăng nhập và đổi lại mật khẩu ngay.`
             });
 
-            res.json({ message: "Đã gửi mật khẩu mới vào email!" });
+            res.json({ message: "Đã gửi mật khẩu mới vào email của bạn!" });
         } catch (err) {
             res.status(500).json({ message: "Lỗi gửi mail: " + err.message });
         }
     },
 
-    // --- PHẦN QUẢN LÝ (CẦN MIDDLEWARE BẢO VỆ) ---
-
-    // 4. Lấy tất cả user (Chỉ Admin)
+    
+    // Khu dành cho người đăng nhập
+    // 4. Lấy tất cả user 
     getAllAccounts: async (req, res) => {
         try {
             const accounts = await Account.find().select('-password');
@@ -109,7 +122,7 @@ const accountController = {
         }
     },
 
-    // 5. Lấy user theo ID (Xem profile)
+    // 5. Xem profile
     getAccountById: async (req, res) => {
         try {
             const account = await Account.findById(req.params.id).select('-password');
@@ -120,34 +133,48 @@ const accountController = {
         }
     },
 
-    // 6. Cập nhật thông tin (Có upload avatar)
+    // 6. Cập nhật thông tin
     updateAccount: async (req, res) => {
         try {
             const updateData = { ...req.body };
-            if (req.file) updateData.avatar = req.file.path; // Nếu có file ảnh
+            
+            if (req.file) {
+                updateData.avatar = req.file.path; 
+            }
 
             const account = await Account.findByIdAndUpdate(req.params.id, updateData, { new: true });
+            if (!account) return res.status(404).json({ message: 'Không tìm thấy user' });
+
             res.json({ message: "Cập nhật thành công!", account });
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
     },
 
-    // 7. Ban user (Chỉ Admin)
+    // 7. Ban user 
     banAccount: async (req, res) => {
         try {
-            await Account.findByIdAndUpdate(req.params.id, { isBanned: true });
-            res.json({ message: "Đã khóa tài khoản thành công" });
+            const account = await Account.findByIdAndUpdate(
+                req.params.id, 
+                { isBanned: true }, 
+                { new: true }
+            );
+
+            if (!account) return res.status(404).json({ message: 'Không tìm thấy user' });
+            
+            res.json({ message: `Đã BAN (khóa) tài khoản ${account.username} thành công.` });
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
     },
     
-    // 8. Xóa user (Chỉ Admin)
+    // 8. Xóa user (hàm ẩn, không dùng thật)
     deleteAccount: async (req, res) => {
         try {
-            await Account.findByIdAndDelete(req.params.id);
-            res.json({ message: "Đã xóa tài khoản vĩnh viễn" });
+            const result = await Account.findByIdAndDelete(req.params.id);
+            if (!result) return res.status(404).json({ message: 'Không tìm thấy user để xóa' });
+            
+            res.json({ message: "Đã xóa tài khoản vĩnh viễn khỏi Database" });
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
