@@ -1,0 +1,421 @@
+/*------------------ Setting Base font, etc... ------------------*/
+* {
+    box-sizing: border-box
+}
+
+body {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    margin: 0;
+    
+    color: #222;
+    background: #fff
+}
+
+a {
+    color: inherit;
+    text-decoration: none
+}
+
+/*------------------------ Header Gradient ------------------------*/
+.header-gradient {
+    display: flex;
+    height: 50px;
+    margin-bottom: 38px;
+    justify-content: right;
+    align-items: center;
+    background: linear-gradient(
+        to left,
+        #e7c66a 0%,
+        #f7e7ac 70%,
+        rgba(255,255,255,0) 100%
+    );
+    
+}   
+
+.header-gradient img {
+    display: flex;
+    height: 50%;
+}
+
+.header-gradient a {
+    color: white;
+    font-size: 25px;
+    padding-right: 30px;
+    padding-left:  20px;
+}
+
+/* ------------------------ Header-site ------------------------*/
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background: linear-gradient(180deg, #ffffff, #ffffff);
+}
+
+/* ---- Display Logo ---- */
+.brand {
+    display: flex;
+    gap: 12px;
+    padding-right: 58px;
+}
+
+.logo {
+    font-size: 19px;
+    font-weight: 750;
+}
+
+/* ---- Display search bar---- */
+.search-bar {
+    width: 100%;
+    position: relative;
+    max-width: 600px;
+    background: rgba(0, 0, 0, 1);
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    padding: 5px 5px;
+}
+
+.search-bar input {
+    background: transparent;
+    flex: 1;
+    border: 0;
+    outline: none;
+    padding: auto;
+    font-size: 20px;
+    color: white;
+}
+
+.search-bar input::-webkit-search-cancel-button { 
+    display: none; 
+}
+
+.search-bar input::placeholder {
+    color: white;
+    text-align: center;
+}
+
+.search-bar button[type=submit] {
+    border: 0;
+    border-radius: 10px;
+    width: 50px;
+    background: white;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    cursor: pointer;
+}
+
+.search-bar button[type=submit] img{
+    border: 0;
+    width: 30px;
+    height: 28px;
+    background-color: rgb(255, 255, 255);
+}
+
+.search-bar button[type=button] {
+    border: 0;
+    width: 50px;
+    border-radius: 0;
+    background: transparent;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    cursor: pointer;
+}
+
+.search-bar button[type=button] img{
+    border: 0;
+    width: 30px;
+    height: 24px;
+    background-color: transparent;
+}
+
+/* ---- Display dropdown menu ---- */
+
+.drop-down-menu {
+    border: 1;
+    border-radius: 20px;
+    outline-style: solid;
+    display: block;
+    height: auto;   
+    width: 168%;
+    align-items: center;
+    background: rgb(255, 255, 255);
+    justify-content: left;  
+    position: absolute;
+    top: 43px;
+    left: -200px;
+    z-index: 1;
+}
+
+.toggel-off {
+    display: none;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.drop-down-menu p {
+    font-size: 21px;
+    font-weight: 700;
+    padding-left:  10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    margin: 0px;
+}
+
+.drop-down-menu li {
+    font-size: 19px;
+    font-weight: 500;
+    list-style-type: none;
+    padding: 10px 0px;
+    cursor: pointer;
+}
+
+.drop-down-menu li:hover {
+    background: rgb(231, 231, 231);
+}
+
+.second-nav {
+    width: 760px;
+    height: 285px;
+}
+
+.second-dropdown-layout {
+    margin: 0px;
+}
+
+/* ---- Display last icon ---- */
+.icons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.icons i {
+    border: 0;
+    cursor: pointer;
+}
+
+.icons button {
+    border: 0;
+    width: 40px;
+    background: transparent;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    cursor: pointer;
+}
+
+.icons button img {
+    border: 0;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+}
+
+/* ------------------------ Product-site ------------------------*/
+.container {
+    border: 0;
+    display: grid;
+    justify-content: center;
+}
+
+/* ---------- Display top product ---------- */
+.top-product {
+    display: flex;
+    align-items: center;
+    max-width : 1280px;
+    height: 470px;
+    justify-content: space-evenly;
+    gap: 75px;
+}
+
+/* --- Display pic --- */
+.top-product img {
+    width:  420px;
+    height: 440px;
+    outline: solid;
+    outline-color: rgb(218, 218, 218);
+    outline-width: 1px;
+}
+
+/* --- Display information-1st --- */
+.Information-1st {
+    width:  420px;
+    height: 440px;
+    position: relative;
+    z-index: 0;
+}
+
+.Add-Liked {
+    border: 0;
+    display: flex;
+    position: absolute;
+    z-index: 0;
+    left: 375px;
+    width:  45px;
+    height: 45px;
+    border-radius: 25px;
+    background: black;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.Add-Liked i {
+    color: white;
+    outline: none;
+}
+
+.Add-Liked:hover {
+    background: red;
+}
+
+.Information-Name {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 0px;
+    margin-top: 1px;
+}
+
+.Information-Author {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    margin-top: 8px;
+}
+
+.Information-Tag{
+    background: none;
+}
+
+.Information-Tag a {
+    border-radius: 8px;
+    font-size: 12px;
+    color: green;
+    font-family: Arial;
+    font-weight: lighter;
+    background: #CFF7D3;
+    padding: 6px 6px;
+    margin-left: 0px;
+    margin-right: 5px;
+}
+
+.Information-Price {
+    font-size: 32px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.Information-Add {
+    border: 0;
+    border-radius: 8px;
+    width: 100%;
+    background: black;
+    color: white;
+    padding: 10px 0px;
+    cursor: pointer;
+}
+
+.Information-Add:hover {
+    background: white;
+    color: black;
+    outline-style: solid;
+    outline-color: black;
+    outline-width: 2px;
+}
+
+.Information-Details {
+    border-radius: 5px;
+    outline: solid;
+    outline-color: rgb(218, 218, 218);
+    outline-width: 2px;
+    margin-top: 22px;
+    margin-bottom: 0px;
+}
+
+.Information-Details div {
+    height: 185px;
+    justify-content: left;
+    display: flex;
+    padding: 0px 0px;
+    margin: 0px 0px;
+}
+
+.Information-Details p {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0px 0px;
+    padding-top: 10px;
+    padding-left: 7px;
+}
+
+.Information-Details ul {
+    list-style-type: none;
+    padding: 0px;
+}
+
+.Information-Details li {
+    list-style-type: none;
+    font-size: 13px;
+    padding-bottom: 1px;
+}
+
+/* ---------- Display Middle-Product ---------- */
+.Middle-Product {
+    outline: solid;
+    outline-width: 2px;
+    outline-color: rgb(218, 218, 218);
+    width: 915px;
+    display: inline;
+    border-radius: 5px;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.Middle-Product-Text {
+    margin-top: 15px;
+    margin-left: 10px;    
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.Middle-Product-Information {
+    margin: 0px 10px;
+}
+
+.Middle-Product-Information p {
+    font-size: 13px;
+    font-weight: 0;
+    margin: 0px 0px;
+    padding-bottom: 8px;
+}
+
+.Middle-Product-Information ul {
+    font-size: 13px;
+    font-weight: 0;
+    margin: 0px 0px;
+    padding: 0px 0px;
+    padding-bottom: 8px;
+}
+
+.Middle-Product-Information li {
+    font-size: 13px;
+    font-weight: 0;
+    margin: 0px 0px;
+    padding-bottom: 3px;
+    margin-left: 25px;
+    line-height-step: 50px  ;
+}
+
+/* ---------- Display Your-Command ---------- */
+
