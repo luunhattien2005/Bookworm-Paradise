@@ -160,8 +160,9 @@
 }
 
 /*------------------------ Header Gradient ------------------------*/
-.header-gradient {
+.pageNameGradient {
     display: flex;
+    color: white;
     height: 50px;
     margin-bottom: 12px;
     justify-content: right;
@@ -172,10 +173,19 @@
         #f7e7ac 70%,
         rgba(255,255,255,0) 100%
     );
-    
+    padding-right: 30px;
 }   
 
-.header-gradient i {
+.nameContainer {
+    font-size: 28px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+/* .pageNameGradient i {
     color: white;
 }
 
@@ -184,4 +194,4 @@
     font-size: 25px;
     padding-right: 30px;
     padding-left:  20px;
-}
+} */
