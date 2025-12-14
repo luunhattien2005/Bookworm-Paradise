@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>Product Info</title>
+	<link rel="stylesheet" href="Product_Info.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+
+<body>
+	<!-------------- Header section full -------------->
+	<header class="site-header">
+		<div class="brand">
+			<div class="logo">Bookworm<br>Paradise</div>
+		</div>
+
+		<form action="" class="search-bar">
+			<button type="button" onclick="menu_ON_OFF()"><img src="img/select-icon-input.png"></button>
+			<script>
+				var ON = false;
+
+				function menu_ON_OFF (){
+					ON = !ON;
+					if (!ON) document.querySelector('.drop-down-menu').className = 'toggel-off';
+					else {
+						document.querySelector('.second-dropdown-layout').className = 'toggel-off';
+						document.querySelector('.toggel-off').className = 'drop-down-menu';
+						document.querySelector('#full-1st').className = 'second-dropdown-layout';
+					}
+				} 
+			</script>
+
+			<div class="toggel-off">
+				<div class="menu">       
+					<div class="first-nav">
+						<p class="first-nav-name"> Danh Mục Sản Phẩm</p>
+
+						<ul id="Catagrory" class="first-nav-list" style="padding-left: 10px;margin: 0px;">
+							<li>Sách tiếng việt</li>
+							<li>Mục tổng hợp 2</li>
+							<li>Mục tổng hợp 3</li>
+							<li>Mục tổng hợp 4</li>
+							<li>Mục tổng hợp 5</li>
+							<li>Mục tổng hợp 6</li>
+						</ul>
+						<script>
+							document.querySelectorAll('#Catagrory li').forEach(li => {li.addEventListener('click', function () {
+								Find_Function(this);
+							});});
+
+							function Find_Function(item) {
+								document.querySelector('.second-dropdown-layout').className = 'toggel-off';
+								if (item.textContent === "Sách tiếng việt") document.querySelector('#full-1st').className = 'second-dropdown-layout';
+								if (item.textContent === "Mục tổng hợp 2")  document.querySelector('#full-2nd').className = 'second-dropdown-layout';
+								if (item.textContent === "Mục tổng hợp 3")  document.querySelector('#full-3rd').className = 'second-dropdown-layout';
+								if (item.textContent === "Mục tổng hợp 4")  document.querySelector('#full-4th').className = 'second-dropdown-layout';
+								if (item.textContent === "Mục tổng hợp 5")  document.querySelector('#full-5th').className = 'second-dropdown-layout';
+								if (item.textContent === "Mục tổng hợp 6")  document.querySelector('#full-6th').className = 'second-dropdown-layout';
+							}
+						</script>
+					</div>
+					<div style="
+						background: black;
+						width: 3px;
+						height: 300px;
+						margin: 0px 5px;
+					"></div>
+
+					<div class="second-nav">
+						<!-- 1st choice  -->
+						<div id="full-1st" class="second-dropdown-layout">
+							<p>Sách tiếng việt</p>
+						</div>
+
+						<!-- 2nd choice  -->
+							<div id="full-2nd" class="toggel-off">
+							<p>Mục tổng hợp 2</p>
+						</div>
+
+						<!-- 3rd choice  -->
+							<div id="full-3rd" class="toggel-off">
+							<p>Mục tổng hợp 3</p>
+						</div>
+
+						<!-- 4th choice  -->
+							<div id="full-4th" class="toggel-off">
+							<p>Mục tổng hợp 4</p>
+						</div>
+
+						<!-- 5th choice  -->
+							<div id="full-5th" class="toggel-off">
+							<p>Mục tổng hợp 5</p>
+						</div>
+
+						<!-- 6th choice  -->
+							<div id="full-6th" class="toggel-off">
+							<p>Mục tổng hợp 6</p>
+						</div>
+					</div>
+				</div>
+			</div>	
+
+			<input  type="search" aria-label="search" placeholder="Nhà giả kim"/>
+			<button type="submit"><img src="img/search-icon.png"></button>
+		</form>
+
+		<div class="icons">
+			<i class="fa-regular fa-bell"         style="font-size: 30px;"></i>
+			<i class="material-symbols-outlined"  style="font-size: 37px;">shopping_cart</i>
+			<i class="fa-regular fa-heart fa-2x1" style="font-size: 30px;"></i>
+			<i class="material-symbols-outlined"  style="font-size: 33px;">featured_seasonal_and_gifts</i>
+			<button type="button"><img src="PP.png"></button>
+		</div>
+	</header>
+
+	<div class="header-gradient"> 
+		<i class="fa-solid fa-book-open" style="font-size: 30px; color: white;"></i>
+		<a>Product Info</a> 
+	</div>
+
+	<!-------------- Product section full -------------->
+	<main class="container">
+		<div class="top-product">
+			<img src="Product_img/Product_1.jpg" alt="Product pic here">
+
+			<div class="Information-1st">
+				<button class="Add-Liked"><i class="fa-regular fa-heart fa-2x1" style="font-size: 30px;"></i></button>
+
+
+				<p class="Information-Name"> Nhà giả kim </p>
+				<p class="Information-Author">  Tác giả: Paulo Coelho </p>
+
+				<div class="Information-Tag">
+					<a>Horror</a>
+					<a>Funny</a>
+					<a>Drama</a>
+					<a>Adult</a>
+					<a>Math</a>
+				</div>
+
+				<p class="Information-Price"> 6.767.676.767 VND </p>
+
+				<button class="Information-Add">Add to Cart</button>
+
+				<div class="Information-Details">
+					<p>Thông tin chi tiết</p>
+
+					<div>
+						<ul style="width: 220px; padding-left:7px;">
+							<li>Mã hàng</li>
+							<li>Tên Nhà Cung Cấp</li>
+							<li>Tác giả</li>
+							<li>Người Dịch</li>
+							<li>NXB</li>
+							<li>Năm XB</li>
+							<li>Trọng lượng (gr)</li>
+							<li>Kích Thước Bao Bì</li>
+							<li>Số trang</li>
+							<li>Hình Thức</li>
+						</ul>
+
+						<ul style="width: 240px;">
+							<li>8935235226272</li>
+							<li>Nhã Nam</li>
+							<li>Paulo Coelho</li>
+							<li>Lê Chu Cầu</li>
+							<li>NXB Hội Nhà Văn</li>
+							<li>2020</li>
+							<li>220</li>
+							<li>20.5 x 13 cm</li>
+							<li>227</li>
+							<li>Bìa Mềm</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="Middle-Product">
+			<p class="Middle-Product-Text">Mô tả sản phẩm</p>
+
+			<div class="Middle-Product-Information">
+				<p>NHÀ GIẢ KIM - HÀNH TRÌNH ĐI TÌM KHO BÁU HAY CUỘC HÀNH TRÌNH TÌM KIẾM CHÍNH MÌNH</p>
+				<p>"Nhà Giả Kim" không đơn thuần là một cuốn tiểu thuyết, mà là bản đồ dẫn lối đến giấc mơ, khao khát và định mệnh của mỗi con người. Câu chuyện về chàng trai chăn cừu Santiago không chỉ mang đến những cuộc phiêu lưu hấp dẫn, mà còn mở ra nhiều tầng triết lý sâu sắc về cuộc sống.</p>
+				<ul>VỀ TÁC GIẢ: Paulo Coelho
+					<li>Là nhà văn người Brazil, bậc thầy kể chuyện với lối viết đậm chất triết lý.</li>
+					<li>Ông là tác giả của nhiều tác phẩm truyền cảm hứng, trong đó "Nhà Giả Kim" là cuốn sách nổi tiếng nhất, được dịch ra hơn 80 ngôn ngữ và bán hàng triệu bản trên toàn thế giới.</li>
+					<li>Các tác phẩm khác của ông như "Veronika quyết chết", "Nhà tiên tri" hay "Phù thủy thành phố Portobello" cũng để lại dấu ấn sâu sắc trong lòng độc giả.</li>
+				</ul>
+				<ul>VỀ DỊCH GIẢ: Lê Chu Cầu
+					<li>Là dịch giả có nhiều đóng góp trong việc đưa văn học nước ngoài đến với độc giả Việt Nam.</li>
+					<li>Ông đã chuyển ngữ nhiều tác phẩm kinh điển, trong đó bản dịch "Nhà Giả Kim" của ông được đánh giá cao bởi sự mượt mà, giàu cảm xúc và giữ trọn vẹn tinh thần triết lý của Paulo Coelho.</li>
+				</ul>
+				<p>TÓM TẮT NỘI DUNG SÁCH</p>
+				<p>Santiago - một chàng trai chăn cừu trẻ tuổi, rời quê hương để theo đuổi giấc mơ tìm kho báu ở Kim Tự Tháp Ai Cập. Trên hành trình ấy, anh gặp gỡ nhiều người, từ ông vua thông thái, người buôn pha lê đến Nhà Giả Kim huyền bí. Tất cả những trải nghiệm trong chuyến phiêu du theo đuổi vận mệnh của mình đã giúp Santiago thấu hiểu được ý nghĩa sâu xa nhất của hạnh phúc, hòa hợp với vũ trụ và con người.</p>
+				<P>Mỗi cuộc gặp gỡ không chỉ giúp anh tiến gần hơn đến kho báu mà còn giúp anh hiểu được mục đích thật sự của đời mình: </P>
+				<p>Trích Nhà giả Kim: "Kho báu không nằm ở nơi ta đến, mà nằm trong chính hành trình ta đi."</p>
+			</div>
+		</div>
+
+		<div class="Your-Command">
+			<p class="Commant-text">Đánh giá của bạn</p>
+
+			<div>
+				<div>
+
+				</div>
+
+				<div>
+				
+				</div>
+
+			</div>
+
+
+		</div>
+
+
+
+
+
+
+
+
+
+
+	</main>
+
+</body>
+
+</html>
