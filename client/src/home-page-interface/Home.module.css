@@ -1,0 +1,162 @@
+.displayContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+}
+
+.displayTitle {
+  font-size: 28px;
+  font-weight: 700;
+  padding: 10px;
+  width: fit-content;
+  color: white;
+  background: linear-gradient(to right, white 0%, black 100%);
+}
+
+/* ---- Nổi bật ---- */
+
+#displayContent1 {
+  position: relative;
+  background: linear-gradient(
+    to left,
+    #e7c66a 0%,
+    #f7e7ac 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  height: fit-content;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* vùng chứa stack */
+.stackWrapper {
+  position: relative;
+  height: 350px;
+}
+
+/* card chung */
+.card {
+  position: absolute;
+  width: 660px;
+  height: 350px;
+  border-radius: 16px;
+  object-fit: cover;
+  left: 50%;
+  transition: all 0.75s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* ảnh trên cùng */
+.pos0 {
+  z-index: 3;
+  transform: translateX(calc(-50% - 220px)) scale(1);
+}
+
+/* ảnh thứ hai */
+.pos1 {
+  z-index: 2;
+  transform: translateX(-50%) scale(0.95);
+  opacity: 0.9;
+}
+
+/* ảnh thứ ba */
+.pos2 {
+  z-index: 1;
+  transform: translateX(calc(-50% + 220px)) scale(0.9);
+  opacity: 0.8;
+}
+
+/* nút điều khiển */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: #ffffff80;
+}
+
+.dot.active {
+  background: #000000;
+}
+
+/* ---- Bộ sưu tập theo mùa ---- */
+#displayContent2 {
+  position: relative;
+  background-image: url(https://i.pinimg.com/1200x/cd/22/ea/cd22eada385f7afc37dec8b005d3541c.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: fit-content;
+  padding: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.img_s {
+  width: 380px;
+  height: 570px;
+  border-radius: 50px;
+}
+
+/* ---- Bảng xếp hạng hằng tuần ---- */
+#displayContent3 {
+  position: relative;
+  background-image: url("./img/rank.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 600px;
+  height: 600px;
+  padding: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.rankItem {
+  position: relative;
+}
+
+.img_w {
+  width: 200px;
+  height: 300px;
+  display: block;
+}
+
+.medal {
+  position: absolute;
+  bottom: -24px;
+  right: -24px;
+  width: 96px;
+  height: 96px;
+}
+
+/* Hạng nhất */
+.rank1 {
+  order: 2;
+}
+
+/* Hạng nhì */
+.rank2 {
+  order: 1;
+  transform: translateY(40px);
+}
+
+/* Hạng ba */
+.rank3 {
+  order: 3;
+  transform: translateY(80px);
+}
