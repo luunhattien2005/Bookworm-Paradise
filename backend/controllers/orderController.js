@@ -42,12 +42,12 @@ const orderController = {
                 deliveryNote
             });
 
-            // e. Trừ kho và Xóa giỏ hàng
+            // Trừ kho và Xóa giỏ hàng
             // (Dùng Promise.all để chạy song song cho nhanh)
             await Promise.all([
                 newOrder.save(), // 1. Lưu đơn
-                Cart.findOneAndDelete({ user: userId }), // 2. Xóa giỏ
-                // 3. Trừ số lượng tồn kho của từng cuốn sách
+                Cart.findOneAndDelete({ user: userId }), // Xóa giỏ
+                // Trừ số lượng tồn kho của từng cuốn sách
                 ...cart.items.map(item =>
                     Book.findByIdAndUpdate(item.book._id, {
                         $inc: {
@@ -75,6 +75,7 @@ const orderController = {
             res.status(500).json({ message: err.message });
         }
     },
+
     // Lấy chi tiết 1 đơn hàng
     getOrderDetail: async (req, res) => {
         try {
@@ -87,5 +88,19 @@ const orderController = {
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
+    },
+
+    // Lấy tất cả đơn hàng (Admin quản lý)
+    getAllOrders: async (req, res) => {
+        try {
+            const orders = await Order.find()
+                .populate('user', 'fullname')
+                .sort({ createdAt: -1 });
+            res.json(orders);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
     }
 }
+
+module.exports = orderController;
