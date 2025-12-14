@@ -6,6 +6,8 @@ import Logout from "./auth-interface/Logout.jsx";
 import Welcome from "./auth-interface/Welcome.jsx";
 import Header from "./header-footer-interface/Header.jsx";
 import Dashboard from "./admin-interface/components/dashboard/Dashboard.jsx";
+import HomePage from "./home-page-interface/HomePage.jsx";
+
 
 export default function App() {
   const location = useLocation()
@@ -23,9 +25,7 @@ export default function App() {
 
           <Route path="/logout" element={<Logout />} />
           
-          <Route path="/home" element={ 
-              <Card name="Luu Nhat Tien" school="HCMUS" ID={23127127}/>
-            } />
+          <Route path="/home" element={<HomePage />} />
 
           <Route path="/profile" element={
               <ProtectedRoute>

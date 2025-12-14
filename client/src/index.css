@@ -9,6 +9,11 @@
     outline: 1px dashed blue; /* Uncomment để show hitbox */
 }
 
+/* body {
+  width: 1400px;
+  margin: 0 auto;
+} */
+
 .card {
   border: 1px solid black;
   border-radius: 10px;
