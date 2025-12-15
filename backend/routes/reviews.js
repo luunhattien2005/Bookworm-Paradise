@@ -2,8 +2,20 @@ const router = require('express').Router();
 const reviewController = require('../controllers/reviewController');
 const { verifyToken } = require('../middleware/authMiddleware');
 
-//  Xem review của sách (Param là BookID)
-router.get('/:bookId', reviewController.getReviewsByBook);
+// Get all reviews of a book
+// GET /books/:bookId/reviews
+router.get('/:bookId/reviews', reviewController.getReviewsByBook);
 
-// Đăng review cho sách (Cần đăng nhập)
-router.post('/', verifyToken, reviewController.postReview);
+// Post a review for a book (must be logged in)
+// POST /books/:bookId/reviews
+router.post('/:bookId/reviews', verifyToken, (req, res) => {
+    // ensure bookId comes from URL, not client body
+    req.body.bookId = req.params.bookId;
+    reviewController.postReview(req, res);
+});
+
+// Delete a review (owner or admin)
+// DELETE /books/reviews/:id
+router.delete('/reviews/:id', verifyToken, reviewController.deleteReview);
+
+module.exports = router;

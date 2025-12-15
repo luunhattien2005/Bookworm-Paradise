@@ -7,7 +7,7 @@ const bookController = {
     // ==========================================
     // PHẦN QUẢN LÝ TÁC GIẢ (AUTHOR)
     // ==========================================
-    
+
     getAllAuthors: async (req, res) => {
         try {
             const authors = await Author.find();
@@ -55,13 +55,13 @@ const bookController = {
     // ==========================================
     // PHẦN QUẢN LÝ SÁCH (BOOK / PRODUCT)
     // ==========================================
-    
+
     // 1. Lấy tất cả sách (ViewAllBooks)
     getAllBooks: async (req, res) => {
         try {
             // Populate để hiện tên Tác giả/Tag thay vì ID
             const books = await Book.find({ isDeleted: false })
-                .populate('author', 'AuthorName') 
+                .populate('author', 'AuthorName')
                 .populate('tags', 'TagName');
             res.json(books);
         } catch (err) {
@@ -75,7 +75,7 @@ const bookController = {
             const book = await Book.findById(req.params.id)
                 .populate('author', 'AuthorName')
                 .populate('tags', 'TagName');
-            
+
             if (!book) return res.status(404).json({ message: "Không tìm thấy sách" });
             res.json(book);
         } catch (err) {
@@ -101,7 +101,7 @@ const bookController = {
     createBook: async (req, res) => {
         try {
             const bookData = req.body;
-            
+
             // Nếu có file ảnh gửi lên
             if (req.file) {
                 bookData.coverImage = req.file.path;
