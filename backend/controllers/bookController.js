@@ -132,7 +132,7 @@ const bookController = {
         }
     },
 
-    // 6. Xóa mềm sách (DeleteBook)
+    // 6. Xóa 1 quyển sách (DeleteBook)
     deleteBook: async (req, res) => {
         try {
             await Book.findByIdAndUpdate(req.params.id, { isDeleted: true });
