@@ -21,7 +21,7 @@ const wishlistController = {
         try {
             const { bookId } = req.body; 
 
-            // $addToSet: Chỉ thêm nếu chưa có (Tránh trùng lặp)
+            // $addToSet: Chỉ thêm nếu chưa có để tránh trùng lặp
             const wishlist = await Wishlist.findOneAndUpdate(
                 { user: req.user.id },
                 { $addToSet: { books: bookId } },
@@ -33,6 +33,22 @@ const wishlistController = {
             res.status(500).json({ message: err.message });
         }
     },
+
+    removeBook: async (req, res) => {
+        try {
+            const { bookId } = req.params; 
+
+            // $pull: Rút cái ID đó ra khỏi mảng books
+            await Wishlist.findOneAndUpdate(
+                { user: req.user.id },
+                { $pull: { books: bookId } }
+            );
+
+            res.json({ message: "Đã xóa khỏi danh sách yêu thích" });
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    }
 };
 
 module.exports = wishlistController;s

@@ -7,5 +7,6 @@ router.use(verifyToken);
 
 router.get('/', wishlistController.getWishlist);
 router.post('/add', wishlistController.addBook);
+router.delete('/remove/:bookId', wishlistController.removeBook);
 
 module.exports = router;
