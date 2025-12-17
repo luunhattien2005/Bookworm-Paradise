@@ -5,7 +5,8 @@ import DOMPurify from "dompurify"
 import styles from "./Product.module.css"
 import { AuthContext } from "../auth-interface/AuthContext"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"
-import Rating from "./Rating"
+import YourRating from "./YourRating"
+import RatingItem from "./RatingItem"
 
 export default function ProductInfo() {
 
@@ -89,11 +90,11 @@ export default function ProductInfo() {
     }
 
     const fakeRatings = [
-        { id: 1, productId: 8935235226272, star: 5, content: "<p>Rating 1<p>", user: {username: "LNTien", img_url: "https://dummyimage.com/50/000/fff"}, createdAt: "2025-12-15T10:30:00Z" },
+        { id: 1, productId: 8935235226272, star: 3, content: "<p>Rating bau troi co 1 co doi khong muon ve nha, xin au lo khong ve noi day, xin cho ta duoc ngam<p><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p><p>Suspendisse luctus cursus nisi in rutrum. Sed iaculis lectus neque, id tempor neque pellentesque nec. Suspendisse tristique dictum risus, id tempor lacus suscipit sed. Praesent arcu turpis, euismod eleifend magna nec, tristique luctus dolor. Maecenas ultrices nisl sed consequat posuere. Nunc sit amet facilisis sem. In in neque sollicitudin, volutpat quam dictum, aliquet ligula. Sed suscipit justo a massa pretium venenatis. Aenean ultrices est ac ultrices sagittis. Pellentesque in lorem interdum urna vestibulum ornare non quis odio. Ut quis ultricies nibh, at tincidunt purus. Sed a urna ac quam ullamcorper pellentesque in sed arcu. Aliquam erat volutpat. Nam commodo enim orci, sed congue sem commodo ac. Integer quis elit et magna sodales interdum non vitae erat. Vestibulum ut sagittis tortor.</p>", user: {username: "LNTien", img_url: "https://dummyimage.com/50/000/fff"}, createdAt: "2025-12-15T10:30:00Z" },
         { id: 2, productId: 8935235226272, star: 5, content: "<p>Rating 2<p>", user: {username: "LNTien", img_url: "https://dummyimage.com/50/000/fff"}, createdAt: "2025-12-14T21:12:00Z" },
-        { id: 3, productId: 8935235226272, star: 5, content: "<p>Rating 3<p>", user: {username: "LNTien", img_url: "https://dummyimage.com/50/000/fff"}, createdAt: "2025-12-14T08:45:00Z" },
-        { id: 4, productId: 8935235226272, star: 5, content: "<p>Rating 4<p>", user: {username: "LNTien", img_url: "https://dummyimage.com/50/000/fff"}, createdAt: "2025-12-13T19:20:00Z" },
-        { id: 5, productId: 8935235226272, star: 5, content: "<p>Rating 5<p>", user: {username: "LNTien", img_url: "https://dummyimage.com/50/000/fff"}, createdAt: "2025-12-12T22:05:00Z" }
+        { id: 3, productId: 8935235226272, star: 1, content: "<p>Rating 3<p>", user: {username: "LNTien", img_url: "https://dummyimage.com/50/000/fff"}, createdAt: "2025-12-14T08:45:00Z" },
+        { id: 4, productId: 8935235226272, star: 2, content: "<p>Rating 4<p>", user: {username: "LNTien", img_url: "https://dummyimage.com/50/000/fff"}, createdAt: "2025-12-13T19:20:00Z" },
+        { id: 5, productId: 8935235226272, star: 4, content: "<p>Rating 5<p>", user: {username: "LNTien", img_url: "https://dummyimage.com/50/000/fff"}, createdAt: "2025-12-12T22:05:00Z" }
     ]    
 
     useEffect(() => {
@@ -116,7 +117,7 @@ export default function ProductInfo() {
         )
     } else {
         show_rating = (
-            <Rating />
+            <YourRating />
         )
     }
 
@@ -194,9 +195,8 @@ export default function ProductInfo() {
                     <p className={styles.ratingEditorTitle}>Đánh giá mới nhất</p>
                     
                     {ratings.map(r => (
-                        <RatingItem key={r._id} rating={r} />
+                        <RatingItem key={r.id} rating={r} />
                     ))}
-
                     {hasMore && (
                         <button onClick={fetchRatings}>
                             Xem thêm đánh giá
