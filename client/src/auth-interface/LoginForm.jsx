@@ -62,6 +62,7 @@ export default function LoginForm({ redirectTo }) {
 
             {showForgotPassword && (
                 <ForgotPasswordModal
+                    open={showForgotPassword}
                     onClose={() => setShowForgotPassword(false)}
                     onSuccess={() => setShowForgotPassword(false)}
                 />

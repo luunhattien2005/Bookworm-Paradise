@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../auth-interface/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import styles from "./Profile.module.css";
+import PageNameHeader from '../header-footer-interface/PageNameHeader';
 
 export default function Profile() {
     const { user } = useContext(AuthContext)
@@ -9,10 +10,7 @@ export default function Profile() {
 
     return (
     <>
-        <div className={styles.headerGradient}> 
-            <i className="fa-regular fa-circle-user" style={{fontSize: "30px"}}></i>
-            <a>Your Profile</a> 
-	    </div>
+        <PageNameHeader pagename="Profile"/>
 
         <main className={styles.container}>
             <div className={styles.leftContainer}>

@@ -90,11 +90,6 @@ export default function Header() {
                 {profileIcon}
             </div>
         </header>
-
-
-
-
-
     )
 }
 

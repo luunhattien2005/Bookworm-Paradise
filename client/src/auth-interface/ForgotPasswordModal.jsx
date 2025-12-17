@@ -1,10 +1,19 @@
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import styles from "./Auth.module.css"
 
-export default function ForgotPasswordModal({onClose, onSuccess}) {
+export default function ForgotPasswordModal({open, onClose, onSuccess}) {
+    const dialogRef = useRef(null)
     const [email, setEmail] = useState("")
     const [validEmail, setValidEmail] = useState(false)
 
+    useEffect(() => {
+        if (open) {
+            dialogRef.current?.showModal()
+        } else {
+            dialogRef.current?.close()
+        }
+    }, [open])
+    
     const handleEmail = (e) => {
         const value = e.target.value;
         setEmail(value);
@@ -45,31 +54,37 @@ export default function ForgotPasswordModal({onClose, onSuccess}) {
         onSuccess()
     }
 
-    return(
-        <div className={styles.authContainer} id={styles.forgotModal}>
-            <div id={styles.modalHeaderWrapper}>
-                <h1>Đặt lại mật khẩu</h1>
-                <button onClick={onClose}>X</button>      
+    return (
+        <dialog
+            ref={dialogRef}
+            className={styles.forgotDialog}
+            onCancel={onClose}   // ESC
+            onClose={onClose}
+        >
+            <div className={styles.modalContent}>
+                <div className={styles.modalHeader}>
+                    <h1>Đặt lại mật khẩu</h1>
+                    <button onClick={onClose}>✕</button>
+                </div>
+
+                <p className={styles.modalText}>
+                    Hãy điền email bạn đã dùng để đăng ký, chúng tôi sẽ gửi mật khẩu mới.
+                </p>
+
+                <form onSubmit={handleSubmit}>
+                    <input
+                        className={`${styles.input} ${validEmail ? styles.validInput : ""}`}
+                        type="email"
+                        placeholder="nguyenvana@gmail.com"
+                        required
+                        onChange={handleEmail}
+                    />
+
+                    <button type="submit" className={styles.gradientButton}>
+                        Xác nhận
+                    </button>
+                </form>
             </div>
-
-            <p id={styles.modal_p}>Hãy điền email bạn đã dùng để dăng ký, chúng tôi sẽ gửi mật khẩu mới tới email của bạn.</p>
-            <label htmlFor="email">Email</label>
-
-            <form onSubmit={handleSubmit}>
-                <input  
-                    className={`${styles.input} ${validEmail ? styles.validInput : ""}`}
-                    type="email" 
-                    id="email" 
-                    placeholder="nguyenvana@gmail.com" 
-                    required
-                    onChange={handleEmail}
-                /><br/>
-
-                <button type="submit" className={styles.gradientButton}>
-                    Xác nhận
-                </button>
-
-            </form>
-        </div>
+        </dialog>
     )
 }

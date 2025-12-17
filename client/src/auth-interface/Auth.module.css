@@ -88,8 +88,8 @@
 
 .smallContainer {
     text-align: right;
-    margin-top: -10px;
-    margin-bottom: 10px;
+    margin-top: 0px;
+    margin-bottom: 20px;
 }
 
 .smallContainer:hover {
@@ -146,30 +146,43 @@
 }
 
 /* Forgot password modal */
-#forgotModal {
-    left: 0%;
-}
-
-#modalHeaderWrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center; 
-}
-
-#modalHeaderWrapper h1 {
-    font-size: 24px;
-    font-weight: 700;
-}
-
-#modal_p {
-    color: hsl(0, 0%, 80%);
-    font-size: 14;
-}
-
-#modalHeaderWrapper button {
+.forgotDialog {
     border: none;
+    padding: 0;
+    background: transparent;
+    margin: auto;
+}
+
+/* backdrop che toàn bộ UI */
+.forgotDialog::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.modalContent {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    min-width: 400px;
+    box-shadow: 0 10px 40px hsla(0, 0%, 0%, 0.3);
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modalHeader button {
     background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.modalText {
+    font-size: 16px;
+    color: hsl(0, 0%, 50%);
+    margin: 10px 0 20px;
 }
 
 /* Welcome jsx */

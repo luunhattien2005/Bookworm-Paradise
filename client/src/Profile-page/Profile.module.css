@@ -1,5 +1,5 @@
 /*------------------------ Dialog ------------------------*/
-dialog {
+.dialog {
     background: linear-gradient(
         to left,
         #e7c56a 0%,
@@ -8,7 +8,7 @@ dialog {
     );
 }
 
-dialog button{
+.dialog button{
     font-size: 20px;
     background: black;
     border: 0;
@@ -20,37 +20,10 @@ dialog button{
     justify-self: center;
 }
 
-dialog button:hover{
+.dialog button:hover{
     background: white;
     color: black;
     outline: black 2px solid;
-}
-
-/*------------------------ Header Gradient ------------------------*/
-.headerGradient {
-    display: flex;
-    height: 50px;
-    margin-bottom: 0px;
-    justify-content: right;
-    align-items: center;
-    background: linear-gradient(
-        to left,
-        #e7c56a 0%,
-        #f7e7ac 70%,
-        rgba(255,255,255,0) 100%
-    );
-    
-}   
-
-.headerGradient i {
-    color: white;
-}
-
-.headerGradient a {
-    color: white;
-    font-size: 25px;
-    padding-right: 30px;
-    padding-left:  20px;
 }
 
 /* --------------- Left-site ---------------*/

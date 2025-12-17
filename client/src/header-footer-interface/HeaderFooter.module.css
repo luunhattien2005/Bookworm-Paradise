@@ -35,6 +35,18 @@
     display: inline-block;
 }
 
+.catalogueDropdown button {
+    display: grid;
+    align-items: center;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+}
+
+.catalogueDropdown:hover .catalogueContainer{
+    display: flex;
+}
+
 .catalogueContainer {
     position: absolute;
     display: none;
@@ -46,25 +58,9 @@
     padding: 20px;
     color: black;
     background: white;
-    top: 44px;
+    top: 45px;
     left: -172px;
     z-index: 9;
-}
-
-.catalogueDropdown button {
-    display: grid;
-    align-items: center;
-    background-color: transparent;
-    cursor: pointer;
-    border: none;
-}
-
-.catalogueDropdown button:hover + .catalogueContainer{
-    display: flex;
-}
-
-.catalogueContainer:hover{
-    display: flex;
 }
 
 .catalogueTitleContainer {
@@ -76,14 +72,14 @@
     border-right: 1px solid black;
 }
 
-.catalogueContainer li {
+.catalogueTitleContainer li {
     width: 200px;
     list-style-type: none;
     padding: 10px 0px;
     cursor: pointer;
 }
 
-.catalogueContainer li:hover {
+.catalogueTitleContainer li:hover {
     color: hsl(44, 72%, 66%);
     font-weight: 700;
     background-color: hsl(0, 0%, 90%);
@@ -112,14 +108,9 @@
     padding: auto;
     font-size: 20px;
     color: white;
-    text-align: left;   
+    text-align: center; /* Place holder o giu thi search text cung o giua luon nha */   
     max-width: 600px;
     width: 400px;
-}
-
-.searchBar input::placeholder {
-    text-align: center;
-    color: white;
 }
 
 .searchBar button {
@@ -143,9 +134,9 @@
     cursor: pointer;
 }
 
-.icons i:hover {
+/* .icons i:hover {
     transform: translateY(0px);
-}
+} */
 
 .icons button {
     border: 0;
@@ -157,9 +148,9 @@
     cursor: pointer;
 }
 
-.icons button:hover {
+/* .icons button:hover {
     transform: translateY(0px);
-}
+} */
 
 .icons button img {
     border: 0;
@@ -170,8 +161,9 @@
 }
 
 /*------------------------ Header Gradient ------------------------*/
-.header-gradient {
+.pageNameGradient {
     display: flex;
+    color: white;
     height: 50px;
     margin-bottom: 12px;
     justify-content: right;
@@ -182,15 +174,14 @@
         #f7e7ac 70%,
         rgba(255,255,255,0) 100%
     );
+    padding-right: 30px;
 }   
 
-.header-gradient i {
-    color: white;
-}
-
-.header-gradient a {
-    color: white;
-    font-size: 25px;
-    padding-right: 30px;
-    padding-left:  20px;
+.nameContainer {
+    font-size: 28px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
 }

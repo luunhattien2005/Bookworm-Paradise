@@ -1,6 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import ProtectedRoute from "./auth-interface/ProtectedRoute.jsx";
-import Card from "./Card.jsx";
 import Auth from "./auth-interface/Auth.jsx";
 import Logout from "./auth-interface/Logout.jsx";
 import Welcome from "./auth-interface/Welcome.jsx";
