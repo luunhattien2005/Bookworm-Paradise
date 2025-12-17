@@ -12,11 +12,11 @@ import Profile from "./Profile-page/Profile.jsx";
 
 export default function App() {
   const location = useLocation()
-
+  const hideHeaderFooterRoutes = ["/", "/auth"]
   return (
     <>
       
-      {location.pathname !== "/auth" && <Header />}        
+      {!hideHeaderFooterRoutes.includes(location.pathname) && <Header />}        
       <Routes>
           <Route path="/" element={<Welcome />} />
 
