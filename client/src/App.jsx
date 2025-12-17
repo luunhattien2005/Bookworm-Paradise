@@ -8,6 +8,7 @@ import Header from "./header-footer-interface/Header.jsx";
 import Dashboard from "./admin-interface/components/dashboard/Dashboard.jsx";
 import HomePage from "./home-page-interface/HomePage.jsx";
 import ProductInfo from "./product-info-interface/ProductInfo.jsx";
+import Profile from "./Profile-page/Profile.jsx";
 
 
 export default function App() {
@@ -32,7 +33,7 @@ export default function App() {
 
           <Route path="/profile" element={
               <ProtectedRoute>
-                <Card name="Luu Nhat Tien" school="HEHEE" ID={2323230}/>
+                <Profile/>
               </ProtectedRoute>
             } />
           
