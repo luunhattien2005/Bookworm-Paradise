@@ -16,26 +16,28 @@ export default function Header() {
             </Link>
         );
     } else {
-        // bug chua link vao profile
         profileIcon = (
-            <button type="button">
-            <img src={user.img_url} />
-            </button>
+            <Link to="/profile">
+                <button type="button">
+                    <img src={user.img_url} />
+                </button>
+            </Link>
         );
     }
+    
     const titles = [{id: 1, name: "Sách tiếng việt"},
-                {id: 2, name: "Danh mục tổng hợp 2"},
-                {id: 3, name: "Danh mục tổng hợp 3"},
-                {id: 4, name: "Danh mục tổng hợp 4"},
-                {id: 5, name: "Danh mục tổng hợp 5"},
-                {id: 6, name: "Danh mục tổng hợp 6"}]
+                    {id: 2, name: "Danh mục tổng hợp 2"},
+                    {id: 3, name: "Danh mục tổng hợp 3"},
+                    {id: 4, name: "Danh mục tổng hợp 4"},
+                    {id: 5, name: "Danh mục tổng hợp 5"},
+                    {id: 6, name: "Danh mục tổng hợp 6"},]
+
     const listTitle = titles.map(title => <li key={title.id} onClick={() => {setSelectedTitle(title.name)}}>{title.name}</li>)
     const [selectedTitle, setSelectedTitle] = useState(titles[0].name)
 
     return(
-        <> 
         <header className={styles.siteHeader}>
-            <Link to={"\home"} className={styles.brand}>
+            <Link to={"/home"} className={styles.brand}>
                 Bookworm<br/>Paradise
             </Link>
             
@@ -43,7 +45,8 @@ export default function Header() {
                 <div className={styles.catalogueDropdown}>
                     <button type="button">
                         <i className="material-symbols-outlined" style={{fontSize: "40px"}}>menu</i>
-                    </button>
+                     </button>
+
                     <div className={styles.catalogueContainer}>
                         <div className={styles.catalogueTitleContainer}>
                             <p>Danh mục sản phẩm</p>
@@ -58,20 +61,22 @@ export default function Header() {
                 </div>
 
                 <form className={styles.searchBar}>
-                    <input type="text"></input>
+                    <input type="text" placeholder="Nhà giả kim"></input>
 
                     <button type="submit">
                         <i className="material-symbols-outlined" style={{fontSize: "35px"}}>search</i>
                     </button>
                 </form>     
             </div>
+
+
             <div className={styles.icons}>
                 <Link to="/notifications">
                     <i className="fa-regular fa-bell" style={{fontSize: "30px"}}></i>
                 </Link>
 
                 <Link to="/cart">
-                    <i className="material-symbols-outlined" style={{fontSize: "37px"}}>shopping_cart</i>
+                    <i className="material-symbols-outlined" style={{fontSize: "35px"}}>shopping_cart</i>
                 </Link>
 
                 <Link to="/wishlist">
@@ -79,22 +84,17 @@ export default function Header() {
                 </Link>
 
                 <Link to="/gifts">
-                    <i className="material-symbols-outlined" style={{fontSize: "33px"}}>featured_seasonal_and_gifts</i>
+                    <i className="material-symbols-outlined" style={{fontSize: "31px"}}>featured_seasonal_and_gifts</i>
                 </Link>
 
-                
-                
                 {profileIcon}
-                
-
             </div>
-
-
-
-
         </header>
-        {/* {showMenu && <Catalogue/>} */}
-        </>
+
+
+
+
+
     )
 }
 

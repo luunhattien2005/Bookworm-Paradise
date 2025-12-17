@@ -23,25 +23,16 @@
     position: relative;
     display: flex;  
     flex-direction: row;
+    align-items: center;
     padding: 0px 8px;
     background-color: black;
     color: white;
     border-radius: 12px;
-    width: fit-content;
-}
-
-.menuSearchContainer button {
-    background-color: transparent;
 }
 
 /* ---- Catalogue ---- */
 .catalogueDropdown {
     display: inline-block;
-}
-
-.catalogueDropdown button {
-    cursor: pointer;
-    border: none;
 }
 
 .catalogueContainer {
@@ -54,12 +45,26 @@
     border-radius: 15px;
     padding: 20px;
     color: black;
-    top: 50px;
+    background: white;
+    top: 44px;
     left: -172px;
-    
-    /* transform: translateX(-50%); */
-
     z-index: 9;
+}
+
+.catalogueDropdown button {
+    display: grid;
+    align-items: center;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+}
+
+.catalogueDropdown button:hover + .catalogueContainer{
+    display: flex;
+}
+
+.catalogueContainer:hover{
+    display: flex;
 }
 
 .catalogueTitleContainer {
@@ -90,10 +95,6 @@
     width: 600px;
 }
 
-.catalogueDropdown:hover .catalogueContainer {
-    display: flex;
-}
-
 /* ---- Display search bar---- */
 .searchBar {
     position: relative;
@@ -111,13 +112,22 @@
     padding: auto;
     font-size: 20px;
     color: white;
-    text-align: center;
+    text-align: left;   
     max-width: 600px;
     width: 400px;
 }
 
+.searchBar input::placeholder {
+    text-align: center;
+    color: white;
+}
+
 .searchBar button {
     border: none;
+    background-color: transparent;
+    cursor: pointer;
+    display: grid;
+    align-items: center;
 }
 
 /* ---- Display last icon ---- */
@@ -134,7 +144,7 @@
 }
 
 .icons i:hover {
-    transform: translateY(5px);
+    transform: translateY(0px);
 }
 
 .icons button {
@@ -148,7 +158,7 @@
 }
 
 .icons button:hover {
-    transform: translateY(5px);
+    transform: translateY(0px);
 }
 
 .icons button img {
@@ -160,9 +170,8 @@
 }
 
 /*------------------------ Header Gradient ------------------------*/
-.pageNameGradient {
+.header-gradient {
     display: flex;
-    color: white;
     height: 50px;
     margin-bottom: 12px;
     justify-content: right;
@@ -173,14 +182,15 @@
         #f7e7ac 70%,
         rgba(255,255,255,0) 100%
     );
-    padding-right: 30px;
 }   
 
-.nameContainer {
-    font-size: 28px;
-    font-weight: 500;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
+.header-gradient i {
+    color: white;
+}
+
+.header-gradient a {
+    color: white;
+    font-size: 25px;
+    padding-right: 30px;
+    padding-left:  20px;
 }
