@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>Settings</title>
+	<link rel="stylesheet" href="Settings.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+
+<body>
+	<!------------------ Header section full ------------------>
+	<header class="site-header">
+		<div class="brand">
+			<div class="logo">Bookworm<br>Paradise</div>
+		</div>
+
+		<form action="" class="search-bar">
+			<button type="button" onclick="menu_ON_OFF()"><img src="img/select-icon-input.png"></button>
+			<script>
+				var ON = false;
+
+				function menu_ON_OFF (){
+					ON = !ON;
+					if (!ON) document.querySelector('.drop-down-menu').className = 'toggel-off';
+					else {
+						document.querySelector('.second-dropdown-layout').className = 'toggel-off';
+						document.querySelector('.toggel-off').className = 'drop-down-menu';
+						document.querySelector('#full-1st').className = 'second-dropdown-layout';
+					}
+				} 
+			</script>
+
+			<div class="toggel-off">
+				<div class="menu">       
+					<div class="first-nav">
+						<p class="first-nav-name"> Danh Mục Sản Phẩm</p>
+
+						<ul id="Catagrory" class="first-nav-list" style="padding-left: 10px;margin: 0px;">
+							<li>Sách tiếng việt</li>
+							<li>Mục tổng hợp 2</li>
+							<li>Mục tổng hợp 3</li>
+							<li>Mục tổng hợp 4</li>
+							<li>Mục tổng hợp 5</li>
+							<li>Mục tổng hợp 6</li>
+						</ul>
+						<script>
+							document.querySelectorAll('#Catagrory li').forEach(li => {li.addEventListener('click', function () {
+								Find_Function(this);
+							});});
+
+							function Find_Function(item) {
+								document.querySelector('.second-dropdown-layout').className = 'toggel-off';
+								if (item.textContent === "Sách tiếng việt") document.querySelector('#full-1st').className = 'second-dropdown-layout';
+								if (item.textContent === "Mục tổng hợp 2")  document.querySelector('#full-2nd').className = 'second-dropdown-layout';
+								if (item.textContent === "Mục tổng hợp 3")  document.querySelector('#full-3rd').className = 'second-dropdown-layout';
+								if (item.textContent === "Mục tổng hợp 4")  document.querySelector('#full-4th').className = 'second-dropdown-layout';
+								if (item.textContent === "Mục tổng hợp 5")  document.querySelector('#full-5th').className = 'second-dropdown-layout';
+								if (item.textContent === "Mục tổng hợp 6")  document.querySelector('#full-6th').className = 'second-dropdown-layout';
+							}
+						</script>
+					</div>
+					<div style="
+						background: black;
+						width: 3px;
+						height: 300px;
+						margin: 0px 5px;
+					"></div>
+
+					<div class="second-nav">
+						<!-- 1st choice  -->
+						<div id="full-1st" class="second-dropdown-layout">
+							<p>Sách tiếng việt</p>
+						</div>
+
+						<!-- 2nd choice  -->
+							<div id="full-2nd" class="toggel-off">
+							<p>Mục tổng hợp 2</p>
+						</div>
+
+						<!-- 3rd choice  -->
+							<div id="full-3rd" class="toggel-off">
+							<p>Mục tổng hợp 3</p>
+						</div>
+
+						<!-- 4th choice  -->
+							<div id="full-4th" class="toggel-off">
+							<p>Mục tổng hợp 4</p>
+						</div>
+
+						<!-- 5th choice  -->
+							<div id="full-5th" class="toggel-off">
+							<p>Mục tổng hợp 5</p>
+						</div>
+
+						<!-- 6th choice  -->
+							<div id="full-6th" class="toggel-off">
+							<p>Mục tổng hợp 6</p>
+						</div>
+					</div>
+				</div>
+			</div>	
+
+			<input  type="search" aria-label="search" placeholder="Nhà giả kim"/>
+			<button type="submit"><img src="img/search-icon.png"></button>
+		</form>
+
+		<div class="icons">
+			<i class="fa-regular fa-bell"         style="font-size: 30px;"></i>
+			<i class="material-symbols-outlined"  style="font-size: 37px;">shopping_cart</i>
+			<i class="fa-regular fa-heart fa-2x1" style="font-size: 30px;"></i>
+			<i class="material-symbols-outlined"  style="font-size: 33px;">featured_seasonal_and_gifts</i>
+			<button type="button"><img src="PP.png"></button>
+		</div>
+	</header>
+
+    <div class="header-gradient"> 
+        <i class="fa-regular fa-circle-user" style="font-size: 30px;"></i>
+        <a>Your Profile</a> 
+	</div>
+
+    <!------------------ Left section full ------------------>
+
+    <main class="container">
+        <div class="left-container">
+            <div class="upper-container">
+				<div class="Profile-Picture">
+					<i class="material-symbols-outlined">photo_camera_front</i>
+                	<img src="PP_Large.png" alt="Picture Profile here">
+				</div>
+
+                <p>Lưu Nhật Tiến</p>
+            </div>
+
+            <div class="lower-container">
+				<p>Hồ sơ cá nhân</p>
+				<p>Thay đổi mật khẩu</p>
+				<p>Sách yêu thích</p>
+				<p>Lịch sử mua hàng</p>
+				<p>Trung tâm thông báo</p>
+				<p>This is useless button</p>
+				<p style="color: rgb(255, 0, 0);">Đăng xuất</p>
+            </div>
+        </div>
+
+        <div class="right-container">
+			<div class="toggel-off">
+				<p>Hồ sơ cá nhân</p>
+
+				<div class="Personal-profile-field">
+					<div class="first-div">
+						<label for="Fullname">Họ tên</label>
+						<label for="Phone">Số điện thoại</label>
+						<label for="Email">Email</label>
+						<label for="Sex">Giới tính</label>
+						<label for="Birthday">Ngày sinh</label>
+						<label for="Address">Địa chỉ nhận hàng</label>
+					</div>
+
+
+					<div class="second-div">
+						<input type="text" id="Fullname" name="Fullname" value="Lưu Nhật Tiến" readonly>
+						<input type="text" id="Phone" name="Phone" value="123456789" readonly>
+						<input type="text" id="Email" name="Email" value="ImGay7865@gmail.com" readonly>
+
+						<select name="Sex" id="Sex" value="Nữ" disabled>
+							<option value="Nam" selected>Nam</option>
+							<option value="Nữ">Nữ</option>
+							<option value="Others">Others</option>
+						</select>
+
+						<input type="date" id="Birthday" name="Birthday" value="2001-04-15" readonly>
+						<input type="text" id="Address" name="Address" value="12A/41/2 Nguyễn Thái Bình, P.4, Q.5, Thành phố HCM" readonly>
+					</div>
+				</div>
+
+				<div class="button">
+					<button id="Personal-profile-button-1">Thay đổi Thông Tin</button>
+					<button id="Personal-profile-button-2" class="toggel-off" style="color: lightcoral;">Hủy bỏ</button>
+					<button id="Personal-profile-button-3" class="toggel-off">Lưu thay đổi</button>
+				</div>
+
+				<script>
+					document.querySelectorAll('.Personal-profile div[class="button"] button').forEach(button => {button.addEventListener('click', function () {
+						Personal_profile(this);
+					});});
+
+					// This is revert for changing
+					originalData = {};
+
+
+					function Personal_profile(item) {
+						if (item.textContent === "Thay đổi Thông Tin") {
+							// This is to show ON and OFF
+							document.querySelector('#Personal-profile-button-1').className = 'toggel-off'
+							document.querySelector('#Personal-profile-button-2').className = ''
+							document.querySelector('#Personal-profile-button-3').className = ''
+
+							// This is to show what function will do to DOM
+							document.querySelectorAll('.Personal-profile-field div[class="second-div"] input').forEach(input => {input.readOnly = false; originalData[input.id] = input.value;})
+							document.querySelector('.Personal-profile-field div[class="second-div"] select').disabled = false;
+							originalData['Sex'] = document.getElementById('Sex').value
+						}
+
+						if (item.textContent === "Hủy bỏ") {
+							// This is to show ON and OFF
+							document.querySelector('#Personal-profile-button-1').className = ''
+							document.querySelector('#Personal-profile-button-2').className = 'toggel-off'
+							document.querySelector('#Personal-profile-button-3').className = 'toggel-off'
+		
+							// This is to show what function will do to DOM
+							document.querySelectorAll('.Personal-profile-field div[class="second-div"] input').forEach(input => {input.readOnly = true; input.value = originalData[input.id];})
+							document.querySelector('.Personal-profile-field div[class="second-div"] select').disabled = true;
+							document.getElementById('Sex').value = originalData['Sex'];
+						}
+
+						if (item.textContent === "Lưu thay đổi") {
+							// This is to show ON and OFF
+							document.querySelector('#Personal-profile-button-1').className = ''
+							document.querySelector('#Personal-profile-button-2').className = 'toggel-off'
+							document.querySelector('#Personal-profile-button-3').className = 'toggel-off'
+
+							// This is to show what function will do to DOM
+							document.querySelectorAll('.Personal-profile-field div[class="second-div"] input').forEach(input => {input.readOnly = true})
+							document.querySelector('.Personal-profile-field div[class="second-div"] select').disabled = true;
+
+							// Do some shit in database (server)
+						}
+					}
+				</script>
+			</div>
+
+			<div class="Password">
+				<p>Thay đổi mật khẩu</p>
+
+				<div class="Password-field">
+					<div class="first-div">
+						<label for="Old_Password">Mật khẩu hiện tại</label>
+						<label for="New_Password">Mật khẩu mới</label>
+						<label for="New_Password_Repeat">Nhập lại mật khẩu mới</label>
+					</div>
+
+					<div class="second-div">
+						<input type="text" id="Old_Password" name="Fullname" value="">
+						<input type="text" id="New_Password" name="Phone" value="">
+						<input type="text" id="New_Password_Repeat" name="Email" value="">
+					</div>
+				</div>
+
+				<div class="button">
+					<button id="Password-field-button">Lưu thay đổi</button>
+				</div>
+
+				<dialog id="Password_Dialog_1">
+					<p>Wrong Password</p>
+					<button id="Password_close" onclick="Password_Dialog_1.close(); Password_Dialog_1.removeAttribute('style');">Close</button>
+				</dialog>
+
+				<dialog id="Password_Dialog_2">
+					<p>Repeat password is not the same as New Password</p>
+					<button id="Password_close" onclick="Password_Dialog_2.close(); Password_Dialog_2.removeAttribute('style');">Close</button>
+				</dialog>
+
+				<dialog id="Password_Dialog_3">
+					<p>New Password can not be the same as Old Password</p>
+					<button id="Password_close" onclick="Password_Dialog_3.close(); Password_Dialog_3.removeAttribute('style');">Close</button>
+				</dialog>
+
+				<dialog id="Password_Dialog_4">
+					<p>All field must be filled</p>
+					<button id="Password_close" onclick="Password_Dialog_4.close(); Password_Dialog_4.removeAttribute('style');">Close</button>
+				</dialog>
+
+				<script>
+					// Prepare if there is error
+					const Password_Dialog_1 = document.getElementById('Password_Dialog_1');
+					const Password_Dialog_2 = document.getElementById('Password_Dialog_2');
+					const Password_Dialog_3 = document.getElementById('Password_Dialog_3');
+					const Password_Dialog_4 = document.getElementById('Password_Dialog_4');
+
+					//Prepare event
+					document.querySelector('#Password-field-button').addEventListener('click', function () {
+						Password_function(this);
+					});
+
+					//Prepare function to do
+					function Password_function(item) {
+						if (document.getElementById('New_Password').value === "" || document.getElementById('Old_Password').value === "" || document.getElementById('New_Password_Repeat').value === "") {
+							Password_Dialog_4.showModal();
+							Password_Dialog_4.setAttribute('style','display: grid;')
+							return;
+						}
+
+						// need someone to do this function
+						if (0) {
+							Password_Dialog_1.showModal();
+							Password_Dialog_1.setAttribute('style','display: grid;')
+							return;
+						}
+
+						if (document.getElementById('New_Password').value !== document.getElementById('New_Password_Repeat').value) {
+							Password_Dialog_2.showModal();
+							Password_Dialog_2.setAttribute('style','display: grid;')
+							return;
+						}
+
+						if (document.getElementById('New_Password').value === document.getElementById('Old_Password').value) {
+							Password_Dialog_3.showModal();
+							Password_Dialog_3.setAttribute('style','display: grid;')
+							return;
+						}
+
+						// If all condition pass => do server fuction
+					}
+				</script>
+			</div>
+
+
+        </div>
+	</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<footer class="footer-container">
+		<img src="img/Shape_1.png">
+
+		<img src="PP_Large.png">
+
+		<div class="footer-information">
+			<div class="footer-1st-information">
+				
+			</div>
+
+			<div class="footer-2nd-information">
+
+			</div>
+		</div>
+
+		<img src="img/Shape_2.png">
+	</footer>
+</body>
+</html>

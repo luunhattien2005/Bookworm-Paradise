@@ -1,0 +1,516 @@
+/*------------------ Setting Base font, etc... ------------------*/
+* {
+    box-sizing: border-box
+}
+
+body {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    margin: 0;
+    
+    color: #222;
+    background: #fff
+}
+
+a {
+    color: inherit;
+    text-decoration: none
+}
+
+/*------------------------ Dialog ------------------------*/
+dialog {
+    background: linear-gradient(
+        to left,
+        #e7c56a 0%,
+        #f7e7ac 20%,
+        rgba(255,255,255,0) 100%
+    );
+}
+
+dialog button{
+    font-size: 20px;
+    background: black;
+    border: 0;
+    border-radius: 10px;
+    padding: 5px 15px;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+    justify-self: center;
+}
+
+dialog button:hover{
+    background: white;
+    color: black;
+    outline: black 2px solid;
+}
+
+/*------------------------ Header Gradient ------------------------*/
+.header-gradient {
+    display: flex;
+    height: 50px;
+    margin-bottom: 0px;
+    justify-content: right;
+    align-items: center;
+    background: linear-gradient(
+        to left,
+        #e7c56a 0%,
+        #f7e7ac 70%,
+        rgba(255,255,255,0) 100%
+    );
+    
+}   
+
+.header-gradient i {
+    color: white;
+}
+
+.header-gradient a {
+    color: white;
+    font-size: 25px;
+    padding-right: 30px;
+    padding-left:  20px;
+}
+
+/* ------------------------ Header-site ------------------------*/
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background: linear-gradient(180deg, #ffffff, #ffffff);
+}
+
+/* ---- Display Logo ---- */
+.brand {
+    display: flex;
+    gap: 12px;
+    padding-right: 58px;
+}
+
+.logo {
+    font-size: 19px;
+    font-weight: 750;
+}
+
+/* ---- Display search bar---- */
+.search-bar {
+    width: 100%;
+    position: relative;
+    max-width: 600px;
+    background: rgba(0, 0, 0, 1);
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    padding: 5px 5px;
+}
+
+.search-bar input {
+    background: transparent;
+    flex: 1;
+    border: 0;
+    outline: none;
+    padding: auto;
+    font-size: 20px;
+    color: white;
+}
+
+.search-bar input::-webkit-search-cancel-button { 
+    display: none; 
+}
+
+.search-bar input::placeholder {
+    color: white;
+    text-align: center;
+}
+
+.search-bar button[type=submit] {
+    border: 0;
+    border-radius: 10px;
+    width: 50px;
+    background: white;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    cursor: pointer;
+}
+
+.search-bar button[type=submit] img{
+    border: 0;
+    width: 30px;
+    height: 28px;
+    background-color: rgb(255, 255, 255);
+}
+
+.search-bar button[type=button] {
+    border: 0;
+    width: 50px;
+    border-radius: 0;
+    background: transparent;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    cursor: pointer;
+}
+
+.search-bar button[type=button] img{
+    border: 0;
+    width: 30px;
+    height: 24px;
+    background-color: transparent;
+}
+
+/* ---- Display dropdown menu ---- */
+
+.drop-down-menu {
+    border: 1;
+    border-radius: 20px;
+    outline-style: solid;
+    display: block;
+    height: auto;   
+    width: 168%;
+    align-items: center;
+    background: rgb(255, 255, 255);
+    justify-content: left;  
+    position: absolute;
+    top: 43px;
+    left: -200px;
+    z-index: 2;
+}
+
+.toggel-off {
+    display: none;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.drop-down-menu p {
+    font-size: 21px;
+    font-weight: 700;
+    padding-left:  10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    margin: 0px;
+}
+
+.drop-down-menu li {
+    font-size: 19px;
+    font-weight: 500;
+    list-style-type: none;
+    padding: 10px 0px;
+    cursor: pointer;
+}
+
+.drop-down-menu li:hover {
+    background: rgb(231, 231, 231);
+}
+
+.second-nav {
+    width: 760px;
+    height: 285px;
+}
+
+.second-dropdown-layout {
+    margin: 0px;
+}
+
+/* ---- Display last icon ---- */
+.icons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.icons i {
+    border: 0;
+    cursor: pointer;
+}
+
+.icons button {
+    border: 0;
+    width: 40px;
+    background: transparent;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    cursor: pointer;
+}
+
+.icons button img {
+    border: 0;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+}
+
+/*------------------------ Footer ------------------------*/
+.footer-container {
+    display: flex;
+    background-color: #e5f2ff;
+    justify-content: space-between;
+    position: relative;
+}
+
+.footer-container img {
+    height: 306px;
+}
+
+.footer-container img[src="PP_Large.png"]{
+    height: 180px;
+    position: absolute;
+    top:  62px;
+    left: 63px
+}
+
+
+/* ------------------------ Main-site ------------------------*/
+.container {
+    border: 0;
+    display: flex;
+    justify-content: left;
+    margin:  0px;  
+}
+
+/* --------------- Left-site ---------------*/
+.left-container {
+    width:  360px;
+    height: 100%;
+    border-right: solid lightgray 2px;
+}
+
+.upper-container {
+    display: grid;
+    justify-content: center;
+    width:  360px;
+    height: auto;
+    position: relative;
+    border-bottom: solid lightgray 2px;
+}
+
+.Profile-Picture {
+    padding-bottom: 10px;
+    padding-top: 22px;
+    display: grid;
+    justify-content: center;
+
+}
+
+.Profile-Picture img[src="PP_Large.png"] {
+    width:  200px;  
+    height: 200px;
+    border-radius: 50%;
+    outline: solid 2px lightgray;
+    cursor: pointer;
+}
+
+.Profile-Picture:hover img[src="PP_Large.png"]{
+    filter: brightness(0.5);
+}
+
+.Profile-Picture i {
+    position: absolute;
+    z-index: 1;
+    top: 30%;
+    left: 43%;
+    opacity: 0;    
+    font-size: 50px; 
+    color: rgb(206, 206, 206);             
+    pointer-events: none;
+}
+
+.Profile-Picture:hover i {
+    opacity: 1;
+}
+
+.upper-container p {
+    font-size: 32px;
+    padding: 20px 0px;
+    margin: 0px 0px;
+    font-weight: bolder;
+}
+
+.lower-container {
+    width:  360px;
+    height: auto;
+}
+
+.lower-container p {
+    margin: 0px;
+    padding-left: 6px;
+    font-size: 25px;    
+    padding-bottom: 36px;
+    padding-top: 8px;
+    cursor: pointer;
+}
+
+.lower-container p:hover{
+    background: lightgoldenrodyellow;
+    border-right: solid 2px lightgray;
+}
+
+/* --------------- Right-site ---------------*/
+.right-container {
+    height: auto;
+    width: 100%;
+    margin-left: 20px;
+}
+
+.right-container p {
+    font-size: 36px;
+    font-weight: 700;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+
+/*--- Personal-profile ---*/
+.Personal-profile-field {
+    padding-left: 30px;
+    display: flex;
+    justify-content: left;
+}
+
+.Personal-profile-field div[class="first-div"] {
+    display: grid;
+    width: 220px;
+    align-items: center;
+}
+
+.Personal-profile-field div[class="first-div"] label {
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+
+.Personal-profile-field div[class="second-div"] {
+    display: grid;
+    width: 84%;
+    align-items: center;
+}
+
+.Personal-profile-field div[class="second-div"] input {
+    background: lightgrey;
+    border: 0;
+    border-radius: 10px; 
+    margin-bottom: 20px;
+    padding: 0px 10px;
+    height: 38px;
+    font-size: 20px;
+}
+
+.Personal-profile-field div[class="second-div"] input:read-only {
+    cursor: unset;
+    outline: none;
+}
+
+.Personal-profile-field div[class="second-div"] input::placeholder {
+    color: black;
+}
+
+.Personal-profile-field div[class="second-div"] select {
+    background: lightgrey;
+    border: 0;
+    border-radius: 10px; 
+    margin-bottom: 20px;
+    padding: 0px 10px;
+    height: 38px;
+    font-size: 20px;
+    cursor: unset;
+    color: black;
+}
+
+.Personal-profile-field div[class="second-div"] select:disabled {
+    color: black;
+    opacity: 1;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: none;
+}
+
+.Personal-profile-field div[class="second-div"] option {
+    color: black
+}
+
+.Personal-profile div[class="button"] {
+    display: flex;
+    justify-content: right;
+    gap: 20px  
+}
+
+.Personal-profile div[class="button"] button{
+    font-size: 20px;
+    background: black;
+    border: 0;
+    border-radius: 10px;
+    padding: 5px 15px;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.Personal-profile div[class="button"] button:hover{
+    background: white;
+    color: black;
+    outline: black 2px solid;
+}
+
+/*--- Password ---*/
+
+.Password-field {
+    padding-left: 30px;
+    display: flex;
+    justify-content: left;
+}
+
+.Password-field div[class="first-div"] {
+    display: grid;
+    width: 220px;
+    align-items: center;
+}
+
+.Password-field div[class="first-div"] label {
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+
+.Password-field div[class="second-div"] {
+    display: grid;
+    width: 84%;
+    align-items: center;
+}
+
+.Password-field div[class="second-div"] input {
+    background: lightgrey;
+    border: 0;
+    border-radius: 10px; 
+    margin-bottom: 20px;
+    padding: 0px 10px;
+    height: 38px;
+    font-size: 20px;
+}
+
+.Password div[class="button"] {
+    display: flex;
+    justify-content: right;
+}
+
+.Password div[class="button"] button{
+    font-size: 20px;
+    background: black;
+    border: 0;
+    border-radius: 10px;
+    padding: 5px 80px;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.Password div[class="button"] button:hover{
+    background: white;
+    color: black;
+    outline: black 2px solid;
+}
