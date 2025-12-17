@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom"
 import { useState, useContext } from "react"
 import { Link } from "react-router-dom"
 import { AuthContext } from "../auth-interface/AuthContext"
@@ -11,12 +10,13 @@ export default function Header() {
     if (!user) {
         profileIcon = (
             <Link to="/profile">
-            <i className="material-symbols-outlined" style={{fontSize: "33px"}}>
-                account_circle
-            </i>
+                <i className="material-symbols-outlined" style={{fontSize: "33px"}}>
+                    account_circle
+                </i>
             </Link>
         );
     } else {
+        // bug chua link vao profile
         profileIcon = (
             <button type="button">
             <img src={user.img_url} />

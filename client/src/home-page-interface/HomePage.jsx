@@ -6,7 +6,6 @@ import banner1 from "./img/nha_gia_kim_p.jpg"
 import banner2 from "./img/combo_p.jpg"
 import banner3 from "./img/cay_cam_ngot_p.png" 
 
-import weekly_rank from "./img/rank.jpg"
 import medal1 from "./img/medal1.png"
 import medal2 from "./img/medal2.png"
 import medal3 from "./img/medal3.png"

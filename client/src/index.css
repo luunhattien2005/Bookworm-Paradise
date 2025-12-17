@@ -12,6 +12,8 @@
 /* body {
   width: 1400px;
   margin: 0 auto;
+  display: grid;
+  justify-content: center;
 } */
 
 .card {

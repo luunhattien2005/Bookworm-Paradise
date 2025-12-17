@@ -1,0 +1,244 @@
+.container {
+    border: 0;
+    display: grid;
+    justify-content: center;
+}
+
+/* ---------- Display top product ---------- */
+.topProduct {
+    display: flex;
+    /* align-items: center; */
+    max-width : 1280px;
+    height: fit-content;
+    justify-content: space-evenly;
+    gap: 75px;
+}
+
+/* --- Display pic --- */
+.topProduct img {
+    width:  420px;
+    outline: solid;
+    outline-color: rgb(218, 218, 218);
+    outline-width: 1px;
+}
+
+/* --- Display information-1st --- */
+.information1st {
+    width:  420px;
+    height: fit-content;
+    position: relative;
+    z-index: 0;
+}
+
+.addLiked {
+    border: 0;
+    display: flex;
+    position: absolute;
+    z-index: 0;
+    left: 375px;
+    width:  45px;
+    height: 45px;
+    border-radius: 25px;
+    background: black;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.addLiked i {
+    color: white;
+    outline: none;
+}
+
+.addLiked:hover {
+    background: red;
+}
+
+.informationName {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 0px;
+    margin-top: 1px;
+}
+
+.informationAuthor {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    margin-top: 8px;
+}
+
+.informationTag {
+    background: none;
+}
+
+.informationTag a {
+    border-radius: 8px;
+    font-size: 12px;
+    color: green;
+    font-family: Arial;
+    font-weight: lighter;
+    background: #CFF7D3;
+    padding: 6px 6px;
+    margin-left: 0px;
+    margin-right: 5px;
+}
+
+.informationPrice {
+    font-size: 32px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.informationAdd {
+    border: 0;
+    border-radius: 8px;
+    width: 100%;
+    background: black;
+    color: white;
+    padding: 10px 0px;
+    cursor: pointer;
+}
+
+.informationAdd:hover {
+    background: white;
+    color: black;
+    outline-style: solid;
+    outline-color: black;
+    outline-width: 2px;
+}
+
+.informationDetails {
+    border-radius: 5px;
+    outline: solid;
+    outline-color: rgb(218, 218, 218);
+    outline-width: 2px;
+    margin-top: 22px;
+    margin-bottom: 0px;
+}
+
+.informationDetails div {
+    height: 185px;
+    justify-content: left;
+    display: flex;
+    padding: 0px 0px;
+    margin: 0px 0px;
+}
+
+.informationDetails p {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0px 0px;
+    padding-top: 10px;
+    padding-left: 7px;
+}
+
+.informationDetails ul {
+    list-style-type: none;
+    padding: 0px;
+}
+
+.informationDetails li {
+    list-style-type: none;
+    font-size: 13px;
+    padding-bottom: 1px;
+}
+
+/* ---------- Display middleProduct ---------- */
+.middleProduct {
+    outline: solid;
+    outline-width: 2px;
+    outline-color: rgb(218, 218, 218);
+    width: 915px;
+    display: inline;
+    border-radius: 5px;
+    margin-top: 12px;
+    margin-bottom: 8px;
+    padding: 20px;
+}
+
+.middleProductTitle {
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.middleProductInformation {
+    margin: 0;
+}
+
+.middleProductInformation p {
+    font-size: 13px;
+    font-weight: 0;
+    margin: 0px 0px;
+    padding-bottom: 8px;
+}
+
+.middleProductInformation ul {
+    font-size: 13px;
+    font-weight: 0;
+    margin: 0px 0px;
+    padding: 0px 0px;
+    padding-bottom: 8px;
+}
+
+.middleProductInformation li {
+    font-size: 13px;
+    font-weight: 0;
+    margin: 0px 0px;
+    padding-bottom: 3px;
+    margin-left: 25px;
+    line-height-step: 50px;
+}
+
+/* ---------- Display Your-Rating ---------- */
+.ratingSection {
+    padding: 20px;
+    position: relative;
+    outline: solid;
+    outline-width: 2px;
+    outline-color: rgb(218, 218, 218);
+    width: 915px;
+    border-radius: 5px;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.ratingEditor {
+  height: 150px;    
+  overflow-y: auto;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  line-height: 1.5;
+}
+
+.ratingEditorTitle {
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.ratingActions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#submitButton {
+    padding: 3px;
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    right: 0;
+}
+
+#submitButton:hover {
+    background-color: white;
+    color: black;
+}
+
+.ratingEditor * {
+    font-size: 16px;
+}
