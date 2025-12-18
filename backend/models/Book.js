@@ -19,4 +19,4 @@ const BookSchema = new mongoose.Schema({
     isDeleted: { type: Boolean, default: false } 
 });
 
-module.exports = mongoose.model('Book', BookSchema);
+module.exports = mongoose.models.Book || mongoose.model('Book', BookSchema);

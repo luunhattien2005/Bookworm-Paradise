@@ -16,6 +16,7 @@
     "test:watch": "vitest"
   },
   "devDependencies": {
+    "@vitest/ui": "^4.0.16",
     "supertest": "^7.1.4",
     "vitest": "^4.0.16"
   }

@@ -5,4 +5,4 @@ const WishlistSchema = new mongoose.Schema({
     books: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }]
 });
 
-module.exports = mongoose.model('Wishlist', WishlistSchema);
+module.exports = mongoose.models.Wishlist || mongoose.model('Wishlist', WishlistSchema);

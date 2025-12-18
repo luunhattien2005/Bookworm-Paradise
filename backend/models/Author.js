@@ -4,4 +4,4 @@ const AuthorSchema = new mongoose.Schema({
     AuthorName: { type: String, required: true, minlength: 1, maxlength: 50 },
 });
 
-module.exports = mongoose.model('Author', AuthorSchema);
+module.exports = mongoose.models.Author || mongoose.model('Author', AuthorSchema);
