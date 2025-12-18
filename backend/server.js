@@ -6,7 +6,7 @@ const connectDB = require("./db");
 
 const app = express();
 connectDB();
-
+//console.log("JWT_SECRET:", process.env.JWT_SECRET);
 app.use(cors());
 app.use(express.json());
 
