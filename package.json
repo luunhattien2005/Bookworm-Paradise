@@ -11,6 +11,12 @@
     "nodemailer": "^7.0.11"
   },
   "scripts": {
-    "start": "node backend\\server.js"
+    "start": "node backend\\server.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "supertest": "^7.1.4",
+    "vitest": "^4.0.16"
   }
 }

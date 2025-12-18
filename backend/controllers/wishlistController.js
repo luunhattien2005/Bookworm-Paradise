@@ -51,4 +51,4 @@ const wishlistController = {
     }
 };
 
-module.exports = wishlistController;s
+module.exports = wishlistController;
