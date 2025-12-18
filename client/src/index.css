@@ -3,10 +3,27 @@
     margin: 0;
     box-sizing: border-box;
     font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 400;
-    font-size: 18px;
+    /* font-weight: 400;
+    font-size: 18px; */
     color: inherit;
     outline: 1px dashed blue; /* Uncomment để show hitbox */
+}
+
+/* body {
+  width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  justify-content: center;
+} */
+
+/* TipTap placeholder */
+.tiptap p.is-editor-empty::before {
+  content: attr(data-placeholder);
+  color: #adb5bd;
+  pointer-events: none;
+  float: left;
+  height: 0;
+  font-size: 14px;
 }
 
 .card {

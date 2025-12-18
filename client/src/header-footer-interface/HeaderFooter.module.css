@@ -23,15 +23,11 @@
     position: relative;
     display: flex;  
     flex-direction: row;
+    align-items: center;
     padding: 0px 8px;
     background-color: black;
     color: white;
     border-radius: 12px;
-    width: fit-content;
-}
-
-.menuSearchContainer button {
-    background-color: transparent;
 }
 
 /* ---- Catalogue ---- */
@@ -40,8 +36,15 @@
 }
 
 .catalogueDropdown button {
+    display: grid;
+    align-items: center;
+    background-color: transparent;
     cursor: pointer;
     border: none;
+}
+
+.catalogueDropdown:hover .catalogueContainer{
+    display: flex;
 }
 
 .catalogueContainer {
@@ -54,11 +57,9 @@
     border-radius: 15px;
     padding: 20px;
     color: black;
-    top: 50px;
+    background: white;
+    top: 45px;
     left: -172px;
-    
-    /* transform: translateX(-50%); */
-
     z-index: 9;
 }
 
@@ -71,14 +72,14 @@
     border-right: 1px solid black;
 }
 
-.catalogueContainer li {
+.catalogueTitleContainer li {
     width: 200px;
     list-style-type: none;
     padding: 10px 0px;
     cursor: pointer;
 }
 
-.catalogueContainer li:hover {
+.catalogueTitleContainer li:hover {
     color: hsl(44, 72%, 66%);
     font-weight: 700;
     background-color: hsl(0, 0%, 90%);
@@ -88,10 +89,6 @@
 .catalogueItemContainer {
     padding-left: 20px;
     width: 600px;
-}
-
-.catalogueDropdown:hover .catalogueContainer {
-    display: flex;
 }
 
 /* ---- Display search bar---- */
@@ -111,13 +108,17 @@
     padding: auto;
     font-size: 20px;
     color: white;
-    text-align: center;
+    text-align: center; /* Place holder o giu thi search text cung o giua luon nha */   
     max-width: 600px;
     width: 400px;
 }
 
 .searchBar button {
     border: none;
+    background-color: transparent;
+    cursor: pointer;
+    display: grid;
+    align-items: center;
 }
 
 /* ---- Display last icon ---- */
@@ -133,9 +134,9 @@
     cursor: pointer;
 }
 
-.icons i:hover {
-    transform: translateY(5px);
-}
+/* .icons i:hover {
+    transform: translateY(0px);
+} */
 
 .icons button {
     border: 0;
@@ -147,9 +148,9 @@
     cursor: pointer;
 }
 
-.icons button:hover {
-    transform: translateY(5px);
-}
+/* .icons button:hover {
+    transform: translateY(0px);
+} */
 
 .icons button img {
     border: 0;
@@ -160,8 +161,9 @@
 }
 
 /*------------------------ Header Gradient ------------------------*/
-.header-gradient {
+.pageNameGradient {
     display: flex;
+    color: white;
     height: 50px;
     margin-bottom: 12px;
     justify-content: right;
@@ -172,16 +174,14 @@
         #f7e7ac 70%,
         rgba(255,255,255,0) 100%
     );
-    
+    padding-right: 30px;
 }   
 
-.header-gradient i {
-    color: white;
-}
-
-.header-gradient a {
-    color: white;
-    font-size: 25px;
-    padding-right: 30px;
-    padding-left:  20px;
+.nameContainer {
+    font-size: 28px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
 }

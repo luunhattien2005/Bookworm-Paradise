@@ -7,7 +7,7 @@ import SignUpForm from "./SignUpForm"
 export default function Auth() {
     const [activeTab, setActiveTab] = useState("login")
     const location = useLocation()
-    const redirectTo = location.state?.from?.pathname || "/home"
+    const redirectTo = location.state?.from || "/home"
 
     return(
         <div className={styles.background}>
