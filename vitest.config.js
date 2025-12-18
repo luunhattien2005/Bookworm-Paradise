@@ -4,6 +4,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    testTimeout: 10000, // Sets timeout to 10 seconds
+    // Helps if you have a separate folder for tests
+    include: ['test/**/*.{test,spec}.js'], 
   },
 });
