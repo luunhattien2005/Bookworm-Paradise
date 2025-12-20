@@ -13,6 +13,7 @@
     "@tiptap/extension-placeholder": "^3.13.0",
     "@tiptap/react": "^3.13.0",
     "@tiptap/starter-kit": "^3.13.0",
+    "axios": "^1.13.2",
     "dompurify": "^3.3.1",
     "prop-types": "^15.8.1",
     "react": "^19.2.0",
