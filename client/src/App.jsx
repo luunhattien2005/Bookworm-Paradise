@@ -4,10 +4,10 @@ import Auth from "./auth-interface/Auth.jsx";
 import Logout from "./auth-interface/Logout.jsx";
 import Welcome from "./auth-interface/Welcome.jsx";
 import Header from "./header-footer-interface/Header.jsx";
-import Dashboard from "./admin-interface/components/dashboard/Dashboard.jsx";
+import Dashboard from "./admin-interface/Dashboard.jsx";
 import HomePage from "./home-page-interface/HomePage.jsx";
 import ProductInfo from "./product-info-interface/ProductInfo.jsx";
-import Profile from "./Profile-page/Profile.jsx";
+import Profile from "./profile-interface/Profile.jsx";
 
 
 export default function App() {
