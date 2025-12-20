@@ -22,9 +22,9 @@ export function AuthProvider({children}) {
     }, [])
 
     // Hàm đăng nhập
-    const login = async (username, password) => { // sửa toàn bộ hàm
-        try {
-            const res = await axios.post(`${API_URL}/login`, { username, password })
+    const login = async (identity, password) => {
+    try {
+        const res = await axios.post(`${API_URL}/login`, { identity, password })
             const { token, user: userData } = res.data
             setUser(userData)
             localStorage.setItem("user", JSON.stringify(userData))
@@ -37,7 +37,7 @@ export function AuthProvider({children}) {
     }
 
     // Hàm đăng ký
-    const signup = async (formData) => { // sửa toàn bộ hàm
+    const signup = async (formData) => { 
         try {
             const res = await axios.post(`${API_URL}/register`, formData)
             return { success: true, message: res.data.message }
@@ -47,11 +47,11 @@ export function AuthProvider({children}) {
     }
 
     //Hàm đăng xuất
-    const logout = () => { // sửa
+    const logout = () => { 
         setUser(null)
         localStorage.removeItem("user")
-        localStorage.removeItem("token") // thêm
-        delete axios.defaults.headers.common['Authorization'] // thêm
+        localStorage.removeItem("token") 
+        delete axios.defaults.headers.common['Authorization'] 
     }
 
     const value = { user, loading, login, signup, logout };
