@@ -79,7 +79,7 @@ export default function Header() {
                     <i className="material-symbols-outlined" style={{fontSize: "35px"}}>shopping_cart</i>
                 </Link>
 
-                <Link to="/wishlist">
+                <Link to="/favorites">
                     <i className="fa-regular fa-heart" style={{fontSize: "30px"}}></i>
                 </Link>
 

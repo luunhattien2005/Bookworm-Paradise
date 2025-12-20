@@ -1,0 +1,104 @@
+/*------------------------ Dialog ------------------------*/
+.dialog {
+    background: linear-gradient(
+        to left,
+        #e7c56a 0%,
+        #f7e7ac 20%,
+        rgba(255,255,255,0) 100%
+    );
+}
+
+.dialog button{
+    font-size: 20px;
+    background: black;
+    border: 0;
+    border-radius: 10px;
+    padding: 5px 15px;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+    justify-self: center;
+}
+
+.dialog button:hover{
+    background: white;
+    color: black;
+    outline: black 2px solid;
+}
+
+/* --------------- Left-site ---------------*/
+.leftContainer {
+    width:  360px;
+    height: 100%;
+    border-right: solid lightgray 2px;
+}
+
+.upperContainer {
+    display: grid;
+    justify-content: center;
+    width:  360px;
+    height: auto;
+    position: relative;
+    border-bottom: solid lightgray 2px;
+}
+
+.ProfilePicture {
+    padding-bottom: 10px;
+    padding-top: 22px;
+    display: grid;
+    justify-content: center;
+
+}
+
+.ProfilePicture img {
+    width:  200px;  
+    height: 200px;
+    border-radius: 50%;
+    outline: solid 2px lightgray;
+    cursor: pointer;
+}
+
+.ProfilePicture:hover img{
+    filter: brightness(0.5);
+}
+
+.ProfilePicture i {
+    position: absolute;
+    z-index: 1;
+    top: 30%;
+    left: 43%;
+    opacity: 0;    
+    font-size: 50px; 
+    color: rgb(206, 206, 206);             
+    pointer-events: none;
+}
+
+.ProfilePicture:hover i {
+    opacity: 1;
+}
+
+.upperContainer p {
+    font-size: 32px;
+    padding: 20px 0px;
+    margin: 0px 0px;
+    font-weight: bolder;
+}
+
+.lowerContainer {
+    width:  360px;
+    height: auto;
+}
+
+.lowerContainer p {
+    margin: 0px;
+    padding-left: 6px;
+    font-size: 25px;    
+    padding-bottom: 36px;
+    padding-top: 8px;
+    cursor: pointer;
+}
+
+.lowerContainer p:hover{
+    background: lightgoldenrodyellow;
+    border-right: solid 2px lightgray;
+}
