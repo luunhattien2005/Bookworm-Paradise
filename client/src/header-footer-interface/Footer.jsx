@@ -7,13 +7,37 @@ export default function Footer() {
 
             <img src="img/PP_Large.png"></img>
 
-            <div className="footer-information">
-                <div class="footer-1st-information">
-                    
+            <div className={styles.footerInfo}>
+                <div className={styles.footerInfo1st}>
+                    <p>Nguyễn Ngọc Minh Quân</p>
+                    <a>Project Manager</a>
+
+                    <div>
+                        <span className="material-symbols-outlined">phone_in_talk</span>
+                        <p>+0 1234 56789</p>    
+                    </div>
+
+                    <div>
+                        <span className="material-symbols-outlined">globe</span>
+                        <p>www.example.com</p>
+                    </div>
+
+                    <div>
+                        <span className="material-symbols-outlined">location_on</span>
+                        <p>Some where on Earth</p>
+                    </div>  
                 </div>
 
-                <div className="footer-2nd-information">
+                <div className={styles.footerInfo2nd}>
+                    <span class="material-symbols-outlined">globe_book</span>
+                    <p>Unemployment Benefits</p>
+                    <a>Fuck you and fuck you too</a>
 
+                    <div>
+                        <i class="fa-brands fa-facebook-f"></i>
+                        <i class="fa-brands fa-youtube"></i>
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </div>
                 </div>
             </div>
 
