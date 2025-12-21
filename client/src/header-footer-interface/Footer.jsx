@@ -3,9 +3,9 @@ import styles from "./HeaderFooter.module.css"
 export default function Footer() {
     return (
         <footer className={styles.footerContainer}>
-            <img src="img/Shape_1.png"></img>
+            <img src="/img/Shape_1.png"></img>
 
-            <img src="img/PP_Large.png"></img>
+            <img src="/img/PP_Large.png"></img>
 
             <div className={styles.footerInfo}>
                 <div className={styles.footerInfo1st}>
@@ -41,7 +41,7 @@ export default function Footer() {
                 </div>
             </div>
 
-            <img src="img/Shape_2.png"></img>
+            <img src="/img/Shape_2.png"></img>
         </footer>
     )
 }
