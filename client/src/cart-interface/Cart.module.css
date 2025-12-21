@@ -1,0 +1,314 @@
+.cartContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header row styles */
+.headerRow {
+  display: grid;
+  grid-template-columns: 40px 1fr 120px 140px 120px 100px;
+  align-items: center;
+  font-size: 18px;
+  padding: 16px;
+  background: #f5f5f5;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+/* Individual item row styles */
+.itemRow {
+  display: grid;
+  grid-template-columns: 40px 1fr 120px 140px 120px 100px;
+  align-items: center;
+
+  padding: 16px;
+  margin-top: 12px;
+
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+
+  transition: box-shadow 0.2s ease;
+}
+
+.itemRow:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Product info styles */
+.productInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.productInfo img {
+  width: 150px;
+  height: 180px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.author {
+  font-size: 14px;
+  color: #777;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+}
+
+.quantity button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+
+.quantity button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.quantity input {
+  width: 40px;
+  height: 32px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-right: none;
+}
+
+.remove {
+  background: none;
+  border: none;
+  color: red;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 16px
+}
+
+/* Footer styles */
+.footer {
+    margin-left: auto;
+    width: fit-content;
+    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    margin-top: 24px;
+    padding: 16px;
+    border-top: 1px solid #eee;
+}
+
+.summary {
+    min-width: 320px;
+    font-size: 16px;
+    color: #333;
+}
+
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.summaryRow span:last-child {
+    font-weight: 500;
+}
+
+.total {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed #ddd;
+
+    font-size: 18px;
+    font-weight: 700;
+    color: #e7c66a;
+}
+
+/* Gradient Button */
+.gradientButton {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.3s ease;
+}
+
+/* gradient overlay */
+.gradientButton::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%; 
+    width: 150%; 
+    height: 100%;
+    background: linear-gradient(
+        90deg, 
+        rgba(255, 255, 255, 0.8) 0%, 
+        rgba(0, 0, 0, 0.2) 100%
+    );
+    transition: all 0.7s ease;
+    transform: skewX(-12deg); 
+}
+
+
+.gradientButton:hover::before {
+    left: 50%; 
+}
+
+.gradientButton:hover {
+    color: white;
+    background-color: black;
+}
+
+/* Checkout page styles */
+/* Info styles */
+.infoContainer {
+    margin-bottom: 24px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    transition: box-shadow 0.2s ease;
+}
+
+.infoContainer:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.infoHeader {
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.infoContainer p {
+    font-size: 16px;
+    margin: 6px 0;
+    padding-left: 16px;
+}
+
+.infoContainer label {
+    font-size: 16px;
+    margin: 6px 0px;
+    padding-left: 16px;
+}
+
+.infoContainer label input {
+    margin-right: 8px;
+}   
+
+/* Header List Checkout */
+.headerRowCheckout {
+  display: grid;
+  grid-template-columns: 1fr 120px 140px 120px;
+  align-items: center;
+  font-size: 18px;
+  padding: 16px;
+  background: #f5f5f5;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+/* Item Content Checkout */
+.itemRowCheckout {
+  display: grid;
+  grid-template-columns: 1fr 120px 140px 120px;
+  align-items: center;
+
+  padding: 16px;
+  margin-top: 12px;
+
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+
+  transition: box-shadow 0.2s ease;
+}
+
+.itemRowCheckout:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.cardForm {
+    margin-top: 12px;
+    margin-left: 16px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* Input chung */
+.cardForm input {
+    padding: 10px 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Focus effect */
+.cardForm input:focus {
+    border-color: #e7c66a;
+    box-shadow: 0 0 0 2px rgba(231, 198, 106, 0.25);
+}
+
+/* Số thẻ + tên chủ thẻ full width */
+.cardForm input:nth-child(1),
+.cardForm input:nth-child(2) {
+    grid-column: span 2;
+}
+
+/* Order note styles */
+.orderNote {
+    width: calc(100% - 32px);
+    margin: 0 16px 16px;
+    padding: 12px;
+
+    font-size: 16px;
+    font-family: inherit;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: vertical;
+
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.orderNote:focus {
+    border-color: #e7c66a;
+    box-shadow: 0 0 0 2px rgba(231, 198, 106, 0.25);
+}

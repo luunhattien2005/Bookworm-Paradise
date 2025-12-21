@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import styles from "./Home.module.css"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"
 
@@ -12,10 +13,10 @@ import medal3 from "./img/medal3.png"
 
 export default function HomePage() {
     // Nổi bật - note ảnh request từ server
-    const images_p = [
-        banner1,
-        banner2,
-        banner3
+    const images_popular = [
+        {banner: banner1, linkTo: "/product/triet-hoc-mac-lenin"},
+        {banner: banner2, linkTo: "/product/combo"},
+        {banner: banner3, linkTo: "/product/cay-cam-ngot"}
     ]
     // Index of image currently on top
     const [active, setActive] = useState(0)
@@ -52,23 +53,24 @@ export default function HomePage() {
                 </div>
                 <div id={styles.displayContent1}>
                     <div className={styles.stackWrapper}>
-                        {images_p.map((_, i) => {
+                        {images_popular.map(({banner, linkTo}, i) => {
                             // position: 0 = top, 1 = middle, 2 = back
-                            const pos = (i - active + images_p.length) % images_p.length;
+                            const pos = (i - active + images_popular.length) % images_popular.length;
                             return (
-                                <img
-                                    key={i}
-                                    src={images_p[i]}
-                                    className={`${styles.card} ${styles[`pos${pos}`]}`}
-                                    alt="featured book"
-                                />
+                                <Link to={linkTo} key={i}>
+                                    <img
+                                        src={banner}
+                                        className={`${styles.card} ${styles[`pos${pos}`]}`}
+                                        alt="featured book"
+                                    />
+                                </Link>
                             );
                         })}
                     </div>
 
 
                     <div className={styles.controls}>
-                        {images_p.map((_, i) => (
+                        {images_popular.map((_, i) => (
                             <button
                                 key={i}
                                 onClick={() => setActive(i)}

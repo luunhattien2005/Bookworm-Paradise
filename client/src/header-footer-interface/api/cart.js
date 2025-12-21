@@ -1,5 +1,6 @@
 let cart = []
 
+// i.quantity là dữ liệu do API (backend) trả về
 export async function getCart() {
   return {
     items: cart,

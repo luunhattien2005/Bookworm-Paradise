@@ -7,7 +7,8 @@ export default function PageNameHeader({ pagename }) {
         Admin: ['Admin dashbroad',''],
         Profile: ['Your profile', <i className="fa-regular fa-circle-user" style={{ fontSize: "30px"}}></i>],
         Product: ['Product info', <i className="fa-solid fa-book-open" style={{ fontSize: "30px"}}></i>],
-        Cart: ['Shopping cart',''],
+        Cart: ['Shopping cart', <i className="material-symbols-outlined" style={{fontSize: "35px"}}>shopping_cart</i>],
+        Checkout: ['Checkout', <i className="fa-solid fa-credit-card" style={{ fontSize: "30px"}}></i>],
     }
 
     return(

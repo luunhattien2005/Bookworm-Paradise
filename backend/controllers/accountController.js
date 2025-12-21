@@ -74,8 +74,11 @@ const accountController = {
                 token,
                 user: {
                     _id: user._id,
+                    email: user.email,
                     username: user.username,
                     fullname: user.fullname,
+                    phone: user.phone,
+                    address: user.address,
                     role: user.role,
                     avatar: user.avatar
                 }
