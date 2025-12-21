@@ -26,6 +26,14 @@
     outline: black 2px solid;
 }
 
+/* ------------------------ Main-site ------------------------*/
+.container {
+    border: 0;
+    display: flex;
+    justify-content: left;
+    margin:  0px;  
+}
+
 /* --------------- Left-site ---------------*/
 .leftContainer {
     width:  360px;
@@ -106,4 +114,110 @@
 .leftChoosing {
     font-weight: 700;
 }
+
+/*-------------- Right Container --------------*/
+.rightContainer {
+    height: auto;
+    width: 100%;
+    margin-left: 20px;
+}
+
+.rightContainer p {
+    font-size: 36px;
+    font-weight: 700;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+/*--- Information ---*/
+.information {
+    padding-left: 30px;
+    display: flex;
+    justify-content: left;
+}
+
+.informationFirstDiv {
+    display: grid;
+    width: 220px;
+    align-items: center;
+}
+
+.informationFirstDiv label {
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+
+.informationSecondDiv {
+    display: grid;
+    width: 84%;
+    align-items: center;
+}
+
+.informationSecondDiv input {
+    background: lightgrey;
+    border: 0;
+    border-radius: 10px; 
+    margin-bottom: 20px;
+    padding: 0px 10px;
+    height: 38px;
+    font-size: 20px;
+}
+
+.informationSecondDiv input:read-only {
+    cursor: unset;
+    outline: none;
+}
+
+.informationSecondDiv input::placeholder {
+    color: black;
+}
+
+.informationSecondDiv select {
+    background: lightgrey;
+    border: 0;
+    border-radius: 10px; 
+    margin-bottom: 20px;
+    padding: 0px 10px;
+    height: 38px;
+    font-size: 20px;
+    cursor: unset;
+    color: black;
+}
+
+.informationSecondDiv select:disabled {
+    color: black;
+    opacity: 1;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: none;
+}
+
+.informationSecondDiv option {
+    color: black
+}
+
+.informationButton {
+    display: flex;
+    justify-content: right;
+    gap: 20px  
+}
+
+.informationButton button{
+    font-size: 20px;
+    background: black;
+    border: 0;
+    border-radius: 10px;
+    padding: 5px 15px;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.informationButton button:hover{
+    background: white;
+    color: black;
+    outline: black 2px solid;
+}
+
 

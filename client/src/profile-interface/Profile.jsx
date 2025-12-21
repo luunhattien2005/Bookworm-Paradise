@@ -3,6 +3,7 @@ import { AuthContext } from '../auth-interface/AuthContext';
 import { useNavigate , useLocation} from 'react-router-dom';
 import styles from "./Profile.module.css";
 import PageNameHeader from '../header-footer-interface/PageNameHeader';
+import Information from './Infomation';
 
 export default function Profile() {
     const { user } = useContext(AuthContext)
@@ -14,8 +15,7 @@ export default function Profile() {
         { label: "Thay đổi mật khẩu", action: "password" },
         { label: "Sách yêu thích", action: "favorites" },
         { label: "Lịch sử mua hàng", action: "bills" },
-        { label: "Trung tâm thông báo", action: "notifications" },
-        { label: "This is useless button", action: null }
+        { label: "Trung tâm thông báo", action: "notifications" }
     ];
 
     function handleMenuClick(action) {
@@ -49,7 +49,7 @@ export default function Profile() {
                 <div className={styles.upperContainer}>
                     <div className={styles.ProfilePicture}>
                         <i className="material-symbols-outlined">photo_camera_front</i>
-                        <img src="/img/PP_Large.png" alt="Picture Profile here"></img>
+                        <img src={user.avatar ? user.avatar : "/img/PP_Large.png"}></img>
                     </div>
 
                     <p>{user.fullname}</p>
@@ -66,9 +66,17 @@ export default function Profile() {
                         </p>
                     ))}
 
+                    <p>This is useless button</p>
                     <p style={{color: "rgb(255, 0, 0)"}} onClick={() => { navigate("/logout")}}>Đăng xuất</p>
                 </div>
             </div>
+
+            {location.pathname ==="/profile/info" && <Information />}
+
+
+
+
+
         </main>
 
 
