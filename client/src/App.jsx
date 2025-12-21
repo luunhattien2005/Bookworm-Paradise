@@ -45,9 +45,33 @@ export default function App() {
               </ProtectedRoute>
             } />
 
-          <Route path="/profile" element={
+          <Route path="/profile/info" element={
               <ProtectedRoute>
-                <Profile/>
+                <Profile />
+              </ProtectedRoute>
+            } />
+
+          <Route path="/profile/password" element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
+
+          <Route path="/profile/favorites" element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
+
+          <Route path="/profile/bills" element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
+
+          <Route path="/profile/notifications" element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             } />
       </Routes>
