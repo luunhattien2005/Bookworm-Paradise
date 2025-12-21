@@ -13,7 +13,30 @@ export default function Cart() {
 
   if (isLoading) return <p>Loading cart...</p>
   if (!data || data.items.length === 0)
-    return <p>Giỏ hàng trống</p>
+    return (
+      <>
+        <PageNameHeader pagename="Cart" />
+
+        <main className={styles.cartContainer}>
+          <div className={styles.emptyCart}>
+            <img
+              src="img/empty-cart.jpg"
+              alt="Empty cart"
+              className={styles.emptyImage}
+            />
+            <h2>Giỏ hàng của bạn đang trống</h2>
+            <p>Hãy chọn thêm sách để tiếp tục mua sắm nhé.</p>
+
+            <Link to="/home" className={styles.backHome}>
+              Quay về trang chủ
+            </Link>
+          </div>
+ 
+        </main>
+
+      
+      </>
+    )
 
   useEffect(() => {
     if (data?.items) {

@@ -19,7 +19,7 @@ export default function Footer() {
 
                     <div>
                         <span className="material-symbols-outlined">globe</span>
-                        <p>www.example.com</p>
+                        <p>bookworm-paradise.vercel.app</p>
                     </div>
 
                     <div>
