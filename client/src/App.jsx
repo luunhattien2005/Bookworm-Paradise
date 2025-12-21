@@ -8,6 +8,7 @@ import Dashboard from "./admin-interface/Dashboard.jsx";
 import HomePage from "./home-page-interface/HomePage.jsx";
 import ProductInfo from "./product-info-interface/ProductInfo.jsx";
 import Profile from "./profile-interface/Profile.jsx";
+import Footer from "./header-footer-interface/Footer.jsx";
 
 
 export default function App() {
@@ -35,8 +36,8 @@ export default function App() {
                 <Profile/>
               </ProtectedRoute>
             } />
-          
       </Routes>
+      {!hideHeaderFooterRoutes.includes(location.pathname) && <Footer />}
       
     </>
   )

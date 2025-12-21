@@ -185,3 +185,22 @@
     align-items: center;
     gap: 10px;
 }
+
+/*------------------------ Footer Section ------------------------*/
+.footerContainer {
+    display: flex;
+    background-color: #e5f2ff;
+    justify-content: space-between;
+    position: relative;
+}
+
+.footerContainer img {
+    height: 306px;
+}
+
+.footerContainer img[src="img/PP_Large.png"]{
+    height: 180px;
+    position: absolute;
+    top:  62px;
+    left: 63px
+}
