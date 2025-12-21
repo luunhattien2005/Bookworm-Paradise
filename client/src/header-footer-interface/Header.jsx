@@ -13,7 +13,7 @@ export default function Header() {
     let profileIcon;
     if (!user) {
         profileIcon = (
-            <Link to="/profile">
+            <Link to="/profile/info">
                 <i className="material-symbols-outlined" style={{fontSize: "33px"}}>
                     account_circle
                 </i>
@@ -21,7 +21,7 @@ export default function Header() {
         );
     } else {
         profileIcon = (
-            <Link to="/profile">
+            <Link to="/profile/info">
                 <button type="button">
                     <img src={user.avatar} />
                 </button>
@@ -75,7 +75,7 @@ export default function Header() {
 
 
             <div className={styles.icons}>
-                <Link to="/notifications">
+                <Link to="/profile/notifications">
                     <i className="fa-regular fa-bell" style={{fontSize: "30px"}}></i>
                 </Link>
 
@@ -84,7 +84,7 @@ export default function Header() {
                     {cartCount > 0 && <span className={styles.cartBadge}>{cartCount}</span>}
                 </Link>
 
-                <Link to="/favorites">
+                <Link to="/profile/favorites">
                     <i className="fa-regular fa-heart" style={{fontSize: "30px"}}></i>
                 </Link>
 

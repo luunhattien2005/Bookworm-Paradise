@@ -215,7 +215,7 @@
     height: 306px;
 }
 
-.footerContainer img[src="img/PP_Large.png"]{
+.footerContainer img[src="/img/PP_Large.png"]{
     height: 180px;
     position: absolute;
     top:  62px;
