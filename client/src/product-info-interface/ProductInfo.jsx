@@ -5,10 +5,23 @@ import DOMPurify from "dompurify"
 import styles from "./Product.module.css"
 import { AuthContext } from "../auth-interface/AuthContext"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"
+
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { addToCart } from "../header-footer-interface/api/cart"
+
 import YourRating from "./YourRating"
 import RatingItem from "./RatingItem"
 
 export default function ProductInfo() {
+
+    const queryClient = useQueryClient()
+
+    const addCartMutation = useMutation({
+        mutationFn: addToCart,
+        onSuccess: () => {
+            queryClient.invalidateQueries(["cart"])
+        }
+    })
 
     const { slug } = useParams()
     const [product, setProduct] = useState(null)
@@ -146,7 +159,12 @@ export default function ProductInfo() {
 
                         <p className={styles.informationPrice}>{product.price}VND</p>
                         
-                        <button className={styles.informationAdd}>Add to cart</button>
+                        <button 
+                            className={styles.informationAdd}
+                            onClick={() => addCartMutation.mutate(product)}
+                        >
+                                Add to cart
+                        </button>
 
                         <div className={styles.informationDetails}>
                             <p>Thông tin chi tiết</p>

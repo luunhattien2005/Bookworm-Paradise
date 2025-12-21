@@ -7,6 +7,7 @@ import Header from "./header-footer-interface/Header.jsx";
 import Dashboard from "./admin-interface/Dashboard.jsx";
 import HomePage from "./home-page-interface/HomePage.jsx";
 import ProductInfo from "./product-info-interface/ProductInfo.jsx";
+import Cart from "./cart-interface/Cart.jsx";
 import Profile from "./profile-interface/Profile.jsx";
 import Footer from "./header-footer-interface/Footer.jsx";
 
@@ -30,6 +31,12 @@ export default function App() {
           <Route path="/home" element={<HomePage />} />
 
           <Route path="/product/:slug" element={<ProductInfo  />} />
+
+          <Route path="/cart" element={
+              // <ProtectedRoute>
+                <Cart/>
+              // </ProtectedRoute>
+            } />
 
           <Route path="/profile" element={
               <ProtectedRoute>

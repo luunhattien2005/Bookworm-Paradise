@@ -1,10 +1,14 @@
 import { useState, useContext } from "react"
 import { Link } from "react-router-dom"
 import { AuthContext } from "../auth-interface/AuthContext"
+import { useCart } from "./hooks/useCart"
+
 import styles from "./HeaderFooter.module.css"
 
 export default function Header() {
     const { user } = useContext(AuthContext)
+    const { data: cart } = useCart()
+    const cartCount = cart?.totalItems || 0
 
     let profileIcon;
     if (!user) {
@@ -75,8 +79,9 @@ export default function Header() {
                     <i className="fa-regular fa-bell" style={{fontSize: "30px"}}></i>
                 </Link>
 
-                <Link to="/cart">
+                <Link to="/cart" className={styles.cartIcon}>
                     <i className="material-symbols-outlined" style={{fontSize: "35px"}}>shopping_cart</i>
+                    {cartCount > 0 && <span className={styles.cartBadge}>{cartCount}</span>}
                 </Link>
 
                 <Link to="/favorites">
