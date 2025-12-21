@@ -46,31 +46,24 @@ export default function SignUpForm({ redirectTo }) {
 
     const navigate = useNavigate()
     const { signup } = useContext(AuthContext)
-    const [error, setError] = useState("") // thêm
+    const [error, setError] = useState("") 
 
-    const handleSubmit = async(e) => { // thêm async
+    const handleSubmit = async(e) => {
         e.preventDefault()
-        setError("") // thêm
+        if (password !== confirmPassword) return alert("Mật khẩu không khớp")
 
-        if (password !== confirmPassword) {
-            alert("Mật khẩu không khớp")
-            return
-        }
-
-        // sửa: Gửi object chứa các trường backend cần
         const result = await signup({ 
-            username: email, // Map email vào trường username của backend
+            username: username, // thêm: lấy từ ô Tên đăng nhập
+            email: email,       // thêm: lấy từ ô Email
             password: password,
-            fullname: username, // Tạm lấy username làm fullname
-            phone: "", // thêm: để trống nếu form chưa có ô này
-            address: "" // thêm: để trống nếu form chưa có ô này
+            fullname: username  // thêm: tạm thời dùng username làm fullname
         })
 
-        if (result.success) { // thêm
-            alert("Đăng ký thành công! Hãy đăng nhập.") // thêm
-            window.location.reload() // thêm: để quay về tab login
+        if (result.success) {
+            alert("Đăng ký thành công!")
+            window.location.reload()
         } else {
-            setError(result.message) // thêm
+            setError(result.message)
         }
     }
 

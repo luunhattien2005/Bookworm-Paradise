@@ -22,16 +22,15 @@ export default function LoginForm({ redirectTo }) {
     
     const navigate = useNavigate()
     const { login } = useContext(AuthContext)
-    const handleSubmit = async(e) => { // thêm async
+    const handleSubmit = async(e) => { 
         e.preventDefault()
-        setError("") // thêm: xóa lỗi cũ trước khi thử lại
-        
-        const result = await login(identity, password) // sửa: đợi kết quả từ API
+        setError("") 
+        const result = await login(identity, password) 
 
-        if (result.success) { // thêm: chỉ chuyển trang khi thành công
+        if (result.success) { //  chỉ chuyển trang khi thành công
             navigate(redirectTo, {replace: true})
         } else {
-            setError(result.message) // thêm: hiển thị lỗi từ backend (ví dụ: "Tài khoản bị khóa")
+            setError(result.message) // hiển thị lỗi từ backend (ví dụ: "Tài khoản bị khóa")
         }
     }
 

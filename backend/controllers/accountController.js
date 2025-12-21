@@ -15,21 +15,25 @@ const accountController = {
 
     // 1. Đăng ký
     register: async (req, res) => {
-        try {
-            const { username, password, fullname, phone, address } = req.body;
+    try {
+        const { username, email, password, fullname, phone, address } = req.body; 
 
-            // Kiểm tra trùng email 
-            const existingUser = await Account.findOne({ username });
-            if (existingUser) return res.status(400).json({ message: "Email này đã tồn tại!" });
+        // Kiểm tra xem username HOẶC email đã tồn tại chưa
+        const existingUser = await Account.findOne({ 
+            $or: [{ username }, { email }] 
+        });
 
-            const newAccount = new Account({
-                username, 
-                password, 
-                fullname, 
-                phone, 
-                address,
-                role: 'customer' // Mặc định là khách
-            });
+        if (existingUser) {
+            const message = existingUser.username === username 
+                ? "Tên đăng nhập đã tồn tại!" 
+                : "Email đã tồn tại!";
+            return res.status(400).json({ message });
+        }
+
+        const newAccount = new Account({
+            username, email, password, fullname, phone, address, // sửa
+            role: 'customer'
+        });
 
             await newAccount.save();
             res.status(201).json({ message: "Đăng ký thành công!", account: newAccount });
@@ -41,10 +45,13 @@ const accountController = {
     // 2. Đăng nhập 
     login: async (req, res) => {
         try {
-            const { username, password } = req.body;
-            const user = await Account.findOne({ username });
+            const { identity, password } = req.body; 
+
+            // Tìm user bằng username HOẶC email
+            const user = await Account.findOne({ 
+                $or: [{ username: identity }, { email: identity }] 
+            });
             
-            // 1. Check tài khoản tồn tại
             if (!user) return res.status(404).json({ message: "Tài khoản không tồn tại" });
             
             // 2. Check mật khẩu
