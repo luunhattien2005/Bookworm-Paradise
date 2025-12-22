@@ -1,0 +1,367 @@
+.container {
+    min-height: 100vh;
+    background: #f5f5f5;
+}
+
+.header {
+    background: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.logout {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.adminInterface {
+    background: #f4d03f;
+    text-align: center;
+    padding: 0.5rem;
+    font-weight: bold;
+}
+
+.nav {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.nav button {
+    background: #f0f0f0;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.nav button:hover {
+    background: #e0e0e0;
+}
+
+.nav button.active {
+    background: #f4d03f;
+}
+
+.content {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Search Bar */
+.searchBar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+.search {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+.searchButton {
+    padding: 0.75rem 1.5rem;
+    background: white;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.addButton {
+    padding: 0.75rem 1.5rem;
+    background: #f4d03f;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Table */
+.table {
+    width: 100%;
+    background: white;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background: #f0f0f0;
+    font-weight: bold;
+}
+
+.table tr:hover {
+    background: #f9f9f9;
+}
+
+.editIcon,
+.deleteIcon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin: 0 0.25rem;
+}
+
+.statusActive {
+    background: #f4d03f;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.actionButton {
+    background: #f4d03f;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.deleteButton {
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Analytics */
+.analyticsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.metricCard {
+    background: white;
+    padding: 2rem;
+    border: 2px solid #333;
+    text-align: center;
+}
+
+.metricCard h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+}
+
+.metricValue {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #f4d03f;
+    margin: 0;
+}
+
+/* Order Edit */
+.orderEditContainer {
+    background: white;
+    padding: 2rem;
+}
+
+.orderEditHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #333;
+}
+
+.orderEditHeader h2 {
+    margin: 0;
+}
+
+.orderActions {
+    display: flex;
+    gap: 1rem;
+}
+
+.updateButton {
+    background: #f4d03f;
+    border: none;
+    padding: 0.75rem 2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.backButton {
+    background: white;
+    border: 2px solid #333;
+    padding: 0.75rem 2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.orderDetails {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.orderInfo p {
+    margin: 0.5rem 0;
+}
+
+.paymentMethod {
+    margin-bottom: 2rem;
+}
+
+.paymentMethod h3 {
+    margin-bottom: 0.5rem;
+}
+
+.statusSection h3 {
+    margin-bottom: 1rem;
+}
+
+.radioGroup {
+    display: flex;
+    gap: 2rem;
+}
+
+.radioGroup label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.radioGroup input[type="radio"] {
+    width: 20px;
+    height: 20px;
+}
+
+/* Product Form */
+.productFormContainer {
+    background: white;
+    padding: 2rem;
+}
+
+.formHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #333;
+}
+
+.formHeader h2 {
+    margin: 0;
+}
+
+.formActions {
+    display: flex;
+    gap: 1rem;
+}
+
+.submitButton {
+    background: #f4d03f;
+    border: none;
+    padding: 0.75rem 2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.productForm {
+    display: grid;
+    gap: 2rem;
+}
+
+.imageUpload {
+    display: flex;
+    justify-content: center;
+}
+
+.imagePlaceholder {
+    width: 200px;
+    height: 200px;
+    border: 2px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f9f9f9;
+}
+
+.imagePlaceholder span {
+    font-size: 3rem;
+}
+
+.imagePlaceholder p {
+    margin: 0.5rem 0 0 0;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup label {
+    font-weight: bold;
+}
+
+.formGroup input,
+.formGroup textarea {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.formGroup textarea {
+    resize: vertical;
+}
+
+.active {
+    background: #f4d03f;
+}
+
+.completed {
+    color: green;
+    font-weight: bold;
+}
+
+.processing {
+    color: orange;
+    font-weight: bold;
+}
+
+.pending {
+    color: red;
+    font-weight: bold;
+}
