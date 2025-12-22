@@ -11,7 +11,7 @@
     "nodemailer": "^7.0.11"
   },
   "scripts": {
-    "start": "node backend\\server.js",
+    "start": "node server.js",
     "test": "vitest run",
     "test:watch": "vitest"
   },

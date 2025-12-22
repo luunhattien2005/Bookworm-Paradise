@@ -14,7 +14,7 @@ import Footer from "./header-footer-interface/Footer.jsx";
 import OrderEdit from "./admin-interface/OrderEdit"
 import ProductAdd from "./admin-interface/ProductAdd"
 import ProductEdit from "./admin-interface/ProductEdit"
-import Navigate from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export default function App() {
   const location = useLocation()
