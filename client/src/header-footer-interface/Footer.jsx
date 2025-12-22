@@ -29,14 +29,14 @@ export default function Footer() {
                 </div>
 
                 <div className={styles.footerInfo2nd}>
-                    <span class="material-symbols-outlined">globe_book</span>
+                    <span className="material-symbols-outlined">globe_book</span>
                     <p>Unemployment Benefits</p>
                     <a>Fuck you and fuck you too</a>
 
                     <div>
-                        <i class="fa-brands fa-facebook-f"></i>
-                        <i class="fa-brands fa-youtube"></i>
-                        <i class="fa-brands fa-x-twitter"></i>
+                        <i className="fa-brands fa-facebook-f"></i>
+                        <i className="fa-brands fa-youtube"></i>
+                        <i className="fa-brands fa-x-twitter"></i>
                     </div>
                 </div>
             </div>

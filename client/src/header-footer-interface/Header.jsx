@@ -7,8 +7,8 @@ import styles from "./HeaderFooter.module.css"
 
 export default function Header() {
     const { user } = useContext(AuthContext)
-    const { data: cart } = useCart()
-    const cartCount = cart?.items?.length || 0
+    // const { data: cart } = useCart() // --> some problems at this lines
+    const cartCount = 0              // cart?.items?.length || 0
 
     let profileIcon;
     if (!user) {
