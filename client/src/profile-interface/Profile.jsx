@@ -4,6 +4,7 @@ import { useNavigate , useLocation} from 'react-router-dom';
 import styles from "./Profile.module.css";
 import PageNameHeader from '../header-footer-interface/PageNameHeader';
 import Information from './Infomation';
+import ChangePassword from './ChangePassword';
 
 export default function Profile() {
     const { user } = useContext(AuthContext)
@@ -72,9 +73,7 @@ export default function Profile() {
             </div>
 
             {location.pathname ==="/profile/info" && <Information />}
-
-
-
+            {location.pathname ==="/profile/password" && <ChangePassword />}
 
 
         </main>
