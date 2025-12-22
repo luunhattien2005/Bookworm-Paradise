@@ -1,4 +1,3 @@
-// Reviews: add, list by book, delete
 import api from './axios';
 
 export async function addReview({ userId, bookId, rating, comment }) {

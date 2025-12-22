@@ -1,7 +1,8 @@
-// Cart API: get cart, add, update, remove, clear
 import api from './axios';
 
+// getCart expects userId (backend routes are /api/carts/:userId)
 export async function getCart(userId) {
+  if (!userId) return { items: [], totalAmount: 0 };
   const res = await api.get(`/api/carts/${userId}`);
   return res.data;
 }

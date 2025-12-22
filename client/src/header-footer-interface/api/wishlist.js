@@ -1,7 +1,7 @@
-// Wishlist: get, add, remove
 import api from './axios';
 
 export async function getWishlist(userId) {
+  if (!userId) return { books: [] };
   const res = await api.get(`/api/wishlists/${userId}`);
   return res.data;
 }

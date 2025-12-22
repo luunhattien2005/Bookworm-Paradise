@@ -1,6 +1,6 @@
-// Book API: search, get, create, update, delete
 import api from './axios';
 
+// q = search text (title/author) OR other params
 export async function searchBooks(q, { limit = 20, page = 1, tag, author } = {}) {
   const params = { q, limit, page };
   if (tag) params.tag = tag;
@@ -14,7 +14,7 @@ export async function getBook(id) {
   return res.data;
 }
 
-// create/update accept FormData for file uploads
+// create/update use FormData (for file upload)
 export async function createBook(formData, token) {
   const res = await api.post('/api/books', formData, {
     headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` },

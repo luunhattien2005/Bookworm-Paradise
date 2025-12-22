@@ -1,8 +1,6 @@
-// Orders: create from cart, list, update status (admin)
 import api from './axios';
 
 export async function createOrder(userId, payload) {
-  // payload: { paymentMethod, shippingAddress, deliveryNote }
   const res = await api.post(`/api/orders/${userId}/create`, payload);
   return res.data;
 }

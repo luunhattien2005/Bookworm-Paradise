@@ -1,4 +1,3 @@
-// Account API: register, login, getMe, updateProfile
 import api from './axios';
 
 function authHeader(token) {
@@ -6,13 +5,11 @@ function authHeader(token) {
 }
 
 export async function registerAccount(payload) {
-  // payload: { email, username, password, fullname, phone?, address? }
   const res = await api.post('/api/accounts/register', payload);
   return res.data;
 }
 
 export async function loginAccount(payload) {
-  // payload: { emailOrUsername, password }
   const res = await api.post('/api/accounts/login', payload);
   return res.data;
 }
