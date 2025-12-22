@@ -11,10 +11,10 @@ import Cart from "./cart-interface/Cart.jsx";
 import CheckOut from "./cart-interface/CheckOut.jsx";
 import Profile from "./profile-interface/Profile.jsx";
 import Footer from "./header-footer-interface/Footer.jsx";
-import Dashboard from "./admin-interface/Dashboard"
 import OrderEdit from "./admin-interface/OrderEdit"
 import ProductAdd from "./admin-interface/ProductAdd"
 import ProductEdit from "./admin-interface/ProductEdit"
+import Navigate from "react-router-dom";
 
 export default function App() {
   const location = useLocation()
@@ -77,7 +77,7 @@ export default function App() {
             <Profile />
           </ProtectedRoute>
         } />
-        <Route path="/" element={<Navigate to="/admin/dashboard" />} />
+        {/*<Route path="/" element={<Navigate to="/admin/dashboard" />} />*/}
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/orders/:id/edit" element={<OrderEdit />} />
         <Route path="/admin/products/add" element={<ProductAdd />} />
