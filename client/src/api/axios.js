@@ -11,4 +11,12 @@ const api = axios.create({
   withCredentials: false,
 });
 
+api.interceptors.request.use(config => {
+  console.log('[API REQUEST]', config.method?.toUpperCase(), config.baseURL + config.url)
+  console.log('Headers:', config.headers)
+  console.log('Data:', config.data)
+  return config
+})
+
+
 export default api;
