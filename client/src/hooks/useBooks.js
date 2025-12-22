@@ -1,5 +1,5 @@
 import { useQuery, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import * as booksApi from '../../api/books';
+import * as booksApi from '../api/book';
 
 /**
  * useSearchBooks, useInfiniteBooks, useGetBook

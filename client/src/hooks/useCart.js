@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getCart as apiGetCart } from '../../api/carts';
-import { AuthContext } from '../../auth-interface/AuthContext.jsx';
+import { getCart as apiGetCart } from '../api/cart';
+import { AuthContext } from '../auth-interface/AuthContext.jsx';
 
 // returns { data, isLoading, error } like react-query
 export function useCart() {

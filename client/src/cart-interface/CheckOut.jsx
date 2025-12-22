@@ -1,5 +1,5 @@
 import { useContext, useMemo, useState } from "react"
-import { useCart } from "../header-footer-interface/hooks/useCart"
+import { useCart } from "../hooks/useCart"
 import { AuthContext } from "../auth-interface/AuthContext"
 import styles from "../cart-interface/Cart.module.css"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"

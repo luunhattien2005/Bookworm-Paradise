@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import * as reviewsApi from '../../api/reviews';
+import * as reviewsApi from '../api/review';
 
 /**
  * useReviewsQuery(bookId)

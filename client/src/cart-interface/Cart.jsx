@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react"
 import { Link } from "react-router-dom"
-import { useCart } from "../header-footer-interface/hooks/useCart"
+import { useCart } from "../hooks/useCart"
 import styles from "./Cart.module.css"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"
 

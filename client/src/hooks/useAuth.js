@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import * as accountsApi from '../../api/accounts';
+import * as accountsApi from '../api/account';
 
 /**
  * useLogin / useRegister / useMe

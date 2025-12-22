@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import * as wishlistApi from '../../api/wishlists';
+import * as wishlistApi from '../api/wishlist';
 
 /**
  * useWishlistQuery(userId)

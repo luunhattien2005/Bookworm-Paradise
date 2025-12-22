@@ -7,7 +7,7 @@ import { AuthContext } from "../auth-interface/AuthContext"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"
 
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { addToCart } from "../header-footer-interface/api/cart"
+import { addToCart } from "../api/cart"
 
 import YourRating from "./YourRating"
 import RatingItem from "./RatingItem"

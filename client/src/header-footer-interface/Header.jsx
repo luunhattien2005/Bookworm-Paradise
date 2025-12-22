@@ -1,7 +1,7 @@
 import { useState, useContext } from "react"
 import { Link } from "react-router-dom"
 import { AuthContext } from "../auth-interface/AuthContext"
-import { useCart } from "./hooks/useCart"
+import { useCart } from "../hooks/useCart"
 
 import styles from "./HeaderFooter.module.css"
 
