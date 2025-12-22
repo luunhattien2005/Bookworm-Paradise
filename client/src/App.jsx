@@ -11,72 +11,81 @@ import Cart from "./cart-interface/Cart.jsx";
 import CheckOut from "./cart-interface/CheckOut.jsx";
 import Profile from "./profile-interface/Profile.jsx";
 import Footer from "./header-footer-interface/Footer.jsx";
-
+import Dashboard from "./admin-interface/Dashboard"
+import OrderEdit from "./admin-interface/OrderEdit"
+import ProductAdd from "./admin-interface/ProductAdd"
+import ProductEdit from "./admin-interface/ProductEdit"
 
 export default function App() {
   const location = useLocation()
   const hideHeaderFooterRoutes = ["/", "/auth"]
   return (
     <>
-      
-      {!hideHeaderFooterRoutes.includes(location.pathname) && <Header />}        
+
+      {!hideHeaderFooterRoutes.includes(location.pathname) && <Header />}
       <Routes>
-          <Route path="/" element={<Welcome />} />
+        <Route path="/" element={<Welcome />} />
 
-          <Route path="/ad" element={<Dashboard />} />
+        <Route path="/ad" element={<Dashboard />} />
 
-          <Route path="/auth" element={<Auth />} />
+        <Route path="/auth" element={<Auth />} />
 
-          <Route path="/logout" element={<Logout />} />
-          
-          <Route path="/home" element={<HomePage />} />
+        <Route path="/logout" element={<Logout />} />
 
-          <Route path="/product/:slug" element={<ProductInfo  />} />
+        <Route path="/home" element={<HomePage />} />
 
-          <Route path="/cart" element={
-              <ProtectedRoute>
-                <Cart/>
-              </ProtectedRoute>
-            } />
+        <Route path="/product/:slug" element={<ProductInfo />} />
 
-          <Route path="/Checkout" element={
-              <ProtectedRoute>
-                <CheckOut/>
-              </ProtectedRoute>
-            } />
+        <Route path="/cart" element={
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        } />
 
-          <Route path="/profile/info" element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } />
+        <Route path="/Checkout" element={
+          <ProtectedRoute>
+            <CheckOut />
+          </ProtectedRoute>
+        } />
 
-          <Route path="/profile/password" element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } />
+        <Route path="/profile/info" element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } />
 
-          <Route path="/profile/favorites" element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } />
+        <Route path="/profile/password" element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } />
 
-          <Route path="/profile/bills" element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } />
+        <Route path="/profile/favorites" element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } />
 
-          <Route path="/profile/notifications" element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } />
+        <Route path="/profile/bills" element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } />
+
+        <Route path="/profile/notifications" element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } />
+        <Route path="/" element={<Navigate to="/admin/dashboard" />} />
+        <Route path="/admin/dashboard" element={<Dashboard />} />
+        <Route path="/admin/orders/:id/edit" element={<OrderEdit />} />
+        <Route path="/admin/products/add" element={<ProductAdd />} />
+        <Route path="/admin/products/:id/edit" element={<ProductEdit />} />
+        <Route path="*" element={<Navigate to="/admin/dashboard" />} />
       </Routes>
       {!hideHeaderFooterRoutes.includes(location.pathname) && <Footer />}
-      
+
     </>
   )
 }
