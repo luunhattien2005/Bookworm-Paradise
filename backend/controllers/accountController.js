@@ -2,6 +2,32 @@ const Account = require('../models/Account');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
+function generatePassword() {
+  const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  const normal = "abcdefghijklmnopqrstuvwxyz"
+  const numbers = "0123456789"
+  const special = "@$!%*?&"
+
+  const chars = upper + numbers + normal + special
+  const length = Math.floor(Math.random() * 9) + 6
+
+  let password =
+    upper[Math.floor(Math.random() * upper.length)] +
+    numbers[Math.floor(Math.random() * numbers.length)] +
+    normal[Math.floor(Math.random() * normal.length)] +
+    special[Math.floor(Math.random() * special.length)]
+
+  for (let i = password.length; i < length; i++) {
+    password += chars[Math.floor(Math.random() * chars.length)]
+  }
+
+  return password
+    .split('')
+    .sort(() => Math.random() - 0.5)
+    .join('')
+}
+
+
 // Cấu hình gửi mail (Lấy từ file .env)
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -36,7 +62,7 @@ const accountController = {
         });
 
             await newAccount.save();
-            res.status(201).json({ message: "Đăng ký thành công!", account: newAccount });
+            res.status(201).json({ message: "Đăng ký thành công! Vui lòng đăng nhập lại.", account: newAccount });
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
@@ -93,11 +119,12 @@ const accountController = {
         try {
             const { email } = req.body;
             // username chính là email
-            const user = await Account.findOne({ username: email });
+            const user = await Account.findOne({ email: email });
             if (!user) return res.status(404).json({ message: "Email chưa đăng ký!" });
 
             // Tạo mật khẩu mới ngẫu nhiên 6 ký tự
-            const newPassword = Math.random().toString(36).slice(-6);
+            // const newPassword = Math.random().toString(36).slice(-6);
+            const newPassword = generatePassword();
             user.password = newPassword;
             
             // Dọn dẹp token cũ nếu có
@@ -116,6 +143,7 @@ const accountController = {
 
             res.json({ message: "Đã gửi mật khẩu mới vào email của bạn!" });
         } catch (err) {
+            console.error("FORGOT PASSWORD ERROR:", err)
             res.status(500).json({ message: "Lỗi gửi mail: " + err.message });
         }
     },
@@ -132,7 +160,23 @@ const accountController = {
         }
     },
 
-    // 5. Xem profile
+    // 5.1. Lấy thông tin bản thân (đã đăng nhập)
+    getMe: async (req, res) => {
+    try {
+        const account = await Account.findById(req.user.id).select('-password');
+
+        if (!account) {
+        return res.status(404).json({ message: "User không tồn tại" });
+        }
+
+        res.json(account);
+    } catch (err) {
+        console.error('GET ME ERROR:', err);
+        res.status(500).json({ message: err.message });
+    }
+    },
+
+    // 5.2. Xem profile
     getAccountById: async (req, res) => {
         try {
             const account = await Account.findById(req.params.id).select('-password');

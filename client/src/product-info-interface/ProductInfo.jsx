@@ -1,108 +1,111 @@
 import { useState, useEffect, useContext } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { useParams } from "react-router-dom"
+import { useGetBookBySlug } from "../hooks/useBooks"
+
 import DOMPurify from "dompurify"
 import styles from "./Product.module.css"
 import { AuthContext } from "../auth-interface/AuthContext"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"
 
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { addToCart } from "../api/cart"
+// import { useMutation, useQueryClient } from "@tanstack/react-query"
+// import { addToCart } from "../api/cart"
 
 import YourRating from "./YourRating"
 import RatingItem from "./RatingItem"
 
 export default function ProductInfo() {
 
-    const queryClient = useQueryClient()
+    // const queryClient = useQueryClient()
 
-    const addCartMutation = useMutation({
-        mutationFn: addToCart,
-        onSuccess: () => {
-            queryClient.invalidateQueries(["cart"])
-        }
-    })
+    // const addCartMutation = useMutation({
+    //     mutationFn: addToCart,
+    //     onSuccess: () => {
+    //         queryClient.invalidateQueries(["cart"])
+    //     }
+    // })
 
     const { slug } = useParams()
-    const [product, setProduct] = useState(null)
 
+    const {
+        data: product,
+        isLoading,
+        isError,
+        error
+    } = useGetBookBySlug(slug);
+
+    // // inject sản phẩm giả
     // useEffect(() => {
-    //     fetch(`/api/products/${slug}`)
-    //         .then(res => res.json())
-    //         .then(data => setProduct(data));
-    // }, [slug]);
+    //     // fake API
+    //     let fake_product;
+    //     if (slug !== "triet-hoc-mac-lenin") {
+    //         fake_product = {
+    //             name: "Nếu Gặp Lại Em Trên Ngọn Đồi Hoa Nở",
+    //             author: "Natsue Siomi",
+    //             slug: slug,
+    //             price: 120000,
+    //             stockQuantity: 10,
+    //             imgURL: "https://cdn1.fahasa.com/media/catalog/product/n/_/n_u-g_p-l_i-em-tr_n-ng_n-_i-hoa-n_.jpg",
+    //             id: 8935325018343,
+    //             provider: "AZ Vietnam",
+    //             translator: "Hoàng Duy Khang",
+    //             publisher: "NXB Thế Giới",
+    //             publicationYear: 2023,
+    //             weight: 330,
+    //             size: "18 x 13 x 1.5 cm",
+    //             pages: 312,
+    //             type: "Bìa mềm",
+    //             desc: `
+    //                 <p>Nếu Gặp Lại Em Trên Ngọn Đồi Hoa Nở</p>
+    //                 <p>Mối lương duyên vượt thời gian. Dù không bao giờ gặp lại, kỷ niệm vẫn khắc sâu trong trái tim.</p>
+    //                 <p>Yuri, một nữ sinh lớp 8, đã trải qua những ngày tháng chán ghét trường lớp và người mẹ của mình. Ngày nọ, sau khi cãi nhau với mẹ, cô bé quyết định bỏ nhà ra đi. Lần tiếp theo mở mắt, Yuri phát hiện bản thân đã xuyên không đến Nhật Bản 70 năm trước. Cô được một chàng trai tên Akira tình cờ đi ngang qua cứu giúp. Sau những ngày tháng kề bên, Yuri dần đem lòng cảm mến người con trai này. Tuy nhiên, là một phi công cảm tử, Akira có nhiệm vụ phải bay đến chiến trường và xả thân vì quốc gia... Cuối cùng Yuri cũng biết được tình cảm thật sự mà Akira dành cho mình.</p>
+    //                 `
+    //         };
+    //     } else {
+    //         fake_product = {
+    //             name: "Triết học Mác Lênin",
+    //             author: "Mác Lênin",
+    //             slug: slug,
+    //             price: 80000,
+    //             stockQuantity: 3,
+    //             imgURL: "https://cdn1.fahasa.com/media/catalog/product/8/9/8935279153367.jpg",
+    //             id: 8935235226272,
+    //             provider: "Nhã Nam",
+    //             translator: "Không",
+    //             publisher: "NXB Hội nhà văn",
+    //             publicationYear: 2020,
+    //             weight: 220,
+    //             size: "20.5 x 13 cm",
+    //             pages: 227,
+    //             type: "Bìa mềm",
+    //             desc: `
+    //                 <p>NHÀ GIẢ KIM - HÀNH TRÌNH ĐI TÌM KHO BÁU HAY CUỘC HÀNH TRÌNH TÌM KIẾM CHÍNH MÌNH</p>
+    //                 <p>"Nhà Giả Kim" không đơn thuần là một cuốn tiểu thuyết, mà là bản đồ dẫn lối đến giấc mơ, khao khát và định mệnh của mỗi con người. Câu chuyện về chàng trai chăn cừu Santiago không chỉ mang đến những cuộc phiêu lưu hấp dẫn, mà còn mở ra nhiều tầng triết lý sâu sắc về cuộc sống.</p>
+    //                 <ul>VỀ TÁC GIẢ: Paulo Coelho
+    //                     <li>Là nhà văn người Brazil, bậc thầy kể chuyện với lối viết đậm chất triết lý.</li>
+    //                     <li>Ông là tác giả của nhiều tác phẩm truyền cảm hứng, trong đó "Nhà Giả Kim" là cuốn sách nổi tiếng nhất, được dịch ra hơn 80 ngôn ngữ và bán hàng triệu bản trên toàn thế giới.</li>
+    //                     <li>Các tác phẩm khác của ông như "Veronika quyết chết", "Nhà tiên tri" hay "Phù thủy thành phố Portobello" cũng để lại dấu ấn sâu sắc trong lòng độc giả.</li>
+    //                 </ul>
+    //                 <ul>VỀ DỊCH GIẢ: Lê Chu Cầu
+    //                     <li>Là dịch giả có nhiều đóng góp trong việc đưa văn học nước ngoài đến với độc giả Việt Nam.</li>
+    //                     <li>Ông đã chuyển ngữ nhiều tác phẩm kinh điển, trong đó bản dịch "Nhà Giả Kim" của ông được đánh giá cao bởi sự mượt mà, giàu cảm xúc và giữ trọn vẹn tinh thần triết lý của Paulo Coelho.</li>
+    //                 </ul>
+    //                 <p>TÓM TẮT NỘI DUNG SÁCH</p>
+    //                 <p>Santiago - một chàng trai chăn cừu trẻ tuổi, rời quê hương để theo đuổi giấc mơ tìm kho báu ở Kim Tự Tháp Ai Cập. Trên hành trình ấy, anh gặp gỡ nhiều người, từ ông vua thông thái, người buôn pha lê đến Nhà Giả Kim huyền bí. Tất cả những trải nghiệm trong chuyến phiêu du theo đuổi vận mệnh của mình đã giúp Santiago thấu hiểu được ý nghĩa sâu xa nhất của hạnh phúc, hòa hợp với vũ trụ và con người.</p>
+    //                 <P>Mỗi cuộc gặp gỡ không chỉ giúp anh tiến gần hơn đến kho báu mà còn giúp anh hiểu được mục đích thật sự của đời mình: </P>
+    //                 <p>Trích Nhà giả Kim: "Kho báu không nằm ở nơi ta đến, mà nằm trong chính hành trình ta đi."</p>
 
-    // inject sản phẩm giả
-    useEffect(() => {
-        // fake API
-        let fake_product;
-        if (slug !== "triet-hoc-mac-lenin") {
-            fake_product = {
-                name: "Nếu Gặp Lại Em Trên Ngọn Đồi Hoa Nở",
-                author: "Natsue Siomi",
-                slug: slug,
-                price: 120000,
-                stock: 10,
-                imgURL: "https://cdn1.fahasa.com/media/catalog/product/n/_/n_u-g_p-l_i-em-tr_n-ng_n-_i-hoa-n_.jpg",
-                id: 8935325018343,
-                provider: "AZ Vietnam",
-                translator: "Hoàng Duy Khang",
-                publisher: "NXB Thế Giới",
-                year: 2023,
-                weight: 330,
-                size: "18 x 13 x 1.5 cm",
-                pages: 312,
-                type: "Bìa mềm",
-                desc: `
-                    <p>Nếu Gặp Lại Em Trên Ngọn Đồi Hoa Nở</p>
-                    <p>Mối lương duyên vượt thời gian. Dù không bao giờ gặp lại, kỷ niệm vẫn khắc sâu trong trái tim.</p>
-                    <p>Yuri, một nữ sinh lớp 8, đã trải qua những ngày tháng chán ghét trường lớp và người mẹ của mình. Ngày nọ, sau khi cãi nhau với mẹ, cô bé quyết định bỏ nhà ra đi. Lần tiếp theo mở mắt, Yuri phát hiện bản thân đã xuyên không đến Nhật Bản 70 năm trước. Cô được một chàng trai tên Akira tình cờ đi ngang qua cứu giúp. Sau những ngày tháng kề bên, Yuri dần đem lòng cảm mến người con trai này. Tuy nhiên, là một phi công cảm tử, Akira có nhiệm vụ phải bay đến chiến trường và xả thân vì quốc gia... Cuối cùng Yuri cũng biết được tình cảm thật sự mà Akira dành cho mình.</p>
-                    `
-            };
-        } else {
-            fake_product = {
-                name: "Triết học Mác Lênin",
-                author: "Mác Lênin",
-                slug: slug,
-                price: 80000,
-                stock: 3,
-                imgURL: "https://cdn1.fahasa.com/media/catalog/product/8/9/8935279153367.jpg",
-                id: 8935235226272,
-                provider: "Nhã Nam",
-                translator: "Không",
-                publisher: "NXB Hội nhà văn",
-                year: 2020,
-                weight: 220,
-                size: "20.5 x 13 cm",
-                pages: 227,
-                type: "Bìa mềm",
-                desc: `
-                    <p>NHÀ GIẢ KIM - HÀNH TRÌNH ĐI TÌM KHO BÁU HAY CUỘC HÀNH TRÌNH TÌM KIẾM CHÍNH MÌNH</p>
-                    <p>"Nhà Giả Kim" không đơn thuần là một cuốn tiểu thuyết, mà là bản đồ dẫn lối đến giấc mơ, khao khát và định mệnh của mỗi con người. Câu chuyện về chàng trai chăn cừu Santiago không chỉ mang đến những cuộc phiêu lưu hấp dẫn, mà còn mở ra nhiều tầng triết lý sâu sắc về cuộc sống.</p>
-                    <ul>VỀ TÁC GIẢ: Paulo Coelho
-                        <li>Là nhà văn người Brazil, bậc thầy kể chuyện với lối viết đậm chất triết lý.</li>
-                        <li>Ông là tác giả của nhiều tác phẩm truyền cảm hứng, trong đó "Nhà Giả Kim" là cuốn sách nổi tiếng nhất, được dịch ra hơn 80 ngôn ngữ và bán hàng triệu bản trên toàn thế giới.</li>
-                        <li>Các tác phẩm khác của ông như "Veronika quyết chết", "Nhà tiên tri" hay "Phù thủy thành phố Portobello" cũng để lại dấu ấn sâu sắc trong lòng độc giả.</li>
-                    </ul>
-                    <ul>VỀ DỊCH GIẢ: Lê Chu Cầu
-                        <li>Là dịch giả có nhiều đóng góp trong việc đưa văn học nước ngoài đến với độc giả Việt Nam.</li>
-                        <li>Ông đã chuyển ngữ nhiều tác phẩm kinh điển, trong đó bản dịch "Nhà Giả Kim" của ông được đánh giá cao bởi sự mượt mà, giàu cảm xúc và giữ trọn vẹn tinh thần triết lý của Paulo Coelho.</li>
-                    </ul>
-                    <p>TÓM TẮT NỘI DUNG SÁCH</p>
-                    <p>Santiago - một chàng trai chăn cừu trẻ tuổi, rời quê hương để theo đuổi giấc mơ tìm kho báu ở Kim Tự Tháp Ai Cập. Trên hành trình ấy, anh gặp gỡ nhiều người, từ ông vua thông thái, người buôn pha lê đến Nhà Giả Kim huyền bí. Tất cả những trải nghiệm trong chuyến phiêu du theo đuổi vận mệnh của mình đã giúp Santiago thấu hiểu được ý nghĩa sâu xa nhất của hạnh phúc, hòa hợp với vũ trụ và con người.</p>
-                    <P>Mỗi cuộc gặp gỡ không chỉ giúp anh tiến gần hơn đến kho báu mà còn giúp anh hiểu được mục đích thật sự của đời mình: </P>
-                    <p>Trích Nhà giả Kim: "Kho báu không nằm ở nơi ta đến, mà nằm trong chính hành trình ta đi."</p>
+    //                 `
+    //         };
+    //     }
 
-                    `
-            };
-        }
-
-        setProduct(fake_product);
-    }, []);
+    //     setProduct(fake_product);
+    // }, []);
 
     
 
     // Load rating
+    
     const [ratings, setRatings] = useState([])
     const [cursor, setCursor] = useState(null)
     const [hasMore, setHasMore] = useState(true)
@@ -112,7 +115,7 @@ export default function ProductInfo() {
         if (!hasMore) return
 
         const params = new URLSearchParams({
-            productId: product.id,
+            productId: product._id,
             limit: LIMIT
         })
 
@@ -146,9 +149,11 @@ export default function ProductInfo() {
 
         return () => clearTimeout(timer)
     }, [])    
+
     // Check login
-    const loaction = useLocation();
+    const location = useLocation();
     const { user } = useContext(AuthContext)
+
     let show_rating;
     if (!user) {
         show_rating = (
@@ -160,7 +165,9 @@ export default function ProductInfo() {
         )
     }
 
-    if (!product) return <div>Loading...</div>
+    if (isLoading) return <div>Loading...</div>;
+    if (isError) return <div>{error.message}</div>;
+
     return(
         <>
             <PageNameHeader pagename="Product"/>
@@ -173,7 +180,7 @@ export default function ProductInfo() {
                         <button className={styles.addLiked}><i className="fa-regular fa-heart fa-2x1" style={{ fontSize: "30px"}}></i></button>
 
                         <p className={styles.informationName}>{product.name}</p>
-                        <p className={styles.informationAuthor}>Tác giả: {product.author}</p>
+                        <p className={styles.informationAuthor}>Tác giả: {product.author.AuthorName}</p>
 
                         <div className={styles.informationTag}>
                             <a href="#">Horror</a>
@@ -187,7 +194,7 @@ export default function ProductInfo() {
                         
                         <button 
                             className={styles.informationAdd}
-                            onClick={() => addCartMutation.mutate(product)}
+                            // onClick={() => addCartMutation.mutate(product)}
                         >
                                 Thêm vào giỏ hàng
                         </button>
@@ -210,15 +217,15 @@ export default function ProductInfo() {
                                 </ul>
 
                                 <ul style={{width: "240px", padding: "7px"}}>
-                                    <li>{product.id}</li>
+                                    <li>{product._id}</li>
                                     <li>{product.provider}</li>
-                                    <li>{product.author}</li>
+                                    <li>{product.author.AuthorName}</li>
                                     <li>{product.translator}</li>
                                     <li>{product.publisher}</li>
-                                    <li>{product.year}</li>
+                                    <li>{product.publicationYear}</li>
                                     <li>{product.weight}</li>
                                     <li>{product.size}</li>
-                                    <li>{product.pages}</li>
+                                    <li>{product.page}</li>
                                     <li>{product.type}</li>
                                 </ul>
                             </div>  
@@ -229,7 +236,7 @@ export default function ProductInfo() {
                 <div className={styles.middleProduct}>
                     <p className={styles.middleProductTitle}>Mô tả sản phẩm</p>
 
-                    <div className={styles.middleProductInformation} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(product.desc)}} /> {/* render raw HTML*/}
+                    <div className={styles.middleProductInformation} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(product.description)}} /> {/* render raw HTML*/}
                 </div> 
 
                 <div className={styles.ratingSection}>

@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react"
-import { loginAccount, getMe } from "../api/account"
+import { loginAccount, getMe, registerAccount } from "../api/account"
 import api from "../api/axios"
-import axios from "axios" // thêm
+
 
 export const  AuthContext = createContext()
 
@@ -9,39 +9,35 @@ export function AuthProvider({children}) {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
     // const img_url = "https://dummyimage.com/50/000/fff"
-    const API_URL = "http://localhost:5000/api/accounts" // thêm
     
     // Load từ localStorage khi mở website
     useEffect(() => {
-        // const savedUser = localStorage.getItem("user")
-        const savedToken = localStorage.getItem("token") // thêm
-        // if (savedUser && savedToken) { // sửa
-        //     setUser(JSON.parse(savedUser))
-        //     axios.defaults.headers.common['Authorization'] = `Bearer ${savedToken}` // thêm
-        // }
+    const initAuth = async () => {
+        const savedToken = localStorage.getItem("token")
 
-        if (savedToken) {
-            api.defaults.headers.common['Authorization'] = `Bearer ${savedToken}`
-            getMe(savedToken).then(setUser).catch(() => {
-                localStorage.removeItem("token")
-            })
+        if (!savedToken) {
+            setLoading(false)
+            return
         }
-        setLoading(false) //Load xong user
+
+        try {
+            api.defaults.headers.common['Authorization'] = `Bearer ${savedToken}`
+            const user = await getMe(savedToken)
+            setUser(user)
+        } catch (err) {
+            localStorage.removeItem("token")
+            setUser(null)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    initAuth()
     }, [])
+
 
     // Hàm đăng nhập
     const login = async (identity, password) => {
-        // try {
-        //     const res = await axios.post(`${API_URL}/login`, { identity, password })
-        //         const { token, user: userData } = res.data
-        //         setUser(userData)
-        //         localStorage.setItem("user", JSON.stringify(userData))
-        //         localStorage.setItem("token", token)
-        //         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-        //         return { success: true }
-        //     } catch (err) {
-        //         return { success: false, message: err.response?.data?.message || "Lỗi" }
-        //     }   
         try {
             const { token, user } = await loginAccount({ identity, password })
             localStorage.setItem("token", token)
@@ -56,8 +52,8 @@ export function AuthProvider({children}) {
     // Hàm đăng ký
     const signup = async (formData) => { 
         try {
-            const res = await axios.post(`${API_URL}/register`, formData)
-            return { success: true, message: res.data.message }
+            const res = await registerAccount(formData)
+            return { success: true, message: res.message }
         } catch (err) {
             return { success: false, message: err.response?.data?.message || "Lỗi" }
         }
@@ -66,9 +62,9 @@ export function AuthProvider({children}) {
     //Hàm đăng xuất
     const logout = () => { 
         setUser(null)
-        localStorage.removeItem("user")
+        // localStorage.removeItem("user")
         localStorage.removeItem("token") 
-        delete axios.defaults.headers.common['Authorization'] 
+        delete api.defaults.headers.common['Authorization'] 
     }
 
     const value = { user, loading, login, signup, logout };

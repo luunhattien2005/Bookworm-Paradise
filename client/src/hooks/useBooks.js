@@ -38,6 +38,16 @@ export function useInfiniteBooks(q, { limit = 20 } = {}, options = {}) {
   );
 }
 
+export function useGetBookBySlug(slug, options = {}) {
+  return useQuery({
+    queryKey: ['book', slug],
+    queryFn: () => booksApi.getBookBySlug(slug),
+    enabled: !!slug,
+    staleTime: 1000 * 60 * 5,
+    ...options,
+  });
+}
+
 export function useGetBook(id, options = {}) {
   return useQuery(['book', id], () => booksApi.getBook(id), {
     enabled: !!id,

@@ -6,6 +6,8 @@ const { verifyToken, verifyAdmin } = require("../middleware/authMiddleware");
 router.post("/register", accountController.register);
 router.post("/login", accountController.login);
 router.post("/forgot-password", accountController.forgotPassword);
+router.get("/me", verifyToken, accountController.getMe);
+
 
 // Xem profile
 router.get("/:id", verifyToken, accountController.getAccountById);

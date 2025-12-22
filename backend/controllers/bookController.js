@@ -69,7 +69,26 @@ const bookController = {
         }
     },
 
-    // 2. Xem chi tiết 1 sách (ViewBookDetail)
+    // 2.1. Xem chi tiết 1 sách theo slug (ViewBookDetail)
+    getBookBySlug: async (req, res) => {
+        try {
+            const book = await Book.findOne({
+                slug: req.params.slug,
+                isDeleted: false
+            })
+            .populate('author', 'AuthorName')
+            .populate('tags', 'TagName');
+
+            if (!book)
+                return res.status(404).json({ message: "Không tìm thấy sách" });
+
+            res.json(book);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    },
+
+    // 2.2. Xem chi tiết 1 sách (ViewBookDetail)
     getBookById: async (req, res) => {
         try {
             const book = await Book.findById(req.params.id)

@@ -1,0 +1,29 @@
+# ===== Node / Logs =====
+node_modules/
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# ===== ENV =====
+.env
+.env.*
+!.env.example
+
+# ===== Build =====
+dist/
+dist-ssr/
+
+# ===== Vite =====
+*.local
+
+# ===== Editor =====
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

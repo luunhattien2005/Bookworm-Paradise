@@ -6,7 +6,8 @@ export default function ProtectedRoute({ children }) {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
 
-  console.log(`Ket qua tra ve tu protected route ${JSON.stringify(user)}`)
+  // console.log(`Ket qua tra ve tu protected route ${JSON.stringify(user)}`)
+
   if (loading) {
     return <div>Loading...</div>;   // Chờ load localStorage
   }

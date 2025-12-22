@@ -14,6 +14,11 @@ export async function loginAccount(payload) {
   return res.data;
 }
 
+export async function forgotPassword(email) {
+  const res = await api.post('/api/accounts/forgot-password', { email });
+  return res.data;
+}
+
 export async function getMe(token) {
   const res = await api.get('/api/accounts/me', { headers: authHeader(token) });
   return res.data;

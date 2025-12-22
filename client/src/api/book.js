@@ -9,6 +9,11 @@ export async function searchBooks(q, { limit = 20, page = 1, tag, author } = {})
   return res.data;
 }
 
+export async function getBookBySlug(slug) {
+  const res = await api.get(`/api/books/slug/${slug}`);
+  return res.data;
+}
+
 export async function getBook(id) {
   const res = await api.get(`/api/books/${id}`);
   return res.data;

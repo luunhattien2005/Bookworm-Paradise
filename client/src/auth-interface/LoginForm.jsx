@@ -5,18 +5,9 @@ import ForgotPasswordModal from "./ForgotPasswordModal";
 import { AuthContext } from "./AuthContext";
 
 export default function LoginForm({ redirectTo }) {
-    const demoEmail = "user@bookworm.com"
-    const demoPassword = "password123"
-    const demoUsername = "bookworm_user"
-
-    const adminEmail = "admin@bookworm.com"
-    const adminPassword = "admin123"
-    const adminUsername = "admin"
-
-
     const [identity, setIdentity] = useState("") //identity could be username or email
     const [password, setPassword] = useState("")
-    const [error, setError] = useState("") // thêm: để hiện thông báo lỗi
+    // const [error, setError] = useState("") // thêm: để hiện thông báo lỗi
     const [showPassword, setShowPassword] = useState(false)
     const [showForgotPassword, setShowForgotPassword] = useState(false)
     
@@ -24,13 +15,12 @@ export default function LoginForm({ redirectTo }) {
     const { login } = useContext(AuthContext)
     const handleSubmit = async(e) => { 
         e.preventDefault()
-        setError("") 
-        const result = await login(identity, password) 
+        const res = await login(identity, password) 
 
-        if (result.success) { //  chỉ chuyển trang khi thành công
+        if (res.success) { //  chỉ chuyển trang khi thành công
             navigate(redirectTo, {replace: true})
         } else {
-            setError(result.message) // hiển thị lỗi từ backend (ví dụ: "Tài khoản bị khóa")
+            alert(res.message) // hiển thị lỗi từ backend (ví dụ: "Tài khoản bị khóa")
         }
     }
 
