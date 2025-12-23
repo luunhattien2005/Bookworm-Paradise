@@ -322,3 +322,25 @@
     width: 40px;
     height: 40px
 }
+
+/* Loading */
+.loading {
+    margin: 200px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 20px;
+}
+
+.loading img {
+    width: 200px;
+    /* height: 100px; */
+}
+
+.loading p {
+    font-size: 24px;
+    font-weight: 600;
+    color: #e7c66a;
+}

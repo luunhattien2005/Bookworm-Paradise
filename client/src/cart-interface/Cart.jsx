@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useCart } from "../hooks/useCart"
 import styles from "./Cart.module.css"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"
+import Loading from "../header-footer-interface/Loading"
 
 export default function Cart() {
   const { data, isLoading } = useCart()
@@ -11,7 +12,7 @@ export default function Cart() {
   const [selected, setSelected] = useState({})
   const [cartItems, setCartItems] = useState([])
 
-  if (isLoading) return <p>Loading cart...</p>
+  if (isLoading) return <Loading />
   if (!data || data.items.length === 0)
     return (
       <>
