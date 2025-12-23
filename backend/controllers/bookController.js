@@ -107,7 +107,7 @@ const bookController = {
         try {
             const keyword = req.params.keyword;
             const books = await Book.find({
-                title: { $regex: keyword, $options: 'i' },
+                name: { $regex: keyword, $options: 'i' }, // SỬA: title -> name
                 isDeleted: false
             });
             res.json(books);
@@ -120,10 +120,9 @@ const bookController = {
     createBook: async (req, res) => {
         try {
             const bookData = req.body;
-
-            // Nếu có file ảnh gửi lên
+            
             if (req.file) {
-                bookData.coverImage = req.file.path;
+                bookData.imgURL = req.file.path; // SỬA: coverImage -> imgURL
             }
 
             const newBook = new Book(bookData);
@@ -139,7 +138,7 @@ const bookController = {
         try {
             const updateData = req.body;
             if (req.file) {
-                updateData.coverImage = req.file.path;
+                updateData.imgURL = req.file.path; // SỬA: coverImage -> imgURL
             }
 
             const updatedBook = await Book.findByIdAndUpdate(req.params.id, updateData, { new: true });
