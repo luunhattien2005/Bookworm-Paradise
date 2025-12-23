@@ -19,8 +19,9 @@ const orderController = {
             // Kiểm tra tồn kho lần cuối (đề phòng lúc thêm vào giỏ thì còn, lúc mua thì hết)
             for (const item of cart.items) {
                 if (item.quantity > item.book.stockQuantity) {
-                    return res.status(400).json({
-                        message: `Sách "${item.book.title}" không đủ hàng (Còn: ${item.book.stockQuantity})`
+                    // SỬA: item.book.title -> item.book.name
+                    return res.status(400).json({ 
+                        message: `Sách "${item.book.name}" không đủ hàng (Còn: ${item.book.stockQuantity})` 
                     });
                 }
             }
@@ -68,8 +69,9 @@ const orderController = {
     getMyOrders: async (req, res) => {
         try {
             const orders = await Order.find({ user: req.user.id })
-                .populate('items.book', 'title coverImage') // Lấy ảnh và tên sách để hiện
-                .sort({ createdAt: -1 }); // Mới nhất lên đầu
+                // SỬA: title -> name, coverImage -> imgURL
+                .populate('items.book', 'name imgURL') 
+                .sort({ createdAt: -1 });
             res.json(orders);
         } catch (err) {
             res.status(500).json({ message: err.message });
@@ -80,9 +82,10 @@ const orderController = {
     getOrderDetail: async (req, res) => {
         try {
             const order = await Order.findById(req.params.id)
-                .populate('user', 'fullname email phone') // Lấy thông tin người mua
-                .populate('items.book', 'title coverImage price'); // Lấy thông tin sách
-
+                .populate('user', 'fullname email phone')
+                // SỬA: title -> name, coverImage -> imgURL
+                .populate('items.book', 'name imgURL price'); 
+            
             if (!order) return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
             res.json(order);
         } catch (err) {
