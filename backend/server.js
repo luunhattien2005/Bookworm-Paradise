@@ -14,7 +14,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
 app.use("/api/accounts", require("./routes/accounts"));
-app.use("/api/books", require("./routes/books"));
+app.use("/api", require("./routes/books"));  // Vì bên trong routes/books.js đã có sẵn /books, /tags, /authors
 app.use("/api/carts", require("./routes/carts"));
 app.use("/api/orders", require("./routes/orders"));
 app.use("/api/reviews", require("./routes/reviews"));
