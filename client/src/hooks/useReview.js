@@ -6,40 +6,56 @@ import * as reviewsApi from '../api/review';
  * useAddReview / useDeleteReview
  */
 
-export function useReviewsQuery(bookId, options = {}) {
-  return useQuery(['reviews', bookId], () => reviewsApi.getReviewsForBook(bookId), {
+export function useReviews(bookId, options = {}) {
+  return useQuery({
+    queryKey: ['reviews', bookId],
+    queryFn: () => reviewsApi.getReviewsForBook(bookId),
     enabled: !!bookId,
-    staleTime: 1000 * 30,
+    staleTime: 1000 * 30, // 30 seconds
     ...options,
   });
 }
 
+/**
+ * Add a review
+ */
 export function useAddReview(options = {}) {
   const qc = useQueryClient();
-  return useMutation(
-    (payload) => reviewsApi.addReview(payload),
-    {
-      onSuccess(data, variables) {
-        const bookId = variables?.bookId || (data && data.book);
-        if (bookId) qc.invalidateQueries(['reviews', bookId]);
-        if (options.onSuccess) options.onSuccess(data);
-      },
-      ...options,
-    }
-  );
+
+  return useMutation({
+    mutationFn: (payload) =>
+      reviewsApi.addReview(payload),
+
+    onSuccess: (data, variables) => {
+      const bookId = variables?.bookId ?? data?.book;
+      if (bookId) {
+        qc.invalidateQueries({ queryKey: ['reviews', bookId] });
+      }
+      options.onSuccess?.(data);
+    },
+
+    ...options,
+  });
 }
 
+/**
+ * Delete a review (admin or owner)
+ */
 export function useDeleteReview(options = {}) {
   const qc = useQueryClient();
-  return useMutation(
-    ({ reviewId, bookId }) => reviewsApi.deleteReview(reviewId, options.token),
-    {
-      onSuccess(_, variables) {
-        const bookId = variables?.bookId;
-        if (bookId) qc.invalidateQueries(['reviews', bookId]);
-        if (options.onSuccess) options.onSuccess();
-      },
-      ...options,
-    }
-  );
+
+  return useMutation({
+    mutationFn: ({ reviewId }) =>
+      reviewsApi.deleteReview(reviewId, options.token),
+
+    onSuccess: (_data, variables) => {
+      const bookId = variables?.bookId;
+      if (bookId) {
+        qc.invalidateQueries({ queryKey: ['reviews', bookId] });
+      }
+      options.onSuccess?.();
+    },
+
+    ...options,
+  });
 }
