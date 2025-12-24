@@ -6,6 +6,12 @@ import * as accountsApi from '../api/account';
  * - Caller is responsible for persisting token (localStorage / AuthContext).
  */
 
+function authHeader(token) {
+  // Lấy token từ localStorage nếu token truyền vào null (để chắc chắn)
+  const t = token || localStorage.getItem('token');
+  return t ? { Authorization: `Bearer ${t}` } : {};
+}
+
 export function useLogin(options = {}) {
   const qc = useQueryClient();
   return useMutation((payload) => accountsApi.loginAccount(payload), {
