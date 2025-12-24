@@ -191,21 +191,23 @@ const accountController = {
     updateAccount: async (req, res) => {
         try {
             const userId = req.user.id || req.params.id;
+            const updateData = { ...req.body };// Copy dữ liệu từ body (tên, sđt...)
             
-            const updateData = { ...req.body };
-            
+            // XỬ LÝ ẢNH 
             if (req.file) {
-                // Lưu đường dẫn, thay thế dấu \ thành / để tránh lỗi hiển thị trên web
-                updateData.avatar = req.file.path.replace(/\\/g, "/"); 
+                updateData.avatar = req.file.path.replace(/\\/g, "/"); // Thay thế dấu backslash (\) của Windows bằng slash (/)
+            } else {
+                // Nếu không có file -> Xóa field avatar khỏi updateData
+                // Để tránh trường hợp req.body có chứa avatar={} (rác) gây lỗi CastError
+                delete updateData.avatar;
             }
 
             const account = await Account.findByIdAndUpdate(userId, updateData, { new: true });
-            
-            if (!account) return res.status(404).json({ message: 'Không tìm thấy user để cập nhật' });
-
+            if (!account) return res.status(404).json({ message: 'Không tìm thấy user' });
             res.json({ message: "Cập nhật thành công!", account });
+            
         } catch (err) {
-            console.error("Update Error:", err); 
+            console.error(err); // Log lỗi ra terminal để dễ check
             res.status(500).json({ message: err.message });
         }
     },

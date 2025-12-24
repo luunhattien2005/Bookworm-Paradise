@@ -27,9 +27,14 @@ export async function getMe(token) {
 }
 
 export async function updateProfile(formData) {
-  // Gọi route /me, gửi FormData (tự động nhận diện multipart/form-data)
-  // Headers sẽ được axios.js hoặc authHeader xử lý, nhưng quan trọng là route đúng
   const token = localStorage.getItem('token');
-  const res = await api.put('/api/accounts/me', formData, { headers: authHeader(token) });
+  
+  const res = await api.put('/api/accounts/me', formData, { 
+    headers: { 
+        ...authHeader(token),
+        // Dòng này để Server hiểu đang gửi file
+        'Content-Type': 'multipart/form-data' 
+    } 
+  });
   return res.data;
 }
