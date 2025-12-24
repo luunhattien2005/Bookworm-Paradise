@@ -1,6 +1,6 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '../auth-interface/AuthContext';
-import { useNavigate , useLocation} from 'react-router-dom';
+import { useNavigate , useLocation } from 'react-router-dom';
 import styles from "./Profile.module.css";
 import PageNameHeader from '../header-footer-interface/PageNameHeader';
 import Information from './Infomation';
@@ -20,26 +20,14 @@ export default function Profile() {
     ];
 
     function handleMenuClick(action) {
-        switch (action) {
-            case "info":
-                navigate("/profile/info");
-                break;
-            case "password":
-                navigate("/profile/password");
-                break;
-            case "favorites":
-                navigate("/profile/favorites");
-                break;
-            case "bills":
-                navigate("/profile/bills");
-                break;
-            case "notifications":
-                navigate("/profile/notifications");
-                break;
-            default:
-                break;
-        }
+        navigate(`/profile/${action}`);
     }
+
+    useEffect(() => {
+        if (user.role === "admin") {
+            navigate("/admin/dashboard", { replace: true });
+        }
+    }, [user, navigate]);
 
     return (
     <>
@@ -75,11 +63,7 @@ export default function Profile() {
             {location.pathname ==="/profile/info" && <Information />}
             {location.pathname ==="/profile/password" && <ChangePassword />}
 
-
         </main>
-
-
-
 
     </>)
 }

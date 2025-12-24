@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import ProtectedRoute from "./auth-interface/ProtectedRoute.jsx";
+import Loading from "./header-footer-interface/Loading.jsx";
 import Auth from "./auth-interface/Auth.jsx";
 import Logout from "./auth-interface/Logout.jsx";
 import Welcome from "./auth-interface/Welcome.jsx";
@@ -26,7 +27,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Welcome />} />
 
-        <Route path="/ad" element={<Dashboard />} />
+        {/* <Route path="/ad" element={<Dashboard />} /> */}
 
         <Route path="/auth" element={<Auth />} />
 
@@ -48,41 +49,20 @@ export default function App() {
           </ProtectedRoute>
         } />
 
-        <Route path="/profile/info" element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
+        <Route
+          path="/profile/*" element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
         } />
 
-        <Route path="/profile/password" element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        } />
-
-        <Route path="/profile/favorites" element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        } />
-
-        <Route path="/profile/bills" element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        } />
-
-        <Route path="/profile/notifications" element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        } />
-        {/*<Route path="/" element={<Navigate to="/admin/dashboard" />} />*/}
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/orders/:id/edit" element={<OrderEdit />} />
         <Route path="/admin/products/add" element={<ProductAdd />} />
         <Route path="/admin/products/:id/edit" element={<ProductEdit />} />
-        <Route path="*" element={<Navigate to="/admin/dashboard" />} />
+
+        <Route path="*" element={<Loading error={true} message="Request failed with status code 404."/>} />
+        
       </Routes>
       {!hideHeaderFooterRoutes.includes(location.pathname) && <Footer />}
 
