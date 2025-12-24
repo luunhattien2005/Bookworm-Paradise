@@ -1,15 +1,35 @@
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../auth-interface/AuthContext';
-import { useNavigate , useLocation } from 'react-router-dom';
+import { useNavigate , useLocation} from 'react-router-dom';
 import styles from "./Profile.module.css";
 import PageNameHeader from '../header-footer-interface/PageNameHeader';
-import Information from './Infomation';
+import Information from './Infomation'; // File của bạn tên là Infomation (thiếu r)
 import ChangePassword from './ChangePassword';
+import { useUpdateUser } from "../hooks/useAuth";
 
 export default function Profile() {
-    const { user } = useContext(AuthContext)
+    const { user, refreshUser } = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation()
+
+    const updateMutation = useUpdateUser({
+        onSuccess: async () => {
+            if (refreshUser) await refreshUser(); // Gọi hàm làm mới dữ liệu
+            alert("Cập nhật ảnh đại diện thành công!");
+        },
+        onError: (err) => {
+            alert("Lỗi: " + (err.response?.data?.message || err.message));
+        }
+    });
+
+    const handleAvatarChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append("avatar", file); 
+            updateMutation.mutate(formData);
+        }
+    }
 
     const menuItems = [
         { label: "Hồ sơ cá nhân", action: "info" },
@@ -22,12 +42,20 @@ export default function Profile() {
     function handleMenuClick(action) {
         navigate(`/profile/${action}`);
     }
-
+    
     useEffect(() => {
-        if (user.role === "admin") {
+        // Nếu user là admin thì đá về dashboard
+        if (user && user.role === "admin") {
             navigate("/admin/dashboard", { replace: true });
         }
     }, [user, navigate]);
+
+    // Xử lý an toàn: Nếu user chưa load xong thì không render phần dưới để tránh crash
+    if (!user) return <div style={{padding: "50px", textAlign:"center"}}>Đang tải thông tin...</div>;
+
+    const avatarUrl = user.avatar 
+        ? (user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000/${user.avatar}`)
+        : "/img/PP_Large.png";
 
     return (
     <>
@@ -37,10 +65,23 @@ export default function Profile() {
             <div className={styles.leftContainer}>
                 <div className={styles.upperContainer}>
                     <div className={styles.ProfilePicture}>
-                        <i className="material-symbols-outlined">photo_camera_front</i>
-                        <img src={user.avatar ? user.avatar : "/img/PP_Large.png"}></img>
+                        <input 
+                            type="file" 
+                            id="avatarUpload" 
+                            style={{display: 'none'}} 
+                            accept="image/*"
+                            onChange={handleAvatarChange}
+                        />
+                         <label htmlFor="avatarUpload" style={{cursor: "pointer"}}>
+                            <i className="material-symbols-outlined">photo_camera_front</i>
+                            <img 
+                                src={avatarUrl} 
+                                alt="Avatar"
+                                style={{ objectFit: "cover" }}
+                                onError={(e) => e.target.src = "/img/PP_Large.png"}
+                            />
+                        </label>
                     </div>
-
                     <p>{user.fullname}</p>
                 </div>
 
@@ -54,7 +95,6 @@ export default function Profile() {
                             {item.label}
                         </p>
                     ))}
-
                     <p>This is useless button</p>
                     <p style={{color: "rgb(255, 0, 0)"}} onClick={() => { navigate("/logout")}}>Đăng xuất</p>
                 </div>
@@ -62,8 +102,10 @@ export default function Profile() {
 
             {location.pathname ==="/profile/info" && <Information />}
             {location.pathname ==="/profile/password" && <ChangePassword />}
-
+            {/* Placeholder cho các tab chưa làm */}
+            {location.pathname ==="/profile/favorites" && <div>Nội dung yêu thích đang phát triển...</div>}
+            {location.pathname ==="/profile/bills" && <div>Lịch sử mua hàng đang phát triển...</div>}
+            {location.pathname ==="/profile/notifications" && <div>Thông báo đang phát triển...</div>}
         </main>
-
     </>)
 }

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateProfile } from '../api/account';
+import * as accountsApi from '../api/account';
 
 
 /**
@@ -11,9 +11,10 @@ import { updateProfile } from '../api/account';
 
 export function useLogin(options = {}) {
   const qc = useQueryClient();
-  return useMutation((payload) => accountsApi.loginAccount(payload), {
-    onSuccess(data) {
-      qc.invalidateQueries(['me']);
+  return useMutation({
+    mutationFn: (payload) => accountsApi.loginAccount(payload),
+    onSuccess: (data) => {
+      qc.invalidateQueries({ queryKey: ['me'] });
       if (options.onSuccess) options.onSuccess(data);
     },
     ...options,
@@ -22,9 +23,10 @@ export function useLogin(options = {}) {
 
 export function useRegister(options = {}) {
   const qc = useQueryClient();
-  return useMutation((payload) => accountsApi.registerAccount(payload), {
-    onSuccess(data) {
-      qc.invalidateQueries(['me']);
+  return useMutation({
+    mutationFn: (payload) => accountsApi.registerAccount(payload),
+    onSuccess: (data) => {
+      qc.invalidateQueries({ queryKey: ['me'] });
       if (options.onSuccess) options.onSuccess(data);
     },
     ...options,
@@ -33,26 +35,23 @@ export function useRegister(options = {}) {
 
 // token: pass token string via parameter
 export function useMe(token, options = {}) {
-  return useQuery(
-    ['me', token],
-    () => accountsApi.getMe(token),
-    {
-      enabled: !!token,
-      staleTime: 1000 * 60 * 5,
-      ...options,
-    }
-  );
+  return useQuery({
+    queryKey: ['me', token],
+    queryFn: () => accountsApi.getMe(token),
+    enabled: !!token,
+    staleTime: 1000 * 60 * 5,
+    ...options,
+  });
 }
 
+// Hook cập nhật thông tin user
 export function useUpdateUser(options = {}) {
   const qc = useQueryClient();
 
   return useMutation({
-    // SỬA: Mutation không cần nhận userId nữa, chỉ cần formData
-    mutationFn: (formData) => updateProfile(formData),
-
+    mutationFn: (formData) => accountsApi.updateProfile(formData),
     onSuccess: (data) => {
-      qc.invalidateQueries(['me']); // Làm mới dữ liệu user
+      qc.invalidateQueries({ queryKey: ['me'] });
       if (options.onSuccess) options.onSuccess(data);
     },
     ...options,

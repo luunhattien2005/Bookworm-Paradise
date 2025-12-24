@@ -190,23 +190,22 @@ const accountController = {
     // 6. Cập nhật thông tin
     updateAccount: async (req, res) => {
         try {
-            // SỬA: Lấy ID từ Token (do middleware verifyToken giải mã)
-            const userId = req.user.id;
-
+            const userId = req.user.id || req.params.id;
+            
             const updateData = { ...req.body };
-
-            // Logic xử lý ảnh giữ nguyên
+            
             if (req.file) {
-                updateData.avatar = req.file.path;
+                // Lưu đường dẫn, thay thế dấu \ thành / để tránh lỗi hiển thị trên web
+                updateData.avatar = req.file.path.replace(/\\/g, "/"); 
             }
 
-            // Sửa: Tìm theo userId vừa lấy được
             const account = await Account.findByIdAndUpdate(userId, updateData, { new: true });
-
-            if (!account) return res.status(404).json({ message: 'Không tìm thấy user' });
+            
+            if (!account) return res.status(404).json({ message: 'Không tìm thấy user để cập nhật' });
 
             res.json({ message: "Cập nhật thành công!", account });
         } catch (err) {
+            console.error("Update Error:", err); 
             res.status(500).json({ message: err.message });
         }
     },

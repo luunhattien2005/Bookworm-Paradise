@@ -4,12 +4,12 @@ import { useContext, useState, useEffect } from 'react';
 import { useUpdateUser } from "../hooks/useAuth";
 
 export default function Information() {
-    const { user } = useContext(AuthContext)
+    const { user, refreshUser } = useContext(AuthContext)
     const [isEditing, setIsEditing] = useState(false);
 
-    // Setup Hook cập nhật
     const updateMutation = useUpdateUser({
-        onSuccess: () => {
+        onSuccess: async () => {
+            if (refreshUser) await refreshUser();
             alert("Cập nhật hồ sơ thành công!");
             setIsEditing(false);
         },
@@ -18,40 +18,34 @@ export default function Information() {
         }
     });
 
-    // State nháp
     const [draft, setDraft] = useState({
-        fullname: "",
-        phone: "",
-        email: "",
-        sex: "Others",
-        birthday: "",
-        address: ""
-    });
+        fullname: "", phone: "", email: "", sex: "Others", birthday: "", address: ""
+    })
 
-    // Đồng bộ dữ liệu từ User vào Draft khi load trang
     useEffect(() => {
         if (user) {
             setDraft({
                 fullname: user.fullname || "",
                 phone: user.phone || "",
-                email: user.email || "", // Email thường không cho sửa, nhưng cứ để hiển thị
+                email: user.email || "", 
                 sex: user.sex || "Others",
-                birthday: user.birthday ? user.birthday.split('T')[0] : "", // Format lại ngày nếu cần
+                birthday: user.birthday ? user.birthday.split('T')[0] : "", 
                 address: user.address || ""
             })
         }
-    }, [user]);
+    }, [user])
 
     const cancelEditing = () => {
-        // Reset về dữ liệu gốc
-        setDraft({
-            fullname: user.fullname || "",
-            phone: user.phone || "",
-            email: user.email || "",
-            sex: user.sex || "Others",
-            birthday: user.birthday ? user.birthday.split('T')[0] : "",
-            address: user.address || ""
-        });
+        if (user) {
+            setDraft({
+                fullname: user.fullname || "",
+                phone: user.phone || "",
+                email: user.email || "", 
+                sex: user.sex || "Others",
+                birthday: user.birthday ? user.birthday.split('T')[0] : "", 
+                address: user.address || ""
+            })
+        }
         setIsEditing(false);
     };
 
@@ -62,10 +56,11 @@ export default function Information() {
         formData.append("address", draft.address);
         formData.append("sex", draft.sex);
         formData.append("birthday", draft.birthday);
-
-        // Gửi lên Server
         updateMutation.mutate(formData);
     };
+
+    // Nếu user chưa có dữ liệu, hiện loading nhẹ thay vì trắng trang
+    if (!user) return null; 
 
     return (
         <div className={styles.rightContainer}>
@@ -84,7 +79,7 @@ export default function Information() {
                 <div className={styles.informationSecondDiv}>
                     <input type="text" value={draft.fullname} onChange={(e) => setDraft({ ...draft, fullname: e.target.value })} readOnly={!isEditing} />
                     <input type="text" value={draft.phone} onChange={(e) => setDraft({ ...draft, phone: e.target.value })} readOnly={!isEditing} />
-                    <input type="text" value={draft.email} disabled className={styles.disabledInput} /> {/* Email không cho sửa */}
+                    <input type="text" value={draft.email} disabled className={styles.disabledInput} /> 
 
                     <select value={draft.sex} onChange={(e) => setDraft({ ...draft, sex: e.target.value })} disabled={!isEditing}>
                         <option value="Nam">Nam</option>

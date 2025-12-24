@@ -1,72 +1,71 @@
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState, useEffect, useCallback } from "react"
 import { loginAccount, getMe, registerAccount } from "../api/account"
 import api from "../api/axios"
 
-
-export const  AuthContext = createContext()
+export const AuthContext = createContext()
 
 export function AuthProvider({children}) {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
-    // const img_url = "https://dummyimage.com/50/000/fff"
-    
-    // Load từ localStorage khi mở website
-    useEffect(() => {
-    const initAuth = async () => {
-        const savedToken = localStorage.getItem("token")
 
+    // 1. Hàm làm mới user (được bọc useCallback để tránh render lại liên tục)
+    const refreshUser = useCallback(async () => {
+        const savedToken = localStorage.getItem("token")
         if (!savedToken) {
+            setUser(null)
             setLoading(false)
             return
         }
 
         try {
+            // Set header token mặc định cho mọi request
             api.defaults.headers.common['Authorization'] = `Bearer ${savedToken}`
-            const user = await getMe(savedToken)
-            setUser(user)
+            const userData = await getMe(savedToken)
+            setUser(userData)
         } catch (err) {
+            console.error("Lỗi xác thực:", err)
             localStorage.removeItem("token")
+            delete api.defaults.headers.common['Authorization']
             setUser(null)
         } finally {
             setLoading(false)
         }
-    }
-
-    initAuth()
     }, [])
 
+    // 2. Chạy 1 lần duy nhất khi web bật lên
+    useEffect(() => {
+        refreshUser()
+    }, [refreshUser])
 
-    // Hàm đăng nhập
     const login = async (identity, password) => {
         try {
-            const { token, user } = await loginAccount({ identity, password })
+            const { token } = await loginAccount({ identity, password })
             localStorage.setItem("token", token)
-            api.defaults.headers.common['Authorization'] = `Bearer ${token}`
-            setUser(user)
+            // Gọi refreshUser để cập nhật state user ngay lập tức
+            await refreshUser() 
             return { success: true }
         } catch (err) {
-            return { success: false, message: err.response?.data?.message || "Lỗi" }
+            return { success: false, message: err.response?.data?.message || "Lỗi đăng nhập" }
         }
     }
 
-    // Hàm đăng ký
     const signup = async (formData) => { 
         try {
             const res = await registerAccount(formData)
             return { success: true, message: res.message }
         } catch (err) {
-            return { success: false, message: err.response?.data?.message || "Lỗi" }
+            return { success: false, message: err.response?.data?.message || "Lỗi đăng ký" }
         }
     }
 
-    //Hàm đăng xuất
     const logout = () => { 
         setUser(null)
-        // localStorage.removeItem("user")
         localStorage.removeItem("token") 
         delete api.defaults.headers.common['Authorization'] 
     }
 
-    const value = { user, loading, login, signup, logout };
+    // 3. Quan trọng: Phải đưa refreshUser vào value để Profile gọi được
+    const value = { user, loading, login, signup, logout, refreshUser };
+    
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

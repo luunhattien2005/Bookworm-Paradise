@@ -27,8 +27,9 @@ export async function getMe(token) {
 }
 
 export async function updateProfile(formData) {
-  // Backend route mới: PUT /api/accounts/me
-  // Không cần truyền ID vào URL nữa
-  const res = await api.put('/api/accounts/me', formData);
+  // Gọi route /me, gửi FormData (tự động nhận diện multipart/form-data)
+  // Headers sẽ được axios.js hoặc authHeader xử lý, nhưng quan trọng là route đúng
+  const token = localStorage.getItem('token');
+  const res = await api.put('/api/accounts/me', formData, { headers: authHeader(token) });
   return res.data;
 }
