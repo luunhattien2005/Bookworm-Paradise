@@ -1,7 +1,9 @@
 import api from './axios';
 
 function authHeader(token) {
-  return token ? { Authorization: `Bearer ${token}` } : {};
+  // Lấy token từ localStorage nếu token truyền vào null (để chắc chắn)
+  const t = token || localStorage.getItem('token');
+  return t ? { Authorization: `Bearer ${t}` } : {};
 }
 
 export async function registerAccount(payload) {
