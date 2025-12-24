@@ -1,32 +1,70 @@
 import styles from "./Profile.module.css";
 import { AuthContext } from '../auth-interface/AuthContext';
-import { useContext , useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { useUpdateUser } from "../hooks/useAuth";
 
 export default function Information() {
     const { user } = useContext(AuthContext)
     const [isEditing, setIsEditing] = useState(false);
 
-    // Saved data (source of truth)
-    const [profile, setProfile] = useState({
-        fullname: user.fullname,
-        phone: user.phone,
-        email: user.email,
-        sex: user.sex || "Others",
-        birthday: user.birthday,
-        address: user.address
+    // Setup Hook cập nhật
+    const updateMutation = useUpdateUser({
+        onSuccess: () => {
+            alert("Cập nhật hồ sơ thành công!");
+            setIsEditing(false);
+        },
+        onError: (err) => {
+            alert("Lỗi: " + (err.response?.data?.message || err.message));
+        }
     });
 
-    // Draft data (temporary edits)
-    const [draft, setDraft] = useState(profile)
+    // State nháp
+    const [draft, setDraft] = useState({
+        fullname: "",
+        phone: "",
+        email: "",
+        sex: "Others",
+        birthday: "",
+        address: ""
+    });
+
+    // Đồng bộ dữ liệu từ User vào Draft khi load trang
+    useEffect(() => {
+        if (user) {
+            setDraft({
+                fullname: user.fullname || "",
+                phone: user.phone || "",
+                email: user.email || "", // Email thường không cho sửa, nhưng cứ để hiển thị
+                sex: user.sex || "Others",
+                birthday: user.birthday ? user.birthday.split('T')[0] : "", // Format lại ngày nếu cần
+                address: user.address || ""
+            })
+        }
+    }, [user]);
 
     const cancelEditing = () => {
-        setDraft(profile);
+        // Reset về dữ liệu gốc
+        setDraft({
+            fullname: user.fullname || "",
+            phone: user.phone || "",
+            email: user.email || "",
+            sex: user.sex || "Others",
+            birthday: user.birthday ? user.birthday.split('T')[0] : "",
+            address: user.address || ""
+        });
         setIsEditing(false);
     };
 
     const saveEditing = () => {
-        setProfile(draft);     // later send to DB
-        setIsEditing(false);
+        const formData = new FormData();
+        formData.append("fullname", draft.fullname);
+        formData.append("phone", draft.phone);
+        formData.append("address", draft.address);
+        formData.append("sex", draft.sex);
+        formData.append("birthday", draft.birthday);
+
+        // Gửi lên Server
+        updateMutation.mutate(formData);
     };
 
     return (
@@ -35,27 +73,27 @@ export default function Information() {
 
             <div className={styles.information}>
                 <div className={styles.informationFirstDiv}>
-                    <label htmlFor="Fullname">Họ tên</label>
-                    <label htmlFor="Phone">Số điện thoại</label>
-                    <label htmlFor="Email">Email</label>
-                    <label htmlFor="Sex">Giới tính</label>
-                    <label htmlFor="Birthday">Ngày sinh</label>
-                    <label htmlFor="Address">Địa chỉ nhận hàng</label>
+                    <label>Họ tên</label>
+                    <label>Số điện thoại</label>
+                    <label>Email</label>
+                    <label>Giới tính</label>
+                    <label>Ngày sinh</label>
+                    <label>Địa chỉ nhận hàng</label>
                 </div>
 
                 <div className={styles.informationSecondDiv}>
-                    <input type="text" value={draft.fullname} onChange={(e) =>setDraft({ ...draft, fullname: e.target.value })} readOnly={!isEditing} />
-                    <input type="text" value={draft.phone}    onChange={(e) =>setDraft({ ...draft, phone:    e.target.value })} readOnly={!isEditing} />
-                    <input type="text" value={draft.email}    onChange={(e) =>setDraft({ ...draft, email:    e.target.value })} readOnly={!isEditing} />
+                    <input type="text" value={draft.fullname} onChange={(e) => setDraft({ ...draft, fullname: e.target.value })} readOnly={!isEditing} />
+                    <input type="text" value={draft.phone} onChange={(e) => setDraft({ ...draft, phone: e.target.value })} readOnly={!isEditing} />
+                    <input type="text" value={draft.email} disabled className={styles.disabledInput} /> {/* Email không cho sửa */}
 
-                    <select name="Sex" value={user.sex || "Others"} onChange={(e) =>setDraft({ ...draft, sex: e.target.value })} disabled={!isEditing}>
-                        <option>Nam</option>
-                        <option>Nữ</option>
-                        <option>Others</option>
+                    <select value={draft.sex} onChange={(e) => setDraft({ ...draft, sex: e.target.value })} disabled={!isEditing}>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                        <option value="Others">Others</option>
                     </select>
 
-                    <input type="date" value={draft.birthday} onChange={(e) =>setDraft({ ...draft, birthday: e.target.value })} readOnly={!isEditing} />
-                    <input type="text" value={draft.address}  onChange={(e) =>setDraft({ ...draft, address:  e.target.value })} readOnly={!isEditing} />
+                    <input type="date" value={draft.birthday} onChange={(e) => setDraft({ ...draft, birthday: e.target.value })} readOnly={!isEditing} />
+                    <input type="text" value={draft.address} onChange={(e) => setDraft({ ...draft, address: e.target.value })} readOnly={!isEditing} />
                 </div>
             </div>
 
@@ -66,20 +104,13 @@ export default function Information() {
 
                 {isEditing && (
                     <>
-                    <button style={{ color: "lightcoral" }} onClick={() => cancelEditing()}> Hủy bỏ </button>
-                    <button onClick={() => saveEditing(false)}> Lưu thay đổi </button>
+                        <button style={{ color: "lightcoral" }} onClick={cancelEditing}> Hủy bỏ </button>
+                        <button onClick={saveEditing} disabled={updateMutation.isLoading}>
+                            {updateMutation.isLoading ? "Đang lưu..." : "Lưu thay đổi"}
+                        </button>
                     </>
                 )}
             </div>
         </div>
-
-
-
-
-
-
-
-
-
     )
 }
