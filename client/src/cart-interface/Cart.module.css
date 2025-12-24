@@ -230,6 +230,12 @@
     background-color: black;
 }
 
+.gradientButton:disabled {
+    background: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
 /* Checkout page styles */
 /* Info styles */
 .infoContainer {
@@ -301,8 +307,7 @@
 }
 
 .cardForm {
-    margin-top: 12px;
-    margin-left: 16px;
+    margin: 16px 16px;
     padding: 16px;
     border: 1px solid #ddd;
     border-radius: 8px;

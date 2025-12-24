@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react"
-import { Link, useLocation } from "react-router-dom"
-import { useParams } from "react-router-dom"
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 import { useGetBookBySlug } from "../hooks/useBooks"
 
 import DOMPurify from "dompurify"
@@ -9,24 +8,25 @@ import { AuthContext } from "../auth-interface/AuthContext"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"
 import Loading from "../header-footer-interface/Loading"
 
-// import { useMutation, useQueryClient } from "@tanstack/react-query"
-// import { addToCart } from "../api/cart"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { addToCart } from "../api/cart"
 
 import YourRating from "./YourRating"
 import RatingItem from "./RatingItem"
 
 export default function ProductInfo() {
 
-    // const queryClient = useQueryClient()
+    const queryClient = useQueryClient()
 
-    // const addCartMutation = useMutation({
-    //     mutationFn: addToCart,
-    //     onSuccess: () => {
-    //         queryClient.invalidateQueries(["cart"])
-    //     }
-    // })
+    const addCartMutation = useMutation({
+        mutationFn: addToCart,
+        onSuccess: () => {
+            queryClient.invalidateQueries(["cart"])
+        }
+    })
 
     const { slug } = useParams()
+    const navigate = useNavigate()
 
     const {
         data: product,
@@ -125,7 +125,9 @@ export default function ProductInfo() {
                         
                         <button 
                             className={styles.informationAdd}
-                            // onClick={() => addCartMutation.mutate(product)}
+                            onClick={() => {!user ? navigate("/auth", { state: { from: location.pathname } }) :
+                                addCartMutation.mutate({ bookId: product._id, quantity: 1 })
+                            }}
                         >
                                 Thêm vào giỏ hàng
                         </button>

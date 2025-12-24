@@ -1,22 +1,28 @@
-import { useContext, useMemo, useState } from "react"
-import { useCart } from "../hooks/useCart"
+import { useContext, useMemo, useState, useEffect } from "react"
+import { useLocation, useNavigate } from "react-router-dom";
+import { useCart, useClearCart } from "../hooks/useCart"
 import { AuthContext } from "../auth-interface/AuthContext"
 import styles from "../cart-interface/Cart.module.css"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"
 
 export default function Checkout() {
-  const { user } = useContext(AuthContext)
-  const { data } = useCart()
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const selectedIds = JSON.parse(
-    localStorage.getItem("checkout_items") || "[]"
-  )
+  const { user } = useContext(AuthContext)
+  const { data: cart = { items: [] } } = useCart();
+  const clearCart = useClearCart();
+
+  // Load selected items from state passed via navigate
+  const selectedBookIds = location.state?.selectedBookIds || [];
 
   const items = useMemo(() => {
-    return data?.items.filter(item =>
-      selectedIds.includes(String(item.id))
-    ) || []
-  }, [data, selectedIds])
+    if (!cart || cart.items.length === 0) return [];
+
+    return cart?.items.filter(item =>
+      selectedBookIds.includes(item.book._id)
+    )
+  }, [cart, selectedBookIds])
 
   const [shipping, setShipping] = useState("standard")
   const [payment, setPayment] = useState("cod")
@@ -24,13 +30,35 @@ export default function Checkout() {
   const shippingFee = shipping === "express" ? 25000 : 10000
 
   const totalProductPrice = useMemo(() => {
-    return items.reduce(
-      (sum, item) => sum + item.quantity * item.price,
-      0
-    )
+    return items.reduce((sum, item) => sum + item.subTotal, 0);
   }, [items])
 
   const totalPrice = totalProductPrice + shippingFee
+
+  const [cardInfo, setCardInfo] = useState({
+    number: "",
+    name: "",
+    expiry: "",
+    cvv: ""
+  })
+
+  // Minimum validate card info if payment method is card
+  const isCardValid = useMemo(() => {
+    if (payment !== "card") return true;
+
+    return (
+      cardInfo.number.trim() &&
+      cardInfo.name.trim() &&
+      cardInfo.expiry.trim() &&
+      cardInfo.cvv.trim()
+    );
+  }, [payment, cardInfo]);
+
+  useEffect(() => {
+    if (!selectedBookIds.length) {
+      navigate("/cart", { replace: true });
+    }
+  }, [selectedBookIds, navigate]);
 
   return (
     <>
@@ -54,14 +82,14 @@ export default function Checkout() {
         </div>
 
         {items.map(item => (
-          <div key={item.id} className={styles.itemRowCheckout}>
+          <div key={item._id} className={styles.itemRowCheckout}>
             <div className={styles.productInfo}>
-              <img src={item.imgURL} alt={item.name} />
-              <p>{item.name}</p>
+              <img src={item.book.imgURL} alt={item.book.name} />
+              <p>{item.book.name}</p>
             </div>
-            <div>{item.price} VND</div>
+            <div>{item.book.price.toLocaleString("vi-VN")} VND</div>
             <div>{item.quantity}</div>
-            <div>{item.price * item.quantity} VND</div>
+            <div>{item.subTotal.toLocaleString("vi-VN")} VND</div>
           </div>
         ))}
 
@@ -115,10 +143,26 @@ export default function Checkout() {
 
           {payment === "card" && (
             <div className={styles.cardForm}>
-              <input placeholder="Số thẻ" />
-              <input placeholder="Tên chủ thẻ" />
-              <input placeholder="MM/YY" />
-              <input placeholder="CVV" />
+              <input 
+                placeholder="Số thẻ"
+                value={cardInfo.number}
+                onChange={(e) => setCardInfo({...cardInfo, number: e.target.value})}
+              />
+              <input 
+                placeholder="Tên chủ thẻ" 
+                value={cardInfo.name}
+                onChange={(e) => setCardInfo({...cardInfo, name: e.target.value})}
+              />
+              <input 
+                placeholder="MM/YY" 
+                value={cardInfo.expiry}
+                onChange={(e) => setCardInfo({...cardInfo, expiry: e.target.value})}
+              />
+              <input 
+                placeholder="CVV" 
+                value={cardInfo.cvv}
+                onChange={(e) => setCardInfo({...cardInfo, cvv: e.target.value})}
+              />
             </div>
           )}
         </div>
@@ -153,8 +197,18 @@ export default function Checkout() {
                 </div>
             </div>
 
-            <button className={styles.gradientButton}>
-                Đặt hàng
+            <button 
+              className={styles.gradientButton}
+              disabled={items.length === 0 || !isCardValid}
+              onClick={async () => {
+                alert("Đặt hàng thành công!");
+                // Here you would normally handle order submission logic
+                // For this example, we just clear the cart and navigate to a Home page
+                await clearCart.mutateAsync();
+                navigate("/home", { replace: true });
+              }}
+            >
+              Đặt hàng
             </button>
         </div>
 

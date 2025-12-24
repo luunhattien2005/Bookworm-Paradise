@@ -1,6 +1,19 @@
 const Cart = require('../models/Cart');
 const Book = require('../models/Book');
 
+const populateCart = async (cart) => {
+    if (!cart) return cart;
+
+    return cart.populate({
+        path: 'items.book',
+        select: 'name price imgURL slug stockQuantity author',
+        populate: {
+            path: 'author',
+            select: 'AuthorName'
+        }
+    });
+};
+
 const cartController = {
 
     // 1. Xem giỏ hàng (Tính toán lại giá luôn cho chắc ăn)
@@ -8,7 +21,7 @@ const cartController = {
         try {
             const userId = req.user.id;
             let cart = await Cart.findOne({ user: userId })
-                .populate('items.book', 'title price coverImage stockQuantity'); // Lấy chi tiết sách
+            cart = await populateCart(cart);    
 
             if (!cart) {
                 return res.json({ items: [], totalAmount: 0 });
@@ -88,8 +101,7 @@ const cartController = {
             }
 
             await cart.save();
-            // Populate để trả về dữ liệu đẹp luôn
-            await cart.populate('items.book', 'title price coverImage');
+            cart = await populateCart(cart);
             
             res.json({ message: "Đã thêm vào giỏ hàng", cart });
 
@@ -127,7 +139,7 @@ const cartController = {
             cart.totalAmount = cart.items.reduce((acc, item) => acc + item.subTotal, 0);
 
             await cart.save();
-            await cart.populate('items.book', 'title price coverImage');
+            cart = await populateCart(cart);
             res.json(cart);
 
         } catch (err) {
@@ -156,8 +168,28 @@ const cartController = {
             }
 
             await cart.save();
-            await cart.populate('items.book', 'title price coverImage');
+            cart = await populateCart(cart);
             res.json({ message: "Đã xóa sản phẩm", cart });
+
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    },
+
+    // 5. Xóa toàn bộ sản phẩm trong giỏ hàng (vẫn giữ lại giỏ hàng)
+    clearCart: async (req, res) => {
+        try {
+            const userId = req.user.id;
+
+            let cart = await Cart.findOne({ user: userId });
+            if (!cart) return res.status(404).json({ message: "Giỏ hàng trống" });
+
+            cart.items = [];
+            cart.totalAmount = 0;
+
+            await cart.save();
+            cart = await populateCart(cart);
+            res.json({ message: "Đã xóa toàn bộ sản phẩm trong giỏ hàng", cart });
 
         } catch (err) {
             res.status(500).json({ message: err.message });

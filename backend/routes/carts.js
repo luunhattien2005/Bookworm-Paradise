@@ -17,4 +17,7 @@ router.put('/update', cartController.updateItemQuantity);
 // Xóa 1 món (Param: bookId)
 router.delete('/remove/:bookId', cartController.removeItem);
 
+// Xóa toàn bộ sản phẩm trong giỏ hàng (vẫn giữ lại giỏ hàng)
+router.delete('/clear', cartController.clearCart);
+
 module.exports = router;

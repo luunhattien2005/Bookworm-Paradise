@@ -1,37 +1,13 @@
-import { useContext } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getCart as apiGetCart } from '../api/cart';
-import { AuthContext } from '../auth-interface/AuthContext.jsx';
-
-// returns { data, isLoading, error } like react-query
-/**
- * Helper: resolve userId from AuthContext or localStorage
- */
-function useUserId() {
-  const auth = useContext(AuthContext);
-
-  return useMemo(() => {
-    if (auth?.user?.id) return auth.user.id;
-
-    try {
-      const u = JSON.parse(localStorage.getItem('user'));
-      return u?.id || localStorage.getItem('userId') || null;
-    } catch {
-      return localStorage.getItem('userId') || null;
-    }
-  }, [auth]);
-}
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import * as cartApi from '../api/cart.js';
 
 /**
- * Get cart
+ * Get current user's cart
  */
 export function useCart(options = {}) {
-  const userId = useUserId();
-
   return useQuery({
-    queryKey: ['cart', userId],
-    queryFn: () => cartApi.getCart(userId),
-    enabled: !!userId,
+    queryKey: ['cart'],
+    queryFn: cartApi.getCart,
     staleTime: 1000 * 60, // 1 minute
     ...options,
   });
@@ -42,18 +18,13 @@ export function useCart(options = {}) {
  */
 export function useAddToCart(options = {}) {
   const qc = useQueryClient();
-  const userId = useUserId();
 
   return useMutation({
-    mutationFn: ({ bookId, quantity = 1 }) =>
-      cartApi.addToCart(userId, { bookId, quantity }),
-
+    mutationFn: cartApi.addToCart,
     onSuccess: (...args) => {
-      qc.invalidateQueries({ queryKey: ['cart', userId] });
+      qc.invalidateQueries({ queryKey: ['cart'] });
       options.onSuccess?.(...args);
     },
-
-    ...options,
   });
 }
 
@@ -62,18 +33,13 @@ export function useAddToCart(options = {}) {
  */
 export function useUpdateCartItem(options = {}) {
   const qc = useQueryClient();
-  const userId = useUserId();
 
   return useMutation({
-    mutationFn: ({ bookId, quantity }) =>
-      cartApi.updateCartItem(userId, { bookId, quantity }),
-
+    mutationFn: cartApi.updateCartItem,
     onSuccess: (...args) => {
-      qc.invalidateQueries({ queryKey: ['cart', userId] });
+      qc.invalidateQueries({ queryKey: ['cart'] });
       options.onSuccess?.(...args);
     },
-
-    ...options,
   });
 }
 
@@ -82,18 +48,13 @@ export function useUpdateCartItem(options = {}) {
  */
 export function useRemoveFromCart(options = {}) {
   const qc = useQueryClient();
-  const userId = useUserId();
 
   return useMutation({
-    mutationFn: (bookId) =>
-      cartApi.removeFromCart(userId, bookId),
-
+    mutationFn: cartApi.removeFromCart,
     onSuccess: (...args) => {
-      qc.invalidateQueries({ queryKey: ['cart', userId] });
+      qc.invalidateQueries({ queryKey: ['cart'] });
       options.onSuccess?.(...args);
     },
-
-    ...options,
   });
 }
 
@@ -102,17 +63,12 @@ export function useRemoveFromCart(options = {}) {
  */
 export function useClearCart(options = {}) {
   const qc = useQueryClient();
-  const userId = useUserId();
 
   return useMutation({
-    mutationFn: () =>
-      cartApi.clearCart(userId),
-
+    mutationFn: cartApi.clearCart,
     onSuccess: (...args) => {
-      qc.invalidateQueries({ queryKey: ['cart', userId] });
+      qc.invalidateQueries({ queryKey: ['cart'] });
       options.onSuccess?.(...args);
     },
-
-    ...options,
   });
 }

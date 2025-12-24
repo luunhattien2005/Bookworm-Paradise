@@ -1,23 +1,65 @@
-import { useState, useEffect, useMemo } from "react"
-import { Link } from "react-router-dom"
-import { useCart } from "../hooks/useCart"
+import { useState, useMemo } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { useCart, useUpdateCartItem, useRemoveFromCart } from "../hooks/useCart";
 import styles from "./Cart.module.css"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"
 import Loading from "../header-footer-interface/Loading"
 
 export default function Cart() {
-  const { data, isLoading } = useCart()
+  const navigate = useNavigate();
+  const { data: cart = { items: [] }, isLoading } = useCart()
+  const updateQty = useUpdateCartItem();
+  const removeItem = useRemoveFromCart();
   
   // checkbox state (UI-only)
   const [selected, setSelected] = useState({})
-  const [cartItems, setCartItems] = useState([])
+
+  // Save selected items to localStorage for checkout page (truyền state, refresh thì mất, tự qua cart chọn lại)
+  const goCheckout = () => {
+    const selectedBookIds  = Object.keys(selected).filter(id => selected[id])
+    navigate("/checkout", { state: { selectedBookIds } })
+  }
+
+  // select all
+  const allChecked = useMemo(
+    () =>
+      cart.items.length > 0 &&
+      cart.items.every(item => selected[item.book._id]),
+    [cart.items, selected]
+  );
+
+  const toggleAll = () => {
+    const next = {}
+    if (!allChecked) {
+      cart.items.forEach(item => {
+        next[item.book._id] = true;
+      });
+    }
+    setSelected(next)
+  }
+
+  // Tổng số sách được chọn
+  const totalItems = useMemo(() => {
+    return cart.items.reduce((sum, item) => {
+      if (!selected[item.book._id]) return sum;
+      return sum + item.quantity;
+    }, 0);
+  }, [cart.items, selected]);
+
+  // Tổng tiền được chọn
+  const totalPrice = useMemo(() => {
+    return cart.items.reduce((sum, item) => {
+      if (!selected[item.book._id]) return sum;
+      return sum + item.subTotal;
+    }, 0);
+  }, [cart.items, selected]);
 
   if (isLoading) return <Loading />
-  if (!data || data.items.length === 0)
+  
+  if (!cart || cart.items.length === 0)
     return (
       <>
         <PageNameHeader pagename="Cart" />
-
         <main className={styles.cartContainer}>
           <div className={styles.emptyCart}>
             <img
@@ -32,78 +74,9 @@ export default function Cart() {
               Quay về trang chủ
             </Link>
           </div>
- 
         </main>
-
-      
       </>
     )
-
-  useEffect(() => {
-    if (data?.items) {
-      setCartItems(data.items)
-    }
-  }, [data])
-
-  // Save selected items to localStorage for checkout page
-  const goCheckout = () => {
-    const selectedIds = Object.keys(selected).filter(id => selected[id])
-    localStorage.setItem("checkout_items", JSON.stringify(selectedIds))
-  }
-
-  // Handlers to increase/decrease quantity - call api later
-  const increaseQty = (id) => {
-    setCartItems(prev =>
-      prev.map(item =>
-        item.id === id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
-    )
-  }
-
-  const decreaseQty = (id) => {
-    setCartItems(prev =>
-      prev.map(item =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    )
-  }
-
-  // select all
-  const allChecked = useMemo(() => {
-    return cartItems.length > 0 &&
-      cartItems.every(item => selected[item.id])
-  }, [cartItems, selected])
-
-  const toggleAll = () => {
-    const next = {}
-    if (!allChecked) {
-      cartItems.forEach(item => {
-        next[item.id] = true
-      })
-    }
-    setSelected(next)
-  }
-
-  // Total price of selected items
-  const totalItems = useMemo(() => {
-    return cartItems.reduce((sum, item) => {
-      if (!selected[item.id]) return sum
-      return sum + item.quantity
-    }, 0)
-  }, [cartItems, selected])
-
-
-  const totalPrice = useMemo(() => {
-    return cartItems.reduce((sum, item) => {
-      if (!selected[item.id]) return sum
-      return sum + item.quantity * item.price
-    }, 0)
-  }, [cartItems, selected])
-
 
   return (
     <>
@@ -121,48 +94,56 @@ export default function Cart() {
         </div>
 
         {/* Items */}
-        {cartItems.map(item => (
-          <div key={item.id} className={styles.itemRow}>
+        {cart.items.map(item => (
+          <div key={item._id} className={styles.itemRow}>
             <input
               type="checkbox"
-              checked={!!selected[item.id]}
+              checked={!!selected[item.book._id]}
               onChange={() =>
                 setSelected(prev => ({
                   ...prev,
-                  [item.id]: !prev[item.id]
+                  [item.book._id]: !prev[item.book._id]
                 }))
               }
             />
 
             {/* Product */}
             <div className={styles.productInfo}>
-              <img src={item.imgURL} alt={item.name} />
+              <img src={item.book.imgURL} alt={item.book.name} />
               <div>
-                <Link to={`/product/${item.slug}`} className={styles.link}>
-                  <p className={styles.name}>Sách: {item.name}</p>
+                <Link to={`/product/${item.book.slug}`} className={styles.link}>
+                  <p className={styles.name}>Sách: {item.book.name}</p>
                 </Link>
-                <p className={styles.author}>Tác giả: {item.author}</p>
+                <p className={styles.author}>Tác giả: {item.book.author.AuthorName}</p>
               </div>
             </div>
 
-            <div>{item.price} VND</div>
+            <div>{item.book.price.toLocaleString("vi-VN")} VND</div>
 
             {/* Quantity */}
             <div className={styles.quantity}>
-              <button disabled={item.quantity <= 1} onClick={() => decreaseQty(item.id)}>-</button> {/* Call api sau */}
-              <input
-                type="number"
-                value={item.quantity}
-                min={1}
-                max={item.stock}
-                readOnly // Call api sau
-              />
-              <button disabled={item.quantity >= item.stock} onClick={() => increaseQty(item.id)}>+</button> {/* Call api sau */}
+              <button 
+                disabled={item.quantity <= 1} 
+                onClick={() => updateQty.mutate({ bookId: item.book._id, quantity: item.quantity - 1 })}>
+                -
+              </button> 
+              
+              <input readOnly value={item.quantity} />
+
+              <button 
+                disabled={item.quantity >= item.book.stockQuantity} 
+                onClick={() => updateQty.mutate({ bookId: item.book._id, quantity: item.quantity + 1 })}>
+                +
+              </button> 
             </div>
 
-            <div>{item.price * item.quantity} VND</div>
+            <div>{item.subTotal.toLocaleString("vi-VN")} VND</div>
 
-            <button className={styles.remove}>Xóa</button>
+            <button 
+              className={styles.remove}
+              onClick={() => removeItem.mutate({ bookId: item.book._id })}>
+              Xóa
+            </button>
           </div>
         ))}
 
@@ -180,15 +161,15 @@ export default function Cart() {
             </div>
           </div>
 
-          <Link to="/checkout" style={{width: "100%"}}>
-            <button
-              disabled={totalItems === 0}
-              className={styles.gradientButton}
-              onClick={goCheckout}
-            >
-              Xác nhận đơn hàng
-            </button>
-          </Link>
+
+          <button
+            disabled={totalItems === 0}
+            className={styles.gradientButton}
+            onClick={goCheckout}
+          >
+            Xác nhận đơn hàng
+          </button>
+
         </div>
       </main>
     </>

@@ -30,7 +30,7 @@ router.get('/books', bookController.getAllBooks);
 router.get('/books/search/:keyword', bookController.searchBooks);
 
 // Lấy sách theo slug
-router.get('/slug/:slug', bookController.getBookBySlug);
+router.get('/books/slug/:slug', bookController.getBookBySlug);
 
 // Lấy chi tiết 1 sách
 router.get('/books/:id', bookController.getBookById);
