@@ -26,7 +26,9 @@ export async function getMe(token) {
   return res.data;
 }
 
-export async function updateProfile(token, updates) {
-  const res = await api.put('/api/accounts/me', updates, { headers: authHeader(token) });
+export async function updateProfile(formData) {
+  // Backend route mới: PUT /api/accounts/me
+  // Không cần truyền ID vào URL nữa
+  const res = await api.put('/api/accounts/me', formData);
   return res.data;
 }
