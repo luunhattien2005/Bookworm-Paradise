@@ -1,5 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import * as accountsApi from '../api/account';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { updateProfile } from '../api/account';
+
 
 /**
  * useLogin / useRegister / useMe
@@ -41,4 +42,19 @@ export function useMe(token, options = {}) {
       ...options,
     }
   );
+}
+
+export function useUpdateUser(options = {}) {
+  const qc = useQueryClient();
+
+  return useMutation({
+    // SỬA: Mutation không cần nhận userId nữa, chỉ cần formData
+    mutationFn: (formData) => updateProfile(formData),
+
+    onSuccess: (data) => {
+      qc.invalidateQueries(['me']); // Làm mới dữ liệu user
+      if (options.onSuccess) options.onSuccess(data);
+    },
+    ...options,
+  });
 }
