@@ -1,24 +1,18 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import * as ordersApi from '../api/order';
 
-/**
- * useOrdersQuery(userId)
- * useCreateOrder / useUpdateOrderStatus
- */
-
+// Hook lấy đơn hàng của user
 export function useOrders(userId, options = {}) {
   return useQuery({
     queryKey: ['orders', userId],
     queryFn: () => ordersApi.getOrders(userId),
     enabled: !!userId,
-    staleTime: 1000 * 60, // 1 minute
+    staleTime: 1000 * 60, // 1 phút
     ...options,
   });
 }
 
-/**
- * Create order (checkout)
- */
+// Hook tạo đơn hàng mới
 export function useCreateOrder(userId, options = {}) {
   const qc = useQueryClient();
 
@@ -36,26 +30,34 @@ export function useCreateOrder(userId, options = {}) {
   });
 }
 
-/**
- * Update order status (admin)
- */
+// Hook lấy tất cả đơn hàng (Admin)
+export function useAllOrders(options = {}) {
+    return useQuery({
+        queryKey: ['admin', 'orders'],
+        queryFn: ordersApi.getAllOrders,
+        ...options
+    });
+}
+
+// Hook lấy chi tiết 1 đơn hàng (cho trang Edit)
+export function useOrderById(orderId, options = {}) {
+    return useQuery({
+        queryKey: ['order', orderId],
+        queryFn: () => ordersApi.getOrderById(orderId),
+        enabled: !!orderId,
+        ...options
+    });
+}
+
+// Hook cập nhật trạng thái đơn hàng (Admin)
 export function useUpdateOrderStatus(options = {}) {
   const qc = useQueryClient();
-
   return useMutation({
-    mutationFn: ({ orderId, status }) =>
-      ordersApi.updateOrderStatus(
-        orderId,
-        status,
-        options.token
-      ),
-
-    onSuccess: (...args) => {
-      // Admin might want to refresh orders
-      qc.invalidateQueries({ queryKey: ['orders'] });
-      options.onSuccess?.(...args);
+    mutationFn: ({ orderId, status }) => ordersApi.updateOrderStatus(orderId, status),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['admin', 'orders'] }); // Refresh list
+      qc.invalidateQueries({ queryKey: ['order'] }); // Refresh detail
     },
-
     ...options,
   });
 }
