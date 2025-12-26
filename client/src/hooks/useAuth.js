@@ -1,14 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import * as accountsApi from '../api/account';
 
-
-/**
- * useLogin / useRegister / useMe
- * - Caller is responsible for persisting token (localStorage / AuthContext).
- */
-
-
-
+// Hook đăng nhập
 export function useLogin(options = {}) {
   const qc = useQueryClient();
   return useMutation({
@@ -21,6 +14,7 @@ export function useLogin(options = {}) {
   });
 }
 
+// Hook đăng ký
 export function useRegister(options = {}) {
   const qc = useQueryClient();
   return useMutation({
@@ -33,7 +27,7 @@ export function useRegister(options = {}) {
   });
 }
 
-// token: pass token string via parameter
+// Hook lấy thông tin user hiện tại
 export function useMe(token, options = {}) {
   return useQuery({
     queryKey: ['me', token],
@@ -56,4 +50,25 @@ export function useUpdateUser(options = {}) {
     },
     ...options,
   });
+}
+
+// Hook lấy tất cả tài khoản (Admin)
+export function useAllAccounts(options = {}) {
+    return useQuery({
+        queryKey: ['admin', 'accounts'],
+        queryFn: accountsApi.getAllAccounts,
+        ...options
+    });
+}
+
+// Hook Ban/Unban tài khoản (Admin)
+export function useBanAccount(options = {}) {
+    const qc = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => accountsApi.banAccount(id),
+        onSuccess: () => {
+            qc.invalidateQueries({ queryKey: ['admin', 'accounts'] });
+        },
+        ...options
+    });
 }
