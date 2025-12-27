@@ -1,10 +1,12 @@
 import api from './axios';
 
 // q = search text (title/author) OR other params
-export async function searchBooks(q, { limit = 20, page = 1, tag, author } = {}) {
+export async function searchBooks(q, { limit = 20, page = 1, tag, author, min, max } = {}) {
   const params = { q, limit, page };
   if (tag) params.tag = tag;
   if (author) params.author = author;
+  if (min) params.min = min;
+  if (max) params.max = max;
   const res = await api.get('/api/books', { params });
   return res.data;
 }

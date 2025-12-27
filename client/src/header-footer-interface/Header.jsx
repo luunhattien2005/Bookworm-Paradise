@@ -1,5 +1,5 @@
 import { useState, useContext } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AuthContext } from "../auth-interface/AuthContext"
 import { useCart } from "../hooks/useCart"
 
@@ -7,6 +7,17 @@ import styles from "./HeaderFooter.module.css"
 
 export default function Header() {
     const { user } = useContext(AuthContext)
+
+    const [keyword, setKeyword] = useState("")
+    const navigate = useNavigate()
+
+    const handleSearch = (e) => {
+        e.preventDefault()
+
+        const q = keyword.trim()
+        navigate(`/search?q=${encodeURIComponent(q)}`)
+    }
+
     const { data: cart } = useCart() 
     const cartCount = cart?.items?.length || 0
 
@@ -64,8 +75,13 @@ export default function Header() {
                     </div>                    
                 </div>
 
-                <form className={styles.searchBar}>
-                    <input type="text" placeholder="Nhà giả kim"></input>
+                <form className={styles.searchBar} onSubmit={handleSearch}>
+                    <input 
+                        type="text" 
+                        placeholder="Nhà giả kim"
+                        value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
+                    />
 
                     <button type="submit">
                         <i className="material-symbols-outlined" style={{fontSize: "35px"}}>search</i>

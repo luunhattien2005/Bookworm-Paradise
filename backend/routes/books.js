@@ -23,11 +23,8 @@ router.post('/tags', verifyAdmin, bookController.createTag);
 // Đường dẫn thực tế: /api/books
 // ==========================================
 
-// Lấy tất cả sách
-router.get('/books', bookController.getAllBooks);
-
-// Tìm kiếm sách (Lưu ý: Đặt route tìm kiếm TRƯỚC route lấy ID để tránh nhầm lẫn)
-router.get('/books/search/:keyword', bookController.searchBooks);
+// Tìm kiếm sách 
+router.get('/books', bookController.searchBooks);
 
 // Lấy sách theo slug
 router.get('/books/slug/:slug', bookController.getBookBySlug);

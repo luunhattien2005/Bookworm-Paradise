@@ -96,6 +96,11 @@ export default function ProductInfo() {
         )
     }
 
+    // if (product) {
+    //     console.log("Product tags:")
+    //     console.log(product.tags)
+    // }
+    
     if (isLoading) return <Loading />;
     if (isError) return <Loading error={true} message={error.message} />;
 
@@ -114,11 +119,15 @@ export default function ProductInfo() {
                         <p className={styles.informationAuthor}>Tác giả: {product.author.AuthorName}</p>
 
                         <div className={styles.informationTag}>
-                            <a href="#">Horror</a>
-                            <a href="#">Funny</a>
-                            <a href="#">Drama</a>
-                            <a href="#">Adult</a>
-                            <a href="#">Math</a>
+                            {product.tags && product.tags.length > 0 ? (
+                                product.tags.map(tag => (
+                                <a href="#" key={tag._id}>
+                                    {tag.name}
+                                </a>
+                                ))
+                            ) : (
+                                <span className={styles.noTag}>Không có thể loại</span>
+                            )}
                         </div>
 
                         <p className={styles.informationPrice}>{product.price.toLocaleString("vi-VN")} VND</p>

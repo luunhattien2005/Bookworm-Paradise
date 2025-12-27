@@ -4,12 +4,22 @@ import * as cartApi from '../api/cart.js';
 /**
  * Get current user's cart
  */
-export function useCart(options = {}) {
+// export function useCart(options = {}) {
+//   return useQuery({
+//     queryKey: ['cart'],
+//     queryFn: cartApi.getCart,
+//     staleTime: 1000 * 60, // 1 minute
+//     ...options,
+//   });
+// }
+
+export function useCart() {
+  const token = localStorage.getItem("token");
+
   return useQuery({
-    queryKey: ['cart'],
+    queryKey: ["cart"],
     queryFn: cartApi.getCart,
-    staleTime: 1000 * 60, // 1 minute
-    ...options,
+    enabled: !!token
   });
 }
 

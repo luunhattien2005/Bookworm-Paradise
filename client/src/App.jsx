@@ -16,6 +16,7 @@ import OrderEdit from "./admin-interface/OrderEdit"
 import ProductAdd from "./admin-interface/ProductAdd"
 import ProductEdit from "./admin-interface/ProductEdit"
 import BillInfo from "./profile-interface/BillInfo.jsx";
+import SearchResult from "./search-interface/SearchResult.jsx";
 import { Navigate } from "react-router-dom";
 
 export default function App() {
@@ -35,6 +36,8 @@ export default function App() {
         <Route path="/logout" element={<Logout />} />
 
         <Route path="/home" element={<HomePage />} />
+
+        <Route path="/search" element={<SearchResult />} />
 
         <Route path="/product/:slug" element={<ProductInfo />} />
 

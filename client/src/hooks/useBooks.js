@@ -14,7 +14,7 @@ export function useSearchBooks(q, params = {}, options = {}) {
   return useQuery({
     queryKey: ['books', { q, ...params }],
     queryFn: () => booksApi.searchBooks(q, params),
-    enabled: !!q,
+    enabled: true,
     keepPreviousData: true,
     staleTime: 1000 * 60,
     ...options,

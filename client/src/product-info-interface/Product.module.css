@@ -69,7 +69,9 @@
 }
 
 .informationTag {
-    background: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;              /* khoảng cách giữa các tag */
 }
 
 .informationTag a {
@@ -80,8 +82,9 @@
     font-weight: lighter;
     background: #CFF7D3;
     padding: 6px 6px;
-    margin-left: 0px;
-    margin-right: 5px;
+    max-width: 100%;
+    word-break: break-word;
+    line-height: 1.4;
 }
 
 .informationPrice {
