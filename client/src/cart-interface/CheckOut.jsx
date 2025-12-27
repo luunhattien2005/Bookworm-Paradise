@@ -1,6 +1,6 @@
 import { useContext, useMemo, useState, useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
-import { useCart, useClearCart } from "../hooks/useCart"
+import { useCart } from "../hooks/useCart"
 import { useCreateOrder } from "../hooks/useOrder"
 import { AuthContext } from "../auth-interface/AuthContext"
 import styles from "../cart-interface/Cart.module.css"
@@ -12,10 +12,10 @@ export default function Checkout() {
 
   const { user } = useContext(AuthContext)
   const { data: cart = { items: [] } } = useCart();
-  const clearCart = useClearCart();
   const createOrder = useCreateOrder({
-    onSuccess: () => {
-      navigate("/home"); // hoặc trang success
+    onSuccess: (data) => {
+      alert(data.message)
+      navigate(`/bill/${data.order._id}`, { replace: true }); 
     },
     onError: (err) => {
       alert(err.response?.data?.message || "Đặt hàng thất bại");

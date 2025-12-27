@@ -9,6 +9,7 @@ export default function PageNameHeader({ pagename }) {
         Product: ['Product info', <i className="fa-solid fa-book-open" style={{ fontSize: "30px"}}></i>],
         Cart: ['Shopping cart', <i className="material-symbols-outlined" style={{fontSize: "35px"}}>shopping_cart</i>],
         Checkout: ['Checkout', <i className="fa-solid fa-credit-card" style={{ fontSize: "30px"}}></i>],
+        Bill: ['Bill Info', <i className="fa-solid fa-file" style={{ fontSize: "30px" }}></i>]
     }
 
     return(

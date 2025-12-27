@@ -121,7 +121,7 @@ export default function ProductInfo() {
                             <a href="#">Math</a>
                         </div>
 
-                        <p className={styles.informationPrice}>{product.price}VND</p>
+                        <p className={styles.informationPrice}>{product.price.toLocaleString("vi-VN")} VND</p>
                         
                         <button 
                             className={styles.informationAdd}

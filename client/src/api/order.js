@@ -25,7 +25,7 @@ export async function getAllOrders() {
 
 // Lấy chi tiết 1 đơn hàng (cho trang Edit)
 export async function getOrderById(orderId) {
-    const res = await api.get(`/api/orders/detail/${orderId}`, { headers: authHeader() });
+    const res = await api.get(`/api/orders/${orderId}`, { headers: authHeader() });
     return res.data;
 }
 

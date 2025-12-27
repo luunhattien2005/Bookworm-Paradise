@@ -294,3 +294,111 @@
     color: black;
     outline: black 2px solid;
 }
+
+/* ----- Bill Info ----- */
+.billContainer {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+.billContainer p {
+    margin-bottom: 4px;
+}
+
+.billTitle {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.billSection {
+  margin-bottom: 24px;
+}
+
+.billSection h4 {
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.billTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.billTable th,
+.billTable td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.productCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.productCell img {
+  width: 48px;
+  height: auto;
+  border-radius: 4px;
+}
+
+.billTotal {
+    margin-top: 24px;
+    border-top: 1px solid black;
+    padding-top: 16px;
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.final {
+    font-weight: 700;
+    font-size: 17px;
+    color: #c92127;
+}
+
+
+/* Status */
+.status {
+  margin-left: 8px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.processing {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.shipping {
+  background: #d4edda;
+  color: #155724;
+}
+
+.delivered {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}

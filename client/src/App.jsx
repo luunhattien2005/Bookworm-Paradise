@@ -15,6 +15,7 @@ import Footer from "./header-footer-interface/Footer.jsx";
 import OrderEdit from "./admin-interface/OrderEdit"
 import ProductAdd from "./admin-interface/ProductAdd"
 import ProductEdit from "./admin-interface/ProductEdit"
+import BillInfo from "./profile-interface/BillInfo.jsx";
 import { Navigate } from "react-router-dom";
 
 export default function App() {
@@ -36,6 +37,12 @@ export default function App() {
         <Route path="/home" element={<HomePage />} />
 
         <Route path="/product/:slug" element={<ProductInfo />} />
+
+        <Route path="/bill/:id" element={
+          <ProtectedRoute>
+            <BillInfo />
+          </ProtectedRoute>
+        } />
 
         <Route path="/cart" element={
           <ProtectedRoute>
