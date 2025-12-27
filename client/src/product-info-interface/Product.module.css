@@ -168,6 +168,20 @@
     margin: 0;
 }
 
+.middleProductInformation h2 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0px 0px;
+    padding-bottom: 8px;
+}
+
+.middleProductInformation h3 {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0px 0px;
+    padding-bottom: 8px;
+}
+
 .middleProductInformation p {
     font-size: 14px;
     font-weight: 0;

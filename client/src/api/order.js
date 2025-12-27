@@ -6,14 +6,14 @@ function authHeader() {
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 // Tạo đơn hàng mới
-export async function createOrder(userId, payload) {
-  const res = await api.post(`/api/orders/${userId}/create`, payload);
+export async function createOrder(payload) {
+  const res = await api.post(`/api/orders/place-order`, payload, { headers: authHeader() });
   return res.data;
 }
 
 // Lấy đơn hàng của user
-export async function getOrders(userId) {
-  const res = await api.get(`/api/orders/${userId}`);
+export async function getMyOrders() {
+  const res = await api.get(`/api/orders/my-orders`, { headers: authHeader() });
   return res.data;
 }
 

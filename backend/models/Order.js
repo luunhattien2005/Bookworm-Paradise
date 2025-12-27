@@ -8,10 +8,19 @@ const OrderItemSchema = new mongoose.Schema({
 
 const OrderSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'Account', required: true },
-    items: [OrderItemSchema],
-    totalAmount: { type: Number, required: true },
-    paymentMethod: { type: String, default: 'COD' }, 
     
+    items: [OrderItemSchema],
+    
+    cartAmount: { type: Number, required: true },
+    
+    paymentMethod: { type: String, enum: ['COD', 'CARD'], default: 'COD' }, 
+
+    shippingMethod: { type: String, enum: ['standard', 'express'], default: 'standard', required: true },
+    
+    shippingFee: { type: Number, required: true },
+
+    totalAmount: { type: Number, required: true }, // tổng cuối đã bao gồm tiền ship
+
     status: { 
         type: String, 
         enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'], 

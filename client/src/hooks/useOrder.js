@@ -2,27 +2,26 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import * as ordersApi from '../api/order';
 
 // Hook lấy đơn hàng của user
-export function useOrders(userId, options = {}) {
+export function useOrders(options = {}) {
   return useQuery({
-    queryKey: ['orders', userId],
-    queryFn: () => ordersApi.getOrders(userId),
-    enabled: !!userId,
+    queryKey: ['orders'],
+    queryFn: () => ordersApi.getMyOrders(),
     staleTime: 1000 * 60, // 1 phút
     ...options,
   });
 }
 
 // Hook tạo đơn hàng mới
-export function useCreateOrder(userId, options = {}) {
+export function useCreateOrder(options = {}) {
   const qc = useQueryClient();
 
   return useMutation({
     mutationFn: (payload) =>
-      ordersApi.createOrder(userId, payload),
+      ordersApi.createOrder(payload),
 
     onSuccess: (...args) => {
-      qc.invalidateQueries({ queryKey: ['orders', userId] });
-      qc.invalidateQueries({ queryKey: ['cart', userId] });
+      qc.invalidateQueries({ queryKey: ['orders'] });
+      qc.invalidateQueries({ queryKey: ['cart'] });
       options.onSuccess?.(...args);
     },
 

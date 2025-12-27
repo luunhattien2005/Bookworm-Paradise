@@ -8,7 +8,11 @@ const orderController = {
     placeOrder: async (req, res) => {
         try {
             const userId = req.user.id;
-            const { shippingAddress, paymentMethod, deliveryNote } = req.body;
+            const { shippingAddress, paymentMethod, deliveryNote, shippingMethod, shippingFee } = req.body;
+
+            if (!shippingMethod || shippingFee == null) {
+                return res.status(400).json({ message: "Thiếu thông tin về phương thức vận chuyển" });
+            }
 
             // Lấy giỏ hàng của user
             const cart = await Cart.findOne({ user: userId }).populate('items.book');
@@ -37,9 +41,12 @@ const orderController = {
             const newOrder = new Order({
                 user: userId,
                 items: orderItems,
-                totalAmount: cart.totalAmount, // Tổng tiền lấy từ Cart
-                shippingAddress,
+                cartAmount: cart.totalAmount, 
                 paymentMethod,
+                shippingAddress,
+                shippingMethod,
+                shippingFee,
+                totalAmount: cart.totalAmount + shippingFee,
                 deliveryNote
             });
 

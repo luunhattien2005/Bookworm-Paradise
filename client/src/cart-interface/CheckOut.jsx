@@ -1,6 +1,7 @@
 import { useContext, useMemo, useState, useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCart, useClearCart } from "../hooks/useCart"
+import { useCreateOrder } from "../hooks/useOrder"
 import { AuthContext } from "../auth-interface/AuthContext"
 import styles from "../cart-interface/Cart.module.css"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"
@@ -12,6 +13,14 @@ export default function Checkout() {
   const { user } = useContext(AuthContext)
   const { data: cart = { items: [] } } = useCart();
   const clearCart = useClearCart();
+  const createOrder = useCreateOrder({
+    onSuccess: () => {
+      navigate("/home"); // hoặc trang success
+    },
+    onError: (err) => {
+      alert(err.response?.data?.message || "Đặt hàng thất bại");
+    }
+  });
 
   // Load selected items from state passed via navigate
   const selectedBookIds = location.state?.selectedBookIds || [];
@@ -25,7 +34,7 @@ export default function Checkout() {
   }, [cart, selectedBookIds])
 
   const [shipping, setShipping] = useState("standard")
-  const [payment, setPayment] = useState("cod")
+  const [payment, setPayment] = useState("COD")
 
   const shippingFee = shipping === "express" ? 25000 : 10000
 
@@ -53,6 +62,8 @@ export default function Checkout() {
       cardInfo.cvv.trim()
     );
   }, [payment, cardInfo]);
+
+  const [deliveryNote, setDeliveryNote] = useState("");
 
   useEffect(() => {
     if (!selectedBookIds.length) {
@@ -124,9 +135,9 @@ export default function Checkout() {
           <label>
             <input
               type="radio"
-              value="cod"
-              checked={payment === "cod"}
-              onChange={() => setPayment("cod")}
+              value="COD"
+              checked={payment === "COD"}
+              onChange={() => setPayment("COD")}
             />
             Thanh toán khi nhận hàng
           </label>
@@ -134,9 +145,9 @@ export default function Checkout() {
           <label>
             <input
               type="radio"
-              value="card"
-              checked={payment === "card"}
-              onChange={() => setPayment("card")}
+              value="CARD"
+              checked={payment === "CARD"}
+              onChange={() => setPayment("CARD")}
             />
             Thẻ tín dụng / ghi nợ
           </label>
@@ -174,6 +185,8 @@ export default function Checkout() {
             <textarea
                 className={styles.orderNote}
                 placeholder="Lưu ý cho đơn hàng"
+                value={deliveryNote}
+                onChange={(e) => setDeliveryNote(e.target.value)}
                 rows={4}
             />
         </div>
@@ -197,19 +210,21 @@ export default function Checkout() {
                 </div>
             </div>
 
-            <button 
-              className={styles.gradientButton}
-              disabled={items.length === 0 || !isCardValid}
-              onClick={async () => {
-                alert("Đặt hàng thành công!");
-                // Here you would normally handle order submission logic
-                // For this example, we just clear the cart and navigate to a Home page
-                await clearCart.mutateAsync();
-                navigate("/home", { replace: true });
-              }}
-            >
-              Đặt hàng
-            </button>
+          <button
+            className={styles.gradientButton}
+            disabled={items.length === 0 || !isCardValid || createOrder.isLoading}
+            onClick={() => {
+              createOrder.mutate({
+                shippingAddress: user.address,
+                paymentMethod: payment.toUpperCase(), // COD / CARD
+                shippingMethod: shipping,
+                shippingFee: shippingFee,
+                deliveryNote: deliveryNote.trim(),
+              });
+            }}
+          >
+            {createOrder.isLoading ? "Đang xử lý..." : "Đặt hàng"}
+          </button>
         </div>
 
       </main>

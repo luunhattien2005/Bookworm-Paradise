@@ -14,9 +14,9 @@ import medal3 from "./img/medal3.png"
 export default function HomePage() {
     // Nổi bật - note ảnh request từ server
     const images_popular = [
-        {banner: banner1, linkTo: "/product/triet-hoc-mac-lenin"},
-        {banner: banner2, linkTo: "/product/combo"},
-        {banner: banner3, linkTo: "/product/cay-cam-ngot"}
+        {banner: banner1, linkTo: "/product/nha-gia-kim"},
+        {banner: banner2, linkTo: "/product/suoi-am-mat-troi"},
+        {banner: banner3, linkTo: "/product/cay-cam-ngot-cua-toi"}
     ]
     // Index of image currently on top
     const [active, setActive] = useState(0)
