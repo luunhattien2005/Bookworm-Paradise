@@ -5,7 +5,14 @@ const wishlistController = {
     getWishlist: async (req, res) => {
         try {
             let wishlist = await Wishlist.findOne({ user: req.user.id })
-                .populate('books', 'name price imgURL author'); 
+                .populate({
+                    path: 'books',
+                    select: 'name price imgURL author slug', 
+                    populate: { 
+                        path: 'author', 
+                        select: 'AuthorName' 
+                    }
+                });
 
             if (!wishlist) {
                 return res.json({ books: [] });

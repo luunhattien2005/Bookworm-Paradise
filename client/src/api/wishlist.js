@@ -1,17 +1,16 @@
 import api from './axios';
 
-export async function getWishlist(userId) {
-  if (!userId) return { books: [] };
-  const res = await api.get(`/api/wishlists/${userId}`);
+export async function getWishlist() {
+  const res = await api.get('/api/wishlists'); 
   return res.data;
 }
 
-export async function addToWishlist(userId, bookId) {
-  const res = await api.post(`/api/wishlists/${userId}/add`, { bookId });
+export async function addToWishlist(bookId) {
+  const res = await api.post('/api/wishlists/add', { bookId });
   return res.data;
 }
 
-export async function removeFromWishlist(userId, bookId) {
-  const res = await api.post(`/api/wishlists/${userId}/remove`, { bookId });
+export async function removeFromWishlist(bookId) {
+  const res = await api.delete(`/api/wishlists/remove/${bookId}`);
   return res.data;
 }

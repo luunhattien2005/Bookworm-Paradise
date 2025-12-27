@@ -3,7 +3,8 @@ import { AuthContext } from '../auth-interface/AuthContext';
 import { useNavigate , useLocation} from 'react-router-dom';
 import styles from "./Profile.module.css";
 import PageNameHeader from '../header-footer-interface/PageNameHeader';
-import Information from './Infomation'; // File của bạn tên là Infomation (thiếu r)
+import Information from './Infomation'; 
+import Favorites from './Favorites';
 import ChangePassword from './ChangePassword';
 import { useUpdateUser } from "../hooks/useAuth";
 
@@ -102,8 +103,8 @@ export default function Profile() {
 
             {location.pathname ==="/profile/info" && <Information />}
             {location.pathname ==="/profile/password" && <ChangePassword />}
+            {location.pathname ==="/profile/favorites" && <Favorites />}
             {/* Placeholder cho các tab chưa làm */}
-            {location.pathname ==="/profile/favorites" && <div>Nội dung yêu thích đang phát triển...</div>}
             {location.pathname ==="/profile/bills" && <div>Lịch sử mua hàng đang phát triển...</div>}
             {location.pathname ==="/profile/notifications" && <div>Thông báo đang phát triển...</div>}
         </main>

@@ -1,57 +1,44 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import * as wishlistApi from '../api/wishlist';
 
 /**
- * Get wishlist for a user
+ * Lấy danh sách yêu thích
  */
-export function useWishlist(userId, options = {}) {
+export function useWishlist(options = {}) {
   return useQuery({
-    queryKey: ['wishlist', userId],
-    queryFn: () => wishlistApi.getWishlist(userId),
-    enabled: !!userId,
-    staleTime: 1000 * 60, // 1 minute
+    queryKey: ['wishlist'], 
+    queryFn: () => wishlistApi.getWishlist(),
+    staleTime: 1000 * 60, 
     ...options,
   });
 }
 
 /**
- * Add book to wishlist
+ * Thêm vào yêu thích
  */
-export function useAddToWishlist(userId, options = {}) {
+export function useAddToWishlist(options = {}) {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: (bookId) =>
-      wishlistApi.addToWishlist(userId, bookId),
-
-    onSuccess: (...args) => {
-      qc.invalidateQueries({ queryKey: ['wishlist', userId] });
-      options.onSuccess?.(...args);
+    mutationFn: (bookId) => wishlistApi.addToWishlist(bookId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['wishlist'] });
     },
-
     ...options,
   });
 }
 
 /**
- * Remove book from wishlist
+ * Xóa khỏi yêu thích
  */
-export function useRemoveFromWishlist(userId, options = {}) {
+export function useRemoveFromWishlist(options = {}) {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: (bookId) =>
-      wishlistApi.removeFromWishlist(userId, bookId),
-
-    onSuccess: (...args) => {
-      qc.invalidateQueries({ queryKey: ['wishlist', userId] });
-      options.onSuccess?.(...args);
+    mutationFn: (bookId) => wishlistApi.removeFromWishlist(bookId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['wishlist'] });
     },
-
     ...options,
   });
 }
