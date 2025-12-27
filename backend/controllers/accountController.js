@@ -212,18 +212,28 @@ const accountController = {
         }
     },
 
-    // 7. Ban user 
+    // 7. Ban/unban user 
     banAccount: async (req, res) => {
         try {
-            const account = await Account.findByIdAndUpdate(
-                req.params.id,
-                { isBanned: true },
-                { new: true }
-            );
+            // Bước 1: Tìm tài khoản trước để xem trạng thái hiện tại
+            const account = await Account.findById(req.params.id);
 
             if (!account) return res.status(404).json({ message: 'Không tìm thấy user' });
+            if (account.role === 'admin') {
+                return res.status(400).json({ message: 'Không thể khóa tài khoản Admin!' });
+            }
 
-            res.json({ message: `Đã BAN (khóa) tài khoản ${account.username} thành công.` });
+            // Bước 2: Đảo ngược trạng thái isBanned
+            // Nếu đang true (bị khóa) -> thành false (mở khóa) và ngược lại
+            account.isBanned = !account.isBanned;
+            
+            // Lưu lại vào DB
+            await account.save();
+
+            // Bước 3: Phản hồi thông báo phù hợp
+            const msg = account.isBanned ? "Đã KHÓA tài khoản" : "Đã MỞ KHÓA tài khoản";
+            res.json({ message: `${msg} ${account.username} thành công.`, account });
+
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
