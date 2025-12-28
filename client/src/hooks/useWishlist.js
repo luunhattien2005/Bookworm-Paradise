@@ -1,9 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import * as wishlistApi from '../api/wishlist';
 
-/**
- * Lấy danh sách yêu thích
- */
+// Lấy danh sách yêu thích
 export function useWishlist(options = {}) {
   return useQuery({
     queryKey: ['wishlist'], 
@@ -13,9 +11,7 @@ export function useWishlist(options = {}) {
   });
 }
 
-/**
- * Thêm vào yêu thích
- */
+// Thêm vào yêu thích
 export function useAddToWishlist(options = {}) {
   const qc = useQueryClient();
 
@@ -28,9 +24,7 @@ export function useAddToWishlist(options = {}) {
   });
 }
 
-/**
- * Xóa khỏi yêu thích
- */
+// Xóa khỏi yêu thích
 export function useRemoveFromWishlist(options = {}) {
   const qc = useQueryClient();
 

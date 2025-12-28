@@ -2,6 +2,7 @@ import { useState, useContext } from "react"
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 import { useGetBookBySlug } from "../hooks/useBooks"
 import { useReviews, useAddReview } from "../hooks/useReview" 
+import { useWishlist, useAddToWishlist, useRemoveFromWishlist } from "../hooks/useWishlist"
 
 import DOMPurify from "dompurify"
 import styles from "./Product.module.css"
@@ -30,6 +31,26 @@ export default function ProductInfo() {
         error
     } = useGetBookBySlug(slug);
 
+    const { data: wishlistData } = useWishlist({ enabled: !!user });
+    
+    const isLiked = wishlistData?.books?.some(b => b._id === product?._id) || false;
+
+    const addToWishlistMutation = useAddToWishlist();
+    const removeFromWishlistMutation = useRemoveFromWishlist();
+
+    const handleToggleWishlist = () => {
+        if (!user) {
+            alert("Vui lòng đăng nhập để thêm vào yêu thích!");
+            return;
+        }
+        if (isLiked) {
+            removeFromWishlistMutation.mutate(product._id);
+        } else {
+            addToWishlistMutation.mutate(product._id);
+        }
+    };
+
+
     // 2. Add to Cart Mutation
     const addCartMutation = useMutation({
         mutationFn: addToCart,
@@ -41,14 +62,13 @@ export default function ProductInfo() {
     })
 
     // 3. Lấy Reviews (Infinite Scroll)
-    // Chỉ gọi khi đã có product._id
     const {
         data: reviewData,
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
         isLoading: loadingReviews
-    } = useReviews(product?._id, 5); // 5 review mỗi lần load
+    } = useReviews(product?._id, 5); 
 
     // 4. Add Review Mutation
     const addReviewMutation = useAddReview(product?._id);
@@ -63,7 +83,6 @@ export default function ProductInfo() {
     if (loadingProduct) return <Loading />;
     if (isError) return <Loading error={true} message={error.message} />;
 
-    // Gộp tất cả các trang review thành 1 mảng duy nhất
     const allReviews = reviewData?.pages.flatMap(page => page.reviews) || [];
 
     // Logic hiển thị khung đánh giá
@@ -83,11 +102,23 @@ export default function ProductInfo() {
             <PageNameHeader pagename="Product"/>
                         
             <main className={styles.container}>
-                {/* --- PHẦN TOP PRODUCT (GIỮ NGUYÊN) --- */}
                 <div className={styles.topProduct}>
                     <img src={product.imgURL} alt="Product Picture" />
                     <div className={styles.information1st}>
-                        <button className={styles.addLiked}><i className="fa-regular fa-heart fa-2x1" style={{ fontSize: "30px"}}></i></button>
+                        
+                        <button 
+                            className={styles.addLiked} 
+                            onClick={handleToggleWishlist}
+                            title={isLiked ? "Bỏ thích" : "Yêu thích"}
+                        >
+                            <i 
+                                className={isLiked ? "fa-solid fa-heart" : "fa-regular fa-heart"} 
+                                style={{ 
+                                    fontSize: "30px",
+                                    color: isLiked ? "red" : "white" // Đỏ nếu đã thích
+                                }}
+                            ></i>
+                        </button>
 
                         <p className={styles.informationName}>{product.name}</p>
                         <p className={styles.informationAuthor}>Tác giả: {product.author?.AuthorName}</p>
@@ -110,7 +141,6 @@ export default function ProductInfo() {
                         </button>
 
                         <div className={styles.informationDetails}>
-                            {/* ... (Giữ nguyên bảng chi tiết) ... */}
                             <p>Thông tin chi tiết</p>
                             <div>
                                 <ul style={{ width: "220px", padding: "7px"}}>
@@ -138,7 +168,6 @@ export default function ProductInfo() {
                     <div className={styles.middleProductInformation} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(product.description)}} />
                 </div> 
 
-                {/* --- PHẦN RATING (CẬP NHẬT) --- */}
                 <div className={styles.ratingSection}>
                     <p className={styles.ratingEditorTitle}>Đánh giá sản phẩm</p>
                     {show_rating}
@@ -156,7 +185,6 @@ export default function ProductInfo() {
                         ))
                     )}
 
-                    {/* Nút Xem thêm */}
                     {hasNextPage && (
                         <div style={{textAlign: "center", marginTop: "10px"}}>
                             <button 

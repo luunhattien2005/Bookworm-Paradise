@@ -47,15 +47,17 @@ export default function Favorites() {
                         alignItems: "center"
                     }}>
                         {/* Ảnh sách */}
-                        <img 
-                            src={book.imgURL} 
-                            alt={book.name} 
-                            style={{ width: "80px", height: "120px", objectFit: "cover", borderRadius: "5px" }}
-                        />
+                        <Link to={`/product/${book.slug}`}> 
+                             <img 
+                                src={book.imgURL} 
+                                alt={book.name} 
+                                style={{ width: "80px", height: "120px", objectFit: "cover", borderRadius: "5px" }}
+                            />
+                        </Link>
 
                         {/* Thông tin */}
                         <div style={{ flex: 1 }}>
-                            <Link to={`/product/${book._id}`} style={{ textDecoration: "none", color: "black" }}>
+                            <Link to={`/product/${book.slug}`} style={{ textDecoration: "none", color: "black" }}>
                                 <h3 style={{ margin: "0 0 5px 0", fontSize: "18px" }}>{book.name}</h3>
                             </Link>
                             <p style={{ margin: "0 0 10px 0", color: "gray", fontSize: "14px" }}>
