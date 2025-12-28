@@ -21,6 +21,10 @@ export default function Header() {
     const { data: cart } = useCart() 
     const cartCount = cart?.items?.length || 0
 
+    const avatarUrl = user?.avatar 
+        ? (user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000/${user.avatar}`)
+        : "/img/PP_Large.png";
+
     let profileIcon;
     if (!user) {
         profileIcon = (
@@ -34,7 +38,7 @@ export default function Header() {
         profileIcon = (
             <Link to="/profile/info">
                 <button type="button">
-                    <img src={user.avatar} />
+                    <img src={avatarUrl} />
                 </button>
             </Link>
         );

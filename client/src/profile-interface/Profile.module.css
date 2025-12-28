@@ -107,6 +107,8 @@
     padding: 20px 0px;
     margin: 0px 0px;
     font-weight: bolder;
+    display: flex;
+    justify-content: center;
 }
 
 .lowerContainer {
@@ -171,7 +173,8 @@
 }
 
 .informationSecondDiv input {
-    background: lightgrey;
+    background: white;
+    outline: solid 2px #e7c66a;
     border: 0;
     border-radius: 10px; 
     margin-bottom: 20px;
@@ -182,15 +185,24 @@
 
 .informationSecondDiv input:read-only {
     cursor: unset;
-    outline: none;
+    outline: solid 2px #e7c66a;
 }
 
 .informationSecondDiv input::placeholder {
     color: black;
 }
 
+.informationSecondDiv input:hover:read-only {
+    background: white;
+}
+
+.informationSecondDiv input:hover {
+    background: #e7c66a;
+}
+
 .informationSecondDiv select {
-    background: lightgrey;
+    background: white;
+    outline: solid 2px #e7c66a;
     border: 0;
     border-radius: 10px; 
     margin-bottom: 20px;
@@ -203,11 +215,20 @@
 
 .informationSecondDiv select:disabled {
     color: black;
+    outline: solid 2px #e7c66a;
     opacity: 1;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     background-image: none;
+}
+
+.informationSecondDiv select:disabled:hover {
+    background: white;
+}
+
+.informationSecondDiv select:hover {
+    background: #e7c66a;
 }
 
 .informationSecondDiv option {
@@ -264,13 +285,19 @@
 }
 
 .passwordSecondDiv input {
-    background: lightgrey;
+    background: white;
+    outline: #e7c66a 2px solid;
     border: 0;
     border-radius: 10px; 
     margin-bottom: 20px;
     padding: 0px 10px;
     height: 38px;
     font-size: 20px;
+}
+
+.passwordSecondDiv input:hover {
+    background: #e7c66a;
+
 }
 
 .passwordButton {

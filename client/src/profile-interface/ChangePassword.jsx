@@ -1,6 +1,7 @@
 import styles from "./Profile.module.css";
 import { useState, useRef } from 'react';
 import { useUpdateUser } from "../hooks/useAuth";
+import { useCheckPassword } from "../hooks/useAuth";
 
 export default function ChangePassword() {
     const [oldPassword, setOldPassword] = useState("");
@@ -10,6 +11,9 @@ export default function ChangePassword() {
     const [dialogMessage, setDialogMessage] = useState("");
     const [isDialogON, SetisDialogON] = useState(false)
     const dialogRef = useRef(null);
+
+    const passwordRef = useRef(null);
+    const checkPassMutation = useCheckPassword()
 
     // Setup Hook cập nhật
     const updateMutation = useUpdateUser({
@@ -25,9 +29,15 @@ export default function ChangePassword() {
         }
     });
 
-    const handleSave = () => {
-        if (!newPassword || !repeatPassword) {
-            showDialog("Vui lòng nhập mật khẩu mới");
+    const  handleSave = async () => {
+        if (!newPassword || !repeatPassword || !oldPassword) {
+            showDialog("Vui lòng nhập đầy đủ các trường");
+            return;
+        }
+
+        let isValid = passwordRef.current?.checkValidity() ?? false;
+        if (!isValid) {
+            showDialog("Mật khẩu mới: 4 - 16 ký tự; có chữ hoa, thường, số, ký tự đặc biệt");
             return;
         }
 
@@ -36,8 +46,17 @@ export default function ChangePassword() {
             return;
         }
 
-        // Tạm thời bỏ qua check Old Password vì Backend chưa hỗ trợ
-        // if (oldPassword !== "...") { ... }
+        let result = await checkPassMutation.mutateAsync(oldPassword);
+        if (!result.isCorrect) { 
+            showDialog("Mật khẩu cũ không khớp");
+            return;
+        }
+
+        if (newPassword === oldPassword) {
+            showDialog("Mật khẩu mới không được trùng mật khẩu cũ");
+            return;
+        }
+
 
         // Chuẩn bị FormData
         const formData = new FormData();
@@ -68,8 +87,7 @@ export default function ChangePassword() {
                     <div className={styles.passwordSecondDiv}>
                         {/* Backend chưa check pass cũ, nhưng cứ để input đây cho UI đẹp */}
                         <input type="password" id="Old_Password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
-
-                        <input type="password" id="New_Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+                        <input type="password" id="New_Password" value={newPassword} ref={passwordRef} required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,14}$" onChange={(e) => setNewPassword(e.target.value)} />
                         <input type="password" id="New_Password_Repeat" value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)} />
                     </div>
                 </div>
