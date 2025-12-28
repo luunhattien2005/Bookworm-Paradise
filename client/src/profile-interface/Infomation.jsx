@@ -50,6 +50,14 @@ export default function Information() {
     };
 
     const saveEditing = () => {
+
+        const phone = draft.phone.trim();
+        const address = draft.address.trim();
+        if (!phone || !address) {
+            alert("Số điện thoại và địa chỉ không được để trống.");
+            return;
+        }
+
         const formData = new FormData();
         formData.append("fullname", draft.fullname);
         formData.append("phone", draft.phone);

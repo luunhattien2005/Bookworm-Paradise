@@ -11,6 +11,16 @@ export default function Checkout() {
   const navigate = useNavigate();
 
   const { user } = useContext(AuthContext)
+
+  useEffect(() => {
+    if (!user) return;
+
+    if (!user.phone || !user.address) {
+      alert("Vui lòng cập nhật đầy đủ SĐT và địa chỉ trước khi đặt hàng.");
+      navigate("/profile/info", { replace: true });
+    }
+  }, [user, navigate]);
+
   const { data: cart = { items: [] } } = useCart();
   const createOrder = useCreateOrder({
     onSuccess: (data) => {
@@ -214,6 +224,11 @@ export default function Checkout() {
             className={styles.gradientButton}
             disabled={items.length === 0 || !isCardValid || createOrder.isLoading}
             onClick={() => {
+              if (!user.phone || !user.address) {
+                alert("Vui lòng cập nhật đầy đủ SĐT và địa chỉ trước khi đặt hàng.");
+                navigate("/profile/info");
+                return;
+              }
               createOrder.mutate({
                 shippingAddress: user.address,
                 paymentMethod: payment.toUpperCase(), // COD / CARD
