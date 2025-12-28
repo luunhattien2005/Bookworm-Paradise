@@ -249,7 +249,28 @@ const accountController = {
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
+    },
+
+    // 9. Hàm Check Password 
+    checkPassword: async (req, res) => {
+        try {
+            const { password } = req.body; // Mật khẩu cũ frontend gửi lên
+            const userId = req.user.id;    // Lấy ID từ token
+
+            const user = await Account.findById(userId);
+            
+            // So sánh mật khẩu
+            if (user.password === password) {
+                return res.json({ isCorrect: true }); 
+            } else {
+                return res.json({ isCorrect: false }); 
+            }
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
     }
 };
+
+
 
 module.exports = accountController;
