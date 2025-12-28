@@ -55,3 +55,9 @@ export async function banAccount(id) {
     const res = await api.put(`/api/accounts/ban/${id}`, {}, { headers: authHeader() });
     return res.data;
 }
+
+export async function checkPassword(password) {
+    // Gửi { password: "..." } lên server
+    const res = await api.post('/api/accounts/check-password', { password }, { headers: authHeader() });
+    return res.data; // Backend trả về: { isCorrect: true/false }
+}

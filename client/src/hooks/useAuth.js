@@ -72,3 +72,10 @@ export function useBanAccount(options = {}) {
         ...options
     });
 }
+
+export function useCheckPassword() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (password) => accountsApi.checkPassword(password)
+  });
+}
