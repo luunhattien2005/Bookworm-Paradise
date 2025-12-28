@@ -45,3 +45,19 @@ export async function deleteBook(id, token) {
   const res = await api.delete(`/api/books/${id}`, { headers: { Authorization: `Bearer ${token}` } });
   return res.data;
 }
+
+
+export async function getTopRated() {
+  const res = await api.get('/api/books/top-rated');
+  return res.data;
+}
+
+export async function getBestSellers() {
+  const res = await api.get('/api/books/best-sellers');
+  return res.data;
+}
+
+export async function getSeasonal(tag) {
+  const res = await api.get('/api/books/seasonal', { params: { tag } });
+  return res.data;
+}

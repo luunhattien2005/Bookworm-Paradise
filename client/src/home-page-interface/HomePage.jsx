@@ -2,83 +2,60 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import styles from "./Home.module.css"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"
+import Loading from "../header-footer-interface/Loading" // Import thêm Loading
 
-import banner1 from "./img/nha_gia_kim_p.jpg"
-import banner2 from "./img/combo_p.jpg"
-import banner3 from "./img/cay_cam_ngot_p.png" 
+// Import Hook mới
+import { useTopRatedBooks, useBestSellers, useSeasonalBooks } from "../hooks/useBooks"
 
+// Ảnh huy chương giữ nguyên
 import medal1 from "./img/medal1.png"
 import medal2 from "./img/medal2.png"
 import medal3 from "./img/medal3.png"
 
 export default function HomePage() {
-    // Nổi bật - note ảnh request từ server
-    const images_popular = [
-        {banner: banner1, linkTo: "/product/nha-gia-kim"},
-        {banner: banner2, linkTo: "/product/suoi-am-mat-troi"},
-        {banner: banner3, linkTo: "/product/cay-cam-ngot-cua-toi"}
-    ]
-    // Index of image currently on top
+    // 1. Lấy dữ liệu từ Backend
+    const { data: topRated = [], isLoading: load1 } = useTopRatedBooks();
+    const { data: seasonal = [], isLoading: load2 } = useSeasonalBooks("Mùa Hè"); // Bạn có thể đổi tên mùa ở đây
+    const { data: bestSellers = [], isLoading: load3 } = useBestSellers();
+
     const [active, setActive] = useState(0)
-    // return index with circular order
-    const getIndex = (offset) => (active + offset) % images.length;
 
-    // Bộ sưu tập theo mùa - note ảnh request từ server
-    const images_s = [
-        "https://m.media-amazon.com/images/I/811qCwNYYFL._SY466_.jpg",
-        "https://m.media-amazon.com/images/I/811qCwNYYFL._SY466_.jpg",
-        "https://m.media-amazon.com/images/I/811qCwNYYFL._SY466_.jpg"
-    ]
+    // Xử lý khi đang tải (Optional: Có thể bỏ qua nếu muốn hiện khung xương)
+    if (load1 || load2 || load3) return <Loading />;
 
-    // Bảng xếp hạng hằng tuần 
-    const medal = [
-        medal1,
-        medal2,
-        medal3
-    ]
-
-    const images_w = [
-        "https://cdn1.fahasa.com/media/catalog/product/b/i/bia-2d_ho-diep-va-kinh-ngu_17307_1.jpg",
-        "https://cdn1.fahasa.com/media/catalog/product/b/i/bia-2d_ho-diep-va-kinh-ngu_17307_1.jpg",
-        "https://cdn1.fahasa.com/media/catalog/product/b/i/bia-2d_ho-diep-va-kinh-ngu_17307_1.jpg"
-    ] 
+    // Dữ liệu cho Bảng xếp hạng (Huy chương)
+    const medals = [medal1, medal2, medal3];
 
     return(
         <>
             <PageNameHeader pagename="Home"/>
 
             <a className={styles.MessagerContainer} href="https://www.facebook.com/quan.chu.86787#">
-                <img
-                    src="/img/Messager_Logo.png"
-                    className={styles.Messager}
-                    alt="fixed"
-                />
+                <img src="/img/Messager_Logo.png" className={styles.Messager} alt="chat" />
             </a>
             
+            {/* --- PHẦN 1: NỔI BẬT (TOP RATED) --- */}
             <div className={styles.displayContainer}>
-                <div className={styles.displayTitle}>
-                    NỔI BẬT
-                </div>
+                <div className={styles.displayTitle}>NỔI BẬT</div>
                 <div id={styles.displayContent1}>
                     <div className={styles.stackWrapper}>
-                        {images_popular.map(({banner, linkTo}, i) => {
-                            // position: 0 = top, 1 = middle, 2 = back
-                            const pos = (i - active + images_popular.length) % images_popular.length;
+                        {topRated.length > 0 ? topRated.map((book, i) => {
+                            // Logic xếp chồng ảnh giữ nguyên của bạn
+                            const pos = (i - active + topRated.length) % topRated.length;
                             return (
-                                <Link to={linkTo} key={i}>
+                                <Link to={`/product/${book.slug}`} key={book._id}>
                                     <img
-                                        src={banner}
+                                        src={book.imgURL}
                                         className={`${styles.card} ${styles[`pos${pos}`]}`}
-                                        alt="featured book"
+                                        alt={book.name}
                                     />
                                 </Link>
                             );
-                        })}
+                        }) : <p style={{textAlign:"center"}}>Đang cập nhật sách nổi bật...</p>}
                     </div>
 
-
                     <div className={styles.controls}>
-                        {images_popular.map((_, i) => (
+                        {topRated.map((_, i) => (
                             <button
                                 key={i}
                                 onClick={() => setActive(i)}
@@ -89,40 +66,51 @@ export default function HomePage() {
                 </div>
             </div>           
 
+            {/* --- PHẦN 2: BỘ SƯU TẬP THEO MÙA --- */}
             <div className={styles.displayContainer}>
-                <div className={styles.displayTitle}>
-                    BỘ SƯU TẬP THEO MÙA
-                </div>
+                <div className={styles.displayTitle}>BỘ SƯU TẬP THEO MÙA</div>
                 <div id={styles.displayContent2}>
-                    {images_s.map((link, i) => (
-                        <img 
-                            key={i} 
-                            src={link}
-                            className={`${styles.img_s}`}
-                        />
-                    ))}
+                    {seasonal.length > 0 ? seasonal.map((book) => (
+                        <Link to={`/product/${book.slug}`} key={book._id}>
+                            <img 
+                                src={book.imgURL}
+                                className={`${styles.img_s}`}
+                                alt={book.name}
+                                title={book.name} // Hover hiện tên sách
+                            />
+                        </Link>
+                    )) : <p>Chưa có bộ sưu tập cho mùa này</p>}
                 </div>
             </div>           
 
+            {/* --- PHẦN 3: BẢNG XẾP HẠNG (BEST SELLERS) --- */}
             <div className={styles.displayContainer}>
-                <div className={styles.displayTitle}>
-                    BẢNG XẾP HẠNG HÀNG TUẦN
-                </div>
+                <div className={styles.displayTitle}>BẢNG XẾP HẠNG HÀNG TUẦN</div>
                 <div id={styles.displayContent3}>
-                    {images_w.map((link, i) => (
-                        <div key={i} className={`${styles.rankItem} ${styles[`rank${i + 1}`]}`}>
-
-                            <img src={link} className={styles.img_w}/>
-                            <img
-                                src={medal[i]}
-                                className={styles.medal}
+                    {bestSellers.length > 0 ? bestSellers.map((book, i) => (
+                        <Link 
+                            to={`/product/${book.slug}`} 
+                            key={book._id} 
+                            className={`${styles.rankItem} ${styles[`rank${i + 1}`]}`}
+                        >
+                            <img 
+                                src={book.imgURL} 
+                                className={styles.img_w} 
+                                alt={book.name}
+                                style={{boxShadow: "0 5px 15px rgba(0,0,0,0.3)"}} // Thêm chút bóng đổ cho đẹp
                             />
-                        </div>
-                    ))}
+                            {/* Chỉ hiện huy chương nếu có trong list medals */}
+                            {medals[i] && (
+                                <img
+                                    src={medals[i]}
+                                    className={styles.medal}
+                                    alt={`Rank ${i+1}`}
+                                />
+                            )}
+                        </Link>
+                    )) : <p>Đang cập nhật bảng xếp hạng...</p>}
                 </div>
             </div>      
-
-            
         </>
     )
 }

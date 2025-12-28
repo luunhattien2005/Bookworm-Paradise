@@ -130,3 +130,27 @@ export function useAdminDeleteBook(options = {}) {
     ...options,
   });
 }
+
+export function useTopRatedBooks() {
+  return useQuery({
+    queryKey: ['books', 'top-rated'],
+    queryFn: booksApi.getTopRated,
+    staleTime: 1000 * 60 * 5, // Cache 5 phút
+  });
+}
+
+export function useBestSellers() {
+  return useQuery({
+    queryKey: ['books', 'best-sellers'],
+    queryFn: booksApi.getBestSellers,
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+export function useSeasonalBooks(tag = "Mùa Hè") {
+  return useQuery({
+    queryKey: ['books', 'seasonal', tag],
+    queryFn: () => booksApi.getSeasonal(tag),
+    staleTime: 1000 * 60 * 30,
+  });
+}

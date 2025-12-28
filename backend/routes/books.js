@@ -41,4 +41,9 @@ router.put('/books/:id', verifyAdmin, upload.single('coverImage'), bookControlle
 // Xóa sách (Soft delete)
 router.delete('/books/:id', verifyAdmin, bookController.deleteBook);
 
+// Các hàm cho homepage
+router.get('/books/top-rated', bookController.getTopRatedBooks);
+router.get('/books/best-sellers', bookController.getBestSellerBooks);
+router.get('/books/seasonal', bookController.getBooksByTagName);
+
 module.exports = router;

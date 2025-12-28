@@ -172,6 +172,59 @@ const bookController = {
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
+    }, 
+
+
+    // phục vụ home pgae
+    // Lấy Top 3 sách có điểm đánh giá cao nhất (Nổi bật)
+    getTopRatedBooks: async (req, res) => {
+        try {
+            const books = await Book.find({ isDeleted: false })
+                .sort({ averageRating: -1 }) // Sắp xếp giảm dần
+                .limit(3);                   // Lấy 3 cuốn
+            res.json(books);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    },
+
+    // Lấy Top 3 sách bán chạy nhất (Bảng xếp hạng)
+    getBestSellerBooks: async (req, res) => {
+        try {
+            const books = await Book.find({ isDeleted: false })
+                .sort({ soldQuantity: -1 }) // Sắp xếp theo số lượng bán
+                .limit(3);
+            res.json(books);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    },
+
+    // Lấy sách theo Tag cụ thể (Bộ sưu tập theo mùa)
+    // Gọi API: /api/books/seasonal?tag=Mùa Hè
+    getBooksByTagName: async (req, res) => {
+        try {
+            const tagName = req.query.tag || "Mùa Hè"; // Mặc định là 'Mùa Hè' nếu không gửi lên
+            
+            // 1. Tìm ID của tag tên là "Mùa Hè"
+            const tagObj = await Tag.findOne({ name: tagName });
+            
+            if (!tagObj) {
+                // Nếu chưa có tag này thì trả về 3 cuốn ngẫu nhiên hoặc mới nhất để không bị trống web
+                const randomBooks = await Book.find({ isDeleted: false }).limit(3);
+                return res.json(randomBooks);
+            }
+
+            // 2. Tìm sách có chứa tag ID đó
+            const books = await Book.find({ 
+                tags: tagObj._id, 
+                isDeleted: false 
+            }).limit(3);
+
+            res.json(books);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
     }
 };
 
