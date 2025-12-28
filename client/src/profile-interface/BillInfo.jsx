@@ -102,8 +102,13 @@ export default function BillInfo() {
             
             {/* Nút hủy dành cho đơn Pending */}
             {(order.status === "Pending") && <div className={styles.billDeletedContainer}>
-                <button> Hủy đơn hàng hiện tại</button>
+                <button className="billDelete"> Hủy đơn hàng hiện tại</button>
             </div>}
+
+            {/* Nút liên hệ dành cho toàn đơn*/}
+            <div className={styles.billDeletedContainer}>
+                <button className="billHelp"> Liên hệ hỗ trợ </button>
+            </div>
         </>
     )
 }

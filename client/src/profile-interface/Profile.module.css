@@ -360,16 +360,27 @@
 .billDeletedContainer button {
     width: 890px;
     text-align: center;
-    background: lightcoral;
-    color: white;
+    color: rgb(255, 255, 255);
     font-size: 20px;
     padding: 8px;
     border-radius: 15px;
     cursor: pointer;
 }
 
-.billDeletedContainer button:hover {
-    background: rgb(204, 0, 0);
+.billDeletedContainer button[class="billDelete"] {
+    background: #ff6e72;
+}
+
+.billDeletedContainer button[class="billDelete"]:hover {
+    background: #9e0005;
+}
+
+.billDeletedContainer button[class="billHelp"] {
+    background: #64d3ff;
+}
+
+.billDeletedContainer button[class="billHelp"]:hover {
+    background: #007d9c;
 }
 
 
