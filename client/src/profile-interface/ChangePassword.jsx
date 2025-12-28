@@ -2,18 +2,18 @@ import styles from "./Profile.module.css";
 import { useState, useRef } from 'react';
 import { useUpdateUser } from "../hooks/useAuth";
 import { useCheckPassword } from "../hooks/useAuth";
+import { useDialog } from "../header-footer-interface/DialogContext";
 
 export default function ChangePassword() {
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
 
-    const [dialogMessage, setDialogMessage] = useState("");
-    const [isDialogON, SetisDialogON] = useState(false)
-    const dialogRef = useRef(null);
-
     const passwordRef = useRef(null);
     const checkPassMutation = useCheckPassword()
+
+    // Dialog set up
+    const { showDialog } = useDialog();
 
     // Setup Hook cập nhật
     const updateMutation = useUpdateUser({
@@ -66,12 +66,6 @@ export default function ChangePassword() {
         updateMutation.mutate(formData);
     };
 
-    const showDialog = (message) => {
-        setDialogMessage(message);
-        SetisDialogON(true);
-        if (dialogRef.current) dialogRef.current.showModal();
-    };
-
     return (
         <>
             <div className={styles.rightContainer}>
@@ -98,12 +92,6 @@ export default function ChangePassword() {
                     </button>
                 </div>
             </div>
-
-            {/* DIALOG SECTION */}
-            <dialog ref={dialogRef} className={styles.dialog} style={isDialogON ? { display: "grid" } : { display: "none" }}>
-                <p>{dialogMessage}</p>
-                <button onClick={() => { dialogRef.current.close(); SetisDialogON(false) }}> Close </button>
-            </dialog>
         </>
     )
 }
