@@ -79,7 +79,7 @@ export default function Information() {
                 <div className={styles.informationSecondDiv}>
                     <input type="text" value={draft.fullname} onChange={(e) => setDraft({ ...draft, fullname: e.target.value })} readOnly={!isEditing} />
                     <input type="text" value={draft.phone} onChange={(e) => setDraft({ ...draft, phone: e.target.value })} readOnly={!isEditing} />
-                    <input type="text" value={draft.email} disabled className={styles.disabledInput} /> 
+                    <input type="text" value={draft.email} disabled /> 
 
                     <select value={draft.sex} onChange={(e) => setDraft({ ...draft, sex: e.target.value })} disabled={!isEditing}>
                         <option value="Nam">Nam</option>
