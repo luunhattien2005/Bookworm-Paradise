@@ -8,6 +8,7 @@ import Favorites from './Favorites';
 import ChangePassword from './ChangePassword';
 import { useUpdateUser } from "../hooks/useAuth";
 import BillList from './BillList';
+import Notification from './Notification';
 
 export default function Profile() {
     const { user, refreshUser } = useContext(AuthContext)
@@ -102,8 +103,8 @@ export default function Profile() {
             {location.pathname ==="/profile/password" && <ChangePassword />}
             {location.pathname ==="/profile/favorites" && <Favorites />}
             {location.pathname ==="/profile/bills" && <BillList/>}
+            {location.pathname ==="/profile/notifications" && <Notification/>}
             {/* Placeholder cho các tab chưa làm */}
-            {location.pathname ==="/profile/notifications" && <div>Thông báo đang phát triển...</div>}
         </main>
     </>
     )}
