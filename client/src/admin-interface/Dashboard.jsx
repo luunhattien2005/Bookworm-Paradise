@@ -60,7 +60,7 @@ export default function Dashboard() {
                                 <div className={styles.searchBarField}>
                                     <input type="text" placeholder="Tìm kiếm sách..." className={styles.search} />
                                     <button>
-                                        <i class="material-symbols-outlined"> search </i>
+                                        <i className="material-symbols-outlined"> search </i>
                                     </button>
                                 </div>
                                 <button className={styles.addButton} onClick={() => navigate("/admin/products/add")}> ADD NEW PRODUCT </button>
@@ -81,18 +81,18 @@ export default function Dashboard() {
                                         <tr key={product._id}>
                                             <td>
                                                 <img
-                                                    src={product.image ? `http://localhost:5000/${product.image}` : "https://via.placeholder.com/50"}
+                                                    src={product?.imgURL ? product.imgURL : "/img/Job_Application.png"}
                                                     alt=""
                                                     style={{ width: "40px", height: "60px", objectFit: "cover" }}
                                                 />
                                             </td>
-                                            <td>{product.title}</td>
+                                            <td>{product.name}</td>
                                             <td>{Number(product.price).toLocaleString()} VND</td>
-                                            <td>{product.stock}</td>
+                                            <td>{product.stockQuantity}</td>
                                             <td>
                                                 <div style={{display: "flex", alignItems: "center", paddingLeft: "35px", gap: "15px"}}>
                                                     <button className={styles.editIcon} onClick={() => navigate(`/admin/products/${product._id}/edit`)}>
-                                                        <span class="material-symbols-outlined" style={{fontSize: "35px"}}> edit_note </span>
+                                                        <span className="material-symbols-outlined" style={{fontSize: "35px"}}> edit_note </span>
                                                     </button>
 
                                                     <button className={styles.deleteIcon} onClick={() => {
@@ -100,7 +100,7 @@ export default function Dashboard() {
                                                             deleteBookMutation.mutate(product._id);
                                                         }
                                                     }}>
-                                                        <span class="material-symbols-outlined" style={{fontSize: "35px"}}> delete </span>
+                                                        <span className="material-symbols-outlined" style={{fontSize: "35px"}}> delete </span>
                                                     </button>
                                                 </div>
                                             </td>
@@ -118,7 +118,7 @@ export default function Dashboard() {
                                 <div className={styles.searchBarField} style={{width: "100%"}}>
                                     <input type="text" placeholder="Tìm đơn hàng ..." className={styles.search} />
                                     <button>
-                                        <i class="material-symbols-outlined"> search </i>
+                                        <i className="material-symbols-outlined"> search </i>
                                     </button>
                                 </div>
                 
