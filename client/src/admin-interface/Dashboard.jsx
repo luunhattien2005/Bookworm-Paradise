@@ -25,10 +25,15 @@ export default function Dashboard() {
     const { data: orders, isLoading: loadingOrders } = useAllOrders();
 
     // --- 4. ANALYTICS (Tính toán từ data thật) ---
-    const totalRevenue = orders?.reduce((sum, order) => sum + (order.totalPrice || 0), 0) || 0;
-    const totalOrders = orders?.length || 0;
-    const totalBooks = products?.length || 0;
+    const totalRevenue = orders?.reduce((sum, order) => {
+        if (order.status === "Delivered") {
+            return sum + (order.totalAmount || 0);
+        }
+        return sum;
+    }, 0) || 0;
 
+    const totalBooks = products.length;
+    const totalOrders = orders?.length || 0;
     // Loading chung
     if (loadingBooks || loadingAccounts || loadingOrders) return <Loading />;
 
@@ -136,7 +141,7 @@ export default function Dashboard() {
                                             <td>{order._id.substring(0, 8)}...</td>
                                             <td>{(order.user?.fullname || "Khách vãng lai").substring(0, 30)}{(order.user?.fullname.length > 30) && "..."}</td>
                                             <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                                            <td>{Number(order.totalPrice).toLocaleString()} đ</td>
+                                            <td>{Number(order.totalAmount).toLocaleString()} đ</td>
                                             <td>
                                                 <span className={
                                                     order.status === "completed" ? styles.completed :

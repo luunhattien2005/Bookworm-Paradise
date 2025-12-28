@@ -8,8 +8,9 @@ router.use(verifyToken); // Tất cả phải đăng nhập
 router.post('/place-order', orderController.placeOrder); // Đặt hàng
 router.get('/my-orders', orderController.getMyOrders); // Xem lịch sử
 router.get('/:id', orderController.getOrderDetail); // Xem chi tiết 1 đơn hàng
+router.patch('/:id/cancel', verifyToken, orderController.cancelOrder);
 
 //Giai quyết Admin
 router.get('/', verifyAdmin, orderController.getAllOrders); // Xem tất cả đơn hàng
-
+router.patch('/:id/status', verifyToken, verifyAdmin, orderController.updateStatus);
 module.exports = router;

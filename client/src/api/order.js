@@ -36,3 +36,8 @@ export async function updateOrderStatus(orderId, status) {
   });
   return res.data;
 }
+
+export async function cancelOrder(orderId) {
+  const res = await api.patch(`/api/orders/${orderId}/cancel`, {}, { headers: authHeader() });
+  return res.data;
+}

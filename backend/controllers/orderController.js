@@ -110,6 +110,63 @@ const orderController = {
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
+    },
+
+    cancelOrder: async (req, res) => {
+        try {
+            const orderId = req.params.id;
+            const userId = req.user.id; // Lấy từ Token người đang đăng nhập
+
+            const order = await Order.findOne({ _id: orderId, user: userId });
+            if (!order) return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+
+            // 1. Chỉ cho phép hủy khi trạng thái là Pending
+            if (order.status !== 'Pending') {
+                return res.status(400).json({ message: "Đơn hàng đã được xử lý, không thể hủy!" });
+            }
+
+            // 2. [QUAN TRỌNG] Hoàn lại số lượng tồn kho (Restock)
+            // Vì lúc đặt hàng đã trừ đi, giờ hủy thì phải cộng lại
+            for (const item of order.items) {
+                await Book.findByIdAndUpdate(item.book, { 
+                    $inc: { stockQuantity: item.quantity, soldQuantity: -item.quantity } 
+                });
+            }
+
+            // 3. Cập nhật trạng thái
+            order.status = 'Cancelled';
+            await order.save();
+
+            res.json({ message: "Hủy đơn hàng thành công", order });
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    },
+
+    updateStatus: async (req, res) => {
+        try {
+            const { status } = req.body;
+            const orderId = req.params.id;
+
+            // 1. Tìm đơn hàng hiện tại xem trạng thái là gì
+            const order = await Order.findById(orderId);
+            if (!order) return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+
+            // 2. [QUAN TRỌNG] Nếu đã giao hàng thành công, TUYỆT ĐỐI KHÔNG cho đổi nữa
+            if (order.status === 'Delivered' || order.status === 'Cancelled') {
+                return res.status(400).json({ 
+                    message: `Đơn hàng đã ${order.status}, không thể thay đổi trạng thái nữa!` 
+                });
+            }
+
+            // 3. Cập nhật trạng thái mới
+            order.status = status;
+            await order.save();
+
+            res.json({ message: "Cập nhật trạng thái thành công", order });
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
     }
 }
 

@@ -60,3 +60,14 @@ export function useUpdateOrderStatus(options = {}) {
     ...options,
   });
 }
+// khách Hủy đơn 
+export function useCancelOrder() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (orderId) => ordersApi.cancelOrder(orderId),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['orders'] }); // Refresh list
+      qc.invalidateQueries({ queryKey: ['order'] });  // Refresh chi tiết đơn
+    },
+  });
+}
