@@ -2,11 +2,12 @@ import { useState, useContext } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { AuthContext } from "../auth-interface/AuthContext"
 import { useCart } from "../hooks/useCart"
-
 import styles from "./HeaderFooter.module.css"
 
 export default function Header() {
     const { user } = useContext(AuthContext)
+
+    const IsAdmin = (user?.role === "admin")
 
     const [keyword, setKeyword] = useState("")
     const navigate = useNavigate()
@@ -95,6 +96,12 @@ export default function Header() {
 
 
             <div className={styles.icons}>
+                {IsAdmin && (
+                    <Link to="/admin/dashboard">
+                        <i className="material-symbols-outlined" style={{fontSize: "36px"}}>supervisor_account</i>
+                    </Link>
+                )}
+
                 <Link to="/profile/notifications">
                     <i className="fa-regular fa-bell" style={{fontSize: "30px"}}></i>
                 </Link>
