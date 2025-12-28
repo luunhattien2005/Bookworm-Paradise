@@ -13,11 +13,16 @@ export default function RatingItem({ rating }) {
   const time = date.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
   const day = date.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" });
 
-  // Xử lý hiển thị Avatar (Backend trả về đường dẫn file, cần thêm localhost)
-  // Nếu backend trả về 'uploads/abc.jpg' thì phải nối thêm URL server
-  const avatarSrc = rating.user?.avatar 
-    ? (rating.user.avatar.startsWith("http") ? rating.user.avatar : `http://localhost:5000/${rating.user.avatar}`)
-    : "https://via.placeholder.com/50";
+  const reviewer = rating.user; 
+
+  const BASE_URL = import.meta.env.VITE_API_URL;
+
+  const avatarUrl = reviewer?.avatar
+    ? (reviewer.avatar.startsWith('http')
+        ? reviewer.avatar
+        : `${BASE_URL}/${reviewer.avatar}?v=${reviewer.updatedAt || reviewer._id}`)
+    : "/img/PP_Large.png";
+
 
   // Check quyền xóa
   const canDelete = user && (user.role === 'admin' || user._id === rating.user._id);
@@ -37,9 +42,9 @@ export default function RatingItem({ rating }) {
       )}
 
       <div className={styles.ratingProfile}>
-        <img src={avatarSrc} alt="avatar" style={{objectFit: "cover"}} />
+        <img src={avatarUrl} alt="avatar" style={{objectFit: "cover"}} />
         <p style={{fontWeight: "bold", fontSize: "13px"}}>
-            {rating.user?.fullname || "Người dùng ẩn danh"}
+            {reviewer?.fullname || "Người dùng ẩn danh"}
         </p>
         <p>{time}</p>
         <p>{day}</p>

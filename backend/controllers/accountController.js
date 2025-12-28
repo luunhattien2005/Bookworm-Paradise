@@ -1,6 +1,9 @@
 const Account = require('../models/Account');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const sharp = require('sharp');
+const fs = require('fs');
+const path = require('path');
 
 function generatePassword() {
     const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -58,7 +61,8 @@ const accountController = {
 
             const newAccount = new Account({
                 username, email, password, fullname, phone, address, // sửa
-                role: 'customer'
+                role: 'customer',
+                avatar: 'uploads/defaultAvatar.png'
             });
 
             await newAccount.save();
@@ -195,7 +199,19 @@ const accountController = {
             
             // XỬ LÝ ẢNH 
             if (req.file) {
-                updateData.avatar = req.file.path.replace(/\\/g, "/"); // Thay thế dấu backslash (\) của Windows bằng slash (/)
+                const uploadDir = path.join(__dirname, '../uploads');
+                if (!fs.existsSync(uploadDir)) {
+                    fs.mkdirSync(uploadDir);
+                }
+
+                const filename = `${userId}.webp`;
+                const filepath = path.join(uploadDir, filename);
+
+                await sharp(req.file.buffer)
+                    .resize(256, 256, { fit: 'cover' }) // avatar vuông
+                    .webp({ quality: 80 })
+                    .toFile(filepath);
+                updateData.avatar = `uploads/${filename}`;
             } else {
                 // Nếu không có file -> Xóa field avatar khỏi updateData
                 // Để tránh trường hợp req.body có chứa avatar={} (rác) gây lỗi CastError

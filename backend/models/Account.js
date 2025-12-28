@@ -16,6 +16,7 @@ const AccountSchema = new mongoose.Schema({
     // Phục vụ chức năng Quên mật khẩu
     resetPasswordToken: { type: String },
     resetPasswordExpire: { type: Date } 
-}); 
-
+},{
+    timestamps: true   
+});
 module.exports = mongoose.models.Account || mongoose.model('Account', AccountSchema);

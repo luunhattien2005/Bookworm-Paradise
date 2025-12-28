@@ -48,8 +48,11 @@ export default function Profile() {
     // Xử lý an toàn: Nếu user chưa load xong thì không render phần dưới để tránh crash
     if (!user) return <div style={{padding: "50px", textAlign:"center"}}>Đang tải thông tin...</div>;
 
-    const avatarUrl = user.avatar 
-        ? (user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000/${user.avatar}`)
+    const BASE_URL = import.meta.env.VITE_API_URL;
+    const avatarUrl = user?.avatar
+        ? (user.avatar.startsWith('http')
+            ? user.avatar
+            : `${BASE_URL}/${user.avatar}?t=${user.updatedAt}`)
         : "/img/PP_Large.png";
 
     return (
