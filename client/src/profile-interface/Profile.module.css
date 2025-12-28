@@ -350,6 +350,28 @@
     color: #c92127;
 }
 
+.billDeletedContainer {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    margin-bottom: 15px;
+}
+
+.billDeletedContainer button {
+    width: 890px;
+    text-align: center;
+    background: lightcoral;
+    color: white;
+    font-size: 20px;
+    padding: 8px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.billDeletedContainer button:hover {
+    background: rgb(204, 0, 0);
+}
+
 
 /* Status */
 .status {
