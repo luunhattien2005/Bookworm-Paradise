@@ -46,6 +46,14 @@ export default function HomePage() {
     return(
         <>
             <PageNameHeader pagename="Home"/>
+
+            <a className={styles.MessagerContainer} href="https://www.facebook.com/quan.chu.86787#">
+                <img
+                    src="/img/Messager_Logo.png"
+                    className={styles.Messager}
+                    alt="fixed"
+                />
+            </a>
             
             <div className={styles.displayContainer}>
                 <div className={styles.displayTitle}>
