@@ -70,7 +70,7 @@ const bookController = {
 
             // Filter theo tag
             if (tag) {
-                filter.tags = tag;
+                filter.tags = { $all: tag.split(',') };
             }
 
             // Filter theo tác giả

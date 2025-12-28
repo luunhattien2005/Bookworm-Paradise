@@ -126,7 +126,9 @@ export default function ProductInfo() {
                         <div className={styles.informationTag}>
                             {product.tags && product.tags.length > 0 ? (
                                 product.tags.map(tag => (
-                                <a href="#" key={tag._id}>{tag.name}</a>
+                                <Link to={`/search?tag=${tag._id}`} key={tag._id}>
+                                    {tag.name}
+                                </Link>
                                 ))
                             ) : (<span className={styles.noTag}>Không có thể loại</span>)}
                         </div>

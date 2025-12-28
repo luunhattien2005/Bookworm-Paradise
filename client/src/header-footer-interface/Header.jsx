@@ -2,6 +2,7 @@ import { useState, useContext } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { AuthContext } from "../auth-interface/AuthContext"
 import { useCart } from "../hooks/useCart"
+import { useTags } from "../hooks/useBooks"
 import styles from "./HeaderFooter.module.css"
 
 export default function Header() {
@@ -9,14 +10,37 @@ export default function Header() {
 
     const IsAdmin = (user?.role === "admin")
 
+    const { data: tags = [] } = useTags()
     const [keyword, setKeyword] = useState("")
+    const [searchPlaceholder, setSearchPlaceholder] = useState("Nhà giả kim")
+    const [selectedTags, setSelectedTags] = useState([]);
+
+    const toggleTag = (id) => {
+        setSelectedTags(prev =>
+            prev.includes(id)
+            ? prev.filter(t => t !== id)
+            : [...prev, id]
+        );
+    };
+
     const navigate = useNavigate()
 
     const handleSearch = (e) => {
         e.preventDefault()
 
         const q = keyword.trim()
-        navigate(`/search?q=${encodeURIComponent(q)}`)
+        const params = new URLSearchParams();
+
+        if (q) params.set("q", q);
+        if (selectedTags.length > 0) {
+            params.set("tag", selectedTags.join(","));
+        }
+
+        navigate(`/search?${params.toString()}`);
+        setSearchPlaceholder(keyword)
+
+        setKeyword("");
+        setSelectedTags([]);
     }
 
     const { data: cart } = useCart() 
@@ -44,16 +68,6 @@ export default function Header() {
             </Link>
         );
     }
-    
-    const titles = [{id: 1, name: "Sách tiếng việt"},
-                    {id: 2, name: "Danh mục tổng hợp 2"},
-                    {id: 3, name: "Danh mục tổng hợp 3"},
-                    {id: 4, name: "Danh mục tổng hợp 4"},
-                    {id: 5, name: "Danh mục tổng hợp 5"},
-                    {id: 6, name: "Danh mục tổng hợp 6"},]
-
-    const listTitle = titles.map(title => <li key={title.id} onClick={() => {setSelectedTitle(title.name)}}>{title.name}</li>)
-    const [selectedTitle, setSelectedTitle] = useState(titles[0].name)
 
     return(
         <header className={styles.siteHeader}>
@@ -68,14 +82,19 @@ export default function Header() {
                      </button>
 
                     <div className={styles.catalogueContainer}>
-                        <div className={styles.catalogueTitleContainer}>
-                            <p>Danh mục sản phẩm</p>
-                            <hr/>
-                            <ul>{listTitle}</ul>
-                        </div>
+                        <p className={styles.filterTitle}>Lọc theo thể loại</p>
 
-                        <div className={styles.catalogueItemContainer}>
-                            {selectedTitle}
+                        <div className={styles.tagGrid}>
+                            {tags.map(tag => (
+                                <label key={tag._id} className={styles.tagItem}>
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedTags.includes(tag._id)}
+                                        onChange={() => toggleTag(tag._id)}
+                                    />
+                                    <span>{tag.name}</span>
+                                </label>
+                            ))}
                         </div>
                     </div>                    
                 </div>
@@ -83,7 +102,7 @@ export default function Header() {
                 <form className={styles.searchBar} onSubmit={handleSearch}>
                     <input 
                         type="text" 
-                        placeholder="Nhà giả kim"
+                        placeholder={searchPlaceholder}
                         value={keyword}
                         onChange={(e) => setKeyword(e.target.value)}
                     />

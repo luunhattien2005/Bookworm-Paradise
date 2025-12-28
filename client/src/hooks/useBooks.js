@@ -6,6 +6,19 @@ import {
 } from '@tanstack/react-query';
 import * as booksApi from '../api/book';
 
+/*
+  Get all tags
+*/ 
+
+export function useTags(options = {}) {
+  return useQuery({
+    queryKey: ['tags'],
+    queryFn: () => booksApi.getAllTags(),
+    staleTime: 1000 * 10,
+    ...options,
+  })
+}
+
 /**
  * Search books
  */
