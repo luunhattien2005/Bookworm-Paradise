@@ -1,3 +1,55 @@
+/*------------------------ Dialog ------------------------*/
+.dialog {
+    width: 600px;
+
+    /* center it */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 0px 0px;
+    outline-width: 2px;
+    background: white;
+}
+
+.dialog p {
+    text-align: left;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 10px;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.dialog p1 {
+    text-align: left;
+    margin-left: 20px;
+    margin-right: 10px;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.dialog button{
+    font-size: 20px;
+    background: black;
+    border: 0;
+    border-radius: 10px;
+    padding: 5px 15px;
+    margin-bottom: 10px;
+    color: white;
+    cursor: pointer;
+    margin-right: 20px;
+    justify-self: center;
+}
+
+.dialog button:hover{
+    background: white;
+    color: black;
+    outline: black 2px solid;
+}
+
 /* ------------------------ Header-site ------------------------*/
 .siteHeader {
     display: flex;
