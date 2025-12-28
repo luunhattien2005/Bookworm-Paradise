@@ -44,13 +44,6 @@ export default function Profile() {
     function handleMenuClick(action) {
         navigate(`/profile/${action}`);
     }
-    
-    useEffect(() => {
-        // Nếu user là admin thì đá về dashboard
-        if (user && user.role === "admin") {
-            navigate("/admin/dashboard", { replace: true });
-        }
-    }, [user, navigate]);
 
     // Xử lý an toàn: Nếu user chưa load xong thì không render phần dưới để tránh crash
     if (!user) return <div style={{padding: "50px", textAlign:"center"}}>Đang tải thông tin...</div>;

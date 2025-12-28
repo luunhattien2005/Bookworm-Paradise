@@ -4,7 +4,7 @@ export default function PageNameHeader({ pagename }) {
 
     const icons = {
         Home: ['Home page', <i className="material-symbols-outlined" style={{ fontSize: "36px"}}>home</i>],
-        Admin: ['Admin dashbroad',''],
+        Admin: ['Admin dashbroad',<i class="material-symbols-outlined" style={{ fontSize: "32px"}}> dashboard </i>],
         Profile: ['Your profile', <i className="fa-regular fa-circle-user" style={{ fontSize: "30px"}}></i>],
         Product: ['Product info', <i className="fa-solid fa-book-open" style={{ fontSize: "30px"}}></i>],
         Cart: ['Shopping cart', <i className="material-symbols-outlined" style={{fontSize: "35px"}}>shopping_cart</i>],

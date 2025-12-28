@@ -38,9 +38,9 @@ export default function Dashboard() {
 
             <div className={styles.container}>
                 <nav className={styles.nav}>
-                    <button onClick={() => setActiveTab("products")} className={activeTab === "products" ? styles.active : ""}>PRODUCTS</button>
-                    <button onClick={() => setActiveTab("orders")} className={activeTab === "orders" ? styles.active : ""}>ORDER</button>
-                    <button onClick={() => setActiveTab("account")} className={activeTab === "account" ? styles.active : ""}>ACCOUNT</button>
+                    <button onClick={() => setActiveTab("products")}  className={activeTab === "products"  ? styles.active : ""}>PRODUCTS</button>
+                    <button onClick={() => setActiveTab("orders")}    className={activeTab === "orders"    ? styles.active : ""}>ORDER</button>
+                    <button onClick={() => setActiveTab("account")}   className={activeTab === "account"   ? styles.active : ""}>ACCOUNT</button>
                     <button onClick={() => setActiveTab("analytics")} className={activeTab === "analytics" ? styles.active : ""}>ANALYTICS</button>
                 </nav>
 
@@ -52,21 +52,23 @@ export default function Dashboard() {
                     {activeTab === "products" && (
                         <>
                             <div className={styles.searchBar}>
-                                <input type="text" placeholder="Tìm kiếm sách..." className={styles.search} />
-                                <button className={styles.searchButton}>🔍</button>
-                                <button className={styles.addButton} onClick={() => navigate("/admin/products/add")}>
-                                    ADD NEW PRODUCT
-                                </button>
+                                <div className={styles.searchBarField}>
+                                    <input type="text" placeholder="Tìm kiếm sách..." className={styles.search} />
+                                    <button>
+                                        <i class="material-symbols-outlined"> search </i>
+                                    </button>
+                                </div>
+                                <button className={styles.addButton} onClick={() => navigate("/admin/products/add")}> ADD NEW PRODUCT </button>
                             </div>
 
                             <table className={styles.table}>
                                 <thead>
                                     <tr>
-                                        <th>Ảnh</th>
-                                        <th>Tên sách</th>
-                                        <th>Giá tiền</th>
-                                        <th>Tồn kho</th>
-                                        <th>Thao tác</th>
+                                        <th style={{ width: "120px" }}>Ảnh</th>
+                                        <th style={{ width: "520px" }}>Tên sách</th>
+                                        <th style={{ width: "300px" }}>Giá tiền</th>
+                                        <th style={{ width: "140px" }}>Tồn kho</th>
+                                        <th style={{ width: "140px" }}>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,15 +82,22 @@ export default function Dashboard() {
                                                 />
                                             </td>
                                             <td>{product.title}</td>
-                                            <td>{Number(product.price).toLocaleString()} đ</td>
+                                            <td>{Number(product.price).toLocaleString()} VND</td>
                                             <td>{product.stock}</td>
                                             <td>
-                                                <button className={styles.editIcon} onClick={() => navigate(`/admin/products/${product._id}/edit`)}>✏️</button>
-                                                <button className={styles.deleteIcon} onClick={() => {
-                                                    if (confirm(`Xóa sách "${product.title}"?`)) {
-                                                        deleteBookMutation.mutate(product._id);
-                                                    }
-                                                }}>❌</button>
+                                                <div style={{display: "flex", alignItems: "center", paddingLeft: "35px", gap: "15px"}}>
+                                                    <button className={styles.editIcon} onClick={() => navigate(`/admin/products/${product._id}/edit`)}>
+                                                        <span class="material-symbols-outlined" style={{fontSize: "35px"}}> edit_note </span>
+                                                    </button>
+
+                                                    <button className={styles.deleteIcon} onClick={() => {
+                                                        if (confirm(`Xóa sách "${product.title}"?`)) {
+                                                            deleteBookMutation.mutate(product._id);
+                                                        }
+                                                    }}>
+                                                        <span class="material-symbols-outlined" style={{fontSize: "35px"}}> delete </span>
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}
@@ -100,22 +109,32 @@ export default function Dashboard() {
                     {/* ---------------- ORDERS TAB ---------------- */}
                     {activeTab === "orders" && (
                         <>
+                            <div className={styles.searchBar}>
+                                <div className={styles.searchBarField} style={{width: "100%"}}>
+                                    <input type="text" placeholder="Tìm đơn hàng ..." className={styles.search} />
+                                    <button>
+                                        <i class="material-symbols-outlined"> search </i>
+                                    </button>
+                                </div>
+                
+                            </div>
+
                             <table className={styles.table}>
                                 <thead>
                                     <tr>
-                                        <th>Mã đơn</th>
-                                        <th>Khách hàng</th>
-                                        <th>Ngày đặt</th>
-                                        <th>Tổng tiền</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thao tác</th>
+                                        <th style={{ width: "150px" }}>Mã đơn</th>
+                                        <th style={{ width: "350px" }}>Khách hàng</th>
+                                        <th style={{ width: "120px" }}>Ngày đặt</th>
+                                        <th style={{ width: "250px" }}>Tổng tiền</th>
+                                        <th style={{ width: "200px" }}>Trạng thái</th>
+                                        <th style={{ width: "100px" }}>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {orders?.map(order => (
                                         <tr key={order._id}>
                                             <td>{order._id.substring(0, 8)}...</td>
-                                            <td>{order.user?.fullname || "Khách vãng lai"}</td>
+                                            <td>{(order.user?.fullname || "Khách vãng lai").substring(0, 30)}{(order.user?.fullname.length > 30) && "..."}</td>
                                             <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                                             <td>{Number(order.totalPrice).toLocaleString()} đ</td>
                                             <td>
@@ -127,7 +146,9 @@ export default function Dashboard() {
                                                 </span>
                                             </td>
                                             <td>
-                                                <button className={styles.editIcon} onClick={() => navigate(`/admin/orders/${order._id}/edit`)}>✏️</button>
+                                                <button className={styles.editIcon} onClick={() => navigate(`/admin/orders/${order._id}/edit`)}>
+                                                    <span class="material-symbols-outlined" style={{fontSize: "35px"}}> edit_note </span>
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
@@ -142,17 +163,17 @@ export default function Dashboard() {
                             <table className={styles.table}>
                                 <thead>
                                     <tr>
-                                        <th>Họ tên</th>
-                                        <th>Email</th>
-                                        <th>Vai trò</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thao tác</th>
+                                        <th style={{ width: "400px" }}>Họ tên</th>
+                                        <th style={{ width: "370px" }}>Email</th>
+                                        <th style={{ width: "140px" }}>Vai trò</th>
+                                        <th style={{ width: "140px" }}>Trạng thái</th>
+                                        <th style={{ width: "150px" }}>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {accounts?.map(acc => (
                                         <tr key={acc._id}>
-                                            <td>{acc.fullname}</td>
+                                            <td>{acc.fullname.substring(0, 35)}{(acc.fullname.length > 35) && "..."}</td>
                                             <td>{acc.email}</td>
                                             <td>{acc.role}</td>
                                             <td>
@@ -160,7 +181,7 @@ export default function Dashboard() {
                                                     {!acc.isBanned ? "Hoạt động" : "Bị khóa"}
                                                 </span>
                                             </td>
-                                            <td>
+                                            <td style={{height: "50px"}}>
                                                 {acc.role !== "admin" && (
                                                     <button
                                                         className={styles.actionButton}
@@ -186,11 +207,11 @@ export default function Dashboard() {
                     {activeTab === "analytics" && (
                         <div className={styles.analyticsGrid}>
                             <div className={styles.metricCard}>
-                                <h3>DOANH THU TỔNG</h3>
-                                <p className={styles.metricValue}>{totalRevenue.toLocaleString()} đ</p>
+                                <h3>TỔNG DOANH THU </h3>
+                                <p className={styles.metricValue}>{totalRevenue.toLocaleString()} VND</p>
                             </div>
                             <div className={styles.metricCard}>
-                                <h3>SỐ ĐẦU SÁCH</h3>
+                                <h3>SỐ LƯỢNG ĐẦU SÁCH</h3>
                                 <p className={styles.metricValue}>{totalBooks}</p>
                             </div>
                             <div className={styles.metricCard}>

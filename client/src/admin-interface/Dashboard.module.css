@@ -78,7 +78,7 @@
 }
 
 .content {
-    padding: 2rem;
+    padding: 18px 5px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -86,64 +86,123 @@
 /* Search Bar */
 .searchBar {
     display: flex;
-    gap: 1rem;
+    justify-content: center;
     margin-bottom: 1.5rem;
     align-items: center;
+    gap: 10px;
 }
 
-.search {
-    flex: 1;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    font-size: 1rem;
+.searchBarField {
+    position: relative;
+    width: 79%;
+    display: flex;
+    margin-right: 0px;
+    margin-left: 10px;
 }
 
-.searchButton {
-    padding: 0.75rem 1.5rem;
+.searchBarField input {
+    background: black;
+    border-radius: 10px;
+    font-size: 22px;
+    width: 98%;
+    padding: 10px 10px;
+    color: white;
+}
+
+.searchBarField button {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
     background: white;
-    border: 1px solid #ddd;
+    height: 38px;
+    width: 60px;
+    right: 30px;
+    top: 7px;
+    border: 0;
+    border-radius: 10px;
     cursor: pointer;
 }
 
 .addButton {
-    padding: 0.75rem 1.5rem;
-    background: #f4d03f;
+    padding: 12px 10px;
+    font-size: 20px;
+    background: #E5DDA2;
     border: none;
+    border-radius: 10px;
+    outline: black 1px solid;
     font-weight: bold;
     cursor: pointer;
 }
 
 /* Table */
 .table {
-    width: 100%;
     background: white;
     border-collapse: collapse;
+    table-layout: fixed;
+    outline: 1px solid #ddd;
 }
 
-.table th,
-.table td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.table th {
-    background: #f0f0f0;
+.table th:nth-child(odd) {
+    background: #d4d4d4;
     font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+    padding: 14px 0px;
 }
 
-.table tr:hover {
-    background: #f9f9f9;
+.table th:nth-child(even) {
+    background: #e7e7e7;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    padding: 14px 0px;
+    font-size: 18px;
+}
+
+
+/* Cột lẻ (1, 3, 5) → vàng */
+.table td:nth-child(odd) {
+    background-color: #fff7cc; 
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    padding: 8px 0px;
+}
+
+/* Cột chẵn (2, 4) → trắng */
+.table td:nth-child(even) {
+    background-color: #ffffff;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    padding: 8px 0px;
 }
 
 .editIcon,
 .deleteIcon {
     background: none;
     border: none;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    justify-items: center;
     cursor: pointer;
-    font-size: 1.2rem;
-    margin: 0 0.25rem;
 }
+
+.actionButton {
+    border: none;
+    border-radius: 15px;
+    display: grid;
+    align-self: center;
+    justify-self: center;
+    cursor: pointer;
+    font-size: 18px;
+    width: 110px;
+    padding: 5px 0px;
+    font-weight: bold;
+}
+
 
 .statusActive {
     background: #f4d03f;
@@ -152,14 +211,6 @@
     font-weight: bold;
 }
 
-.actionButton {
-    background: #f4d03f;
-    border: none;
-    padding: 0.5rem 1rem;
-    margin-right: 0.5rem;
-    cursor: pointer;
-    font-weight: bold;
-}
 
 .deleteButton {
     background: #ff4444;
@@ -169,6 +220,8 @@
     cursor: pointer;
     font-weight: bold;
 }
+
+
 
 /* Analytics */
 .analyticsGrid {
@@ -193,7 +246,7 @@
 .metricValue {
     font-size: 2rem;
     font-weight: bold;
-    color: #f4d03f;
+    color: #a7a16b;
     margin: 0;
 }
 
