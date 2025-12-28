@@ -17,15 +17,6 @@
     font-size: 1.2rem;
 }
 
-.logout {
-    background: #333;
-    color: white;
-    border: none;
-    padding: 0.5rem 1.5rem;
-    cursor: pointer;
-    font-weight: bold;
-}
-
 .adminInterface {
     background: #f4d03f;
     text-align: center;
@@ -33,29 +24,57 @@
     font-weight: bold;
 }
 
+.logout {
+    right: 20px;
+    top: 170px;
+    width: 110px;
+    height: 40px;
+    position: absolute;
+    background: #000000;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.logout:hover {
+    background: white;
+    color: black;
+    outline: black 2px solid;
+}
+
 .nav {
+    position: relative;
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     padding: 1rem 2rem;
     background: white;
     border-bottom: 1px solid #ddd;
+    gap: 20px;
 }
 
 .nav button {
-    background: #f0f0f0;
+    background: #E5DDA2;
+    width: 200px;
     border: none;
     padding: 0.75rem 1.5rem;
     cursor: pointer;
     font-weight: bold;
     transition: background 0.2s;
+    outline: black 2px solid;
+    border-radius: 10px;
 }
 
 .nav button:hover {
-    background: #e0e0e0;
+    background: #c5b53a;
 }
 
 .nav button.active {
-    background: #f4d03f;
+    background: #f9ffff;
 }
 
 .content {
