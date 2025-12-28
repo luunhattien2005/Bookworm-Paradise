@@ -8,6 +8,7 @@ import Favorites from './Favorites';
 import ChangePassword from './ChangePassword';
 import { useUpdateUser } from "../hooks/useAuth";
 import BillList from './BillList';
+import Notification from './Notification';
 
 export default function Profile() {
     const { user, refreshUser } = useContext(AuthContext)
@@ -48,8 +49,11 @@ export default function Profile() {
     // Xử lý an toàn: Nếu user chưa load xong thì không render phần dưới để tránh crash
     if (!user) return <div style={{padding: "50px", textAlign:"center"}}>Đang tải thông tin...</div>;
 
-    const avatarUrl = user.avatar 
-        ? (user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000/${user.avatar}`)
+    const BASE_URL = import.meta.env.VITE_API_URL;
+    const avatarUrl = user?.avatar
+        ? (user.avatar.startsWith('http')
+            ? user.avatar
+            : `${BASE_URL}/${user.avatar}?t=${user.updatedAt}`)
         : "/img/PP_Large.png";
 
     return (
@@ -99,8 +103,8 @@ export default function Profile() {
             {location.pathname ==="/profile/password" && <ChangePassword />}
             {location.pathname ==="/profile/favorites" && <Favorites />}
             {location.pathname ==="/profile/bills" && <BillList/>}
+            {location.pathname ==="/profile/notifications" && <Notification/>}
             {/* Placeholder cho các tab chưa làm */}
-            {location.pathname ==="/profile/notifications" && <div>Thông báo đang phát triển...</div>}
         </main>
     </>
     )}

@@ -31,7 +31,7 @@ export default function Footer() {
                 <div className={styles.footerInfo2nd}>
                     <span className="material-symbols-outlined">globe_book</span>
                     <p>Unemployment Benefits</p>
-                    <a>Fuck you and fuck you too</a>
+                    <a>Empowering Futures Through Knowledge and Opportunity</a>
 
                     <div>
                         <i className="fa-brands fa-facebook-f"></i>

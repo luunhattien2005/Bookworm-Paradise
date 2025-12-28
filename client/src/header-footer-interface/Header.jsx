@@ -46,8 +46,11 @@ export default function Header() {
     const { data: cart } = useCart() 
     const cartCount = cart?.items?.length || 0
 
-    const avatarUrl = user?.avatar 
-        ? (user.avatar.startsWith('http') ? user.avatar : `http://localhost:5000/${user.avatar}`)
+    const BASE_URL = import.meta.env.VITE_API_URL;
+    const avatarUrl = user?.avatar
+        ? (user.avatar.startsWith('http')
+            ? user.avatar
+            : `${BASE_URL}/${user.avatar}?t=${user.updatedAt}`)
         : "/img/PP_Large.png";
 
     let profileIcon;
@@ -63,7 +66,7 @@ export default function Header() {
         profileIcon = (
             <Link to="/profile/info">
                 <button type="button">
-                    <img src={avatarUrl} />
+                    <img src={avatarUrl} onError={(e) => e.target.src = "/img/PP_Large.png"}/>
                 </button>
             </Link>
         );

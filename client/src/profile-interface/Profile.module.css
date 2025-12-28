@@ -471,3 +471,62 @@
   text-decoration: none;
   color: inherit; 
 }
+
+/*--- Notification ---*/
+.NotificationList {
+    display: grid;
+    margin-left: 30px;
+    padding-top: 2px;
+    padding-left: 2px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    overflow: auto;
+}
+
+.NotificationTab {
+    display: grid;
+    height: 130px;
+    width: 98%;
+    gap: 0px;
+    margin-bottom: 20px;
+    padding: 7px 10px;
+    outline: black 2px solid;
+}
+
+.NotificationTab:hover {
+    background: #ffe7a4;
+}
+
+.NotificationTitle {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.NotificationTitle h1 {
+    font-size: 19px;
+
+}
+
+.NotificationInfo {
+    display: grid;
+    gap: 1px;
+}
+
+.NotificationInfo h2 {
+    display: flex;
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.NotificationInfo h3 {
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.NotificationInfo h3 {
+    padding: 1px 5px;
+    border-radius: 10px;
+    margin: 0px 3px;
+}
