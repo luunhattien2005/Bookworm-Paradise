@@ -158,6 +158,7 @@
     height: 30px;
     background-color: transparent;
     border-radius: 50%;
+    outline: solid 2px lightgray;
 }
 
 /* ---- Cart Icon with Badge ---- */
