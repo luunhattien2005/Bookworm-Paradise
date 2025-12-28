@@ -1,6 +1,7 @@
-import { useState, useEffect, useContext } from "react"
+import { useState, useContext } from "react" 
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 import { useGetBookBySlug } from "../hooks/useBooks"
+import { useReviews, useAddReview } from "../hooks/useReview" 
 
 import DOMPurify from "dompurify"
 import styles from "./Product.module.css"
@@ -15,76 +16,57 @@ import YourRating from "./YourRating"
 import RatingItem from "./RatingItem"
 
 export default function ProductInfo() {
-
     const queryClient = useQueryClient()
-
-    const addCartMutation = useMutation({
-        mutationFn: addToCart,
-        onSuccess: () => {
-            queryClient.invalidateQueries(["cart"])
-        }
-    })
-
     const { slug } = useParams()
     const navigate = useNavigate()
+    const location = useLocation()
+    const { user } = useContext(AuthContext)
 
+    // 1. Lấy thông tin sách
     const {
         data: product,
-        isLoading,
+        isLoading: loadingProduct,
         isError,
         error
     } = useGetBookBySlug(slug);
 
-    // Load rating
-    
-    const [ratings, setRatings] = useState([])
-    const [cursor, setCursor] = useState(null)
-    const [hasMore, setHasMore] = useState(true)
-    const LIMIT = 5    
+    // 2. Add to Cart Mutation
+    const addCartMutation = useMutation({
+        mutationFn: addToCart,
+        onSuccess: () => {
+            queryClient.invalidateQueries(["cart"])
+            alert("Đã thêm vào giỏ hàng!")
+        },
+        onError: (err) => alert(err.response?.data?.message || "Lỗi thêm giỏ hàng")
+    })
 
-    const fetchRatings = async () => {
-        if (!hasMore) return
+    // 3. Lấy Reviews (Infinite Scroll)
+    // Chỉ gọi khi đã có product._id
+    const {
+        data: reviewData,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+        isLoading: loadingReviews
+    } = useReviews(product?._id, 5); // 5 review mỗi lần load
 
-        const params = new URLSearchParams({
-            productId: product._id,
-            limit: LIMIT
+    // 4. Add Review Mutation
+    const addReviewMutation = useAddReview(product?._id);
+
+    const handleSubmitReview = (data) => {
+        addReviewMutation.mutate(data, {
+            onSuccess: () => alert("Đánh giá thành công!"),
+            onError: (err) => alert(err.response?.data?.message || "Lỗi gửi đánh giá")
         })
-
-        if (cursor) {
-            params.append("cursor", cursor)
-        }
-
-        const res = await fetch(`/api/ratings?${params}`)
-        const data = await res.json()
-
-        setRatings(prev => [...prev, ...data.ratings])
-        setCursor(data.nextCursor)
-        setHasMore(data.hasMore)    
     }
 
-    const fakeRatings = [
-        { id: 1, productId: 8935235226272, star: 3, content: "<p>Rating bau troi co 1 co doi khong muon ve nha, xin au lo khong ve noi day, xin cho ta duoc ngam<p><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p><p>Suspendisse luctus cursus nisi in rutrum. Sed iaculis lectus neque, id tempor neque pellentesque nec. Suspendisse tristique dictum risus, id tempor lacus suscipit sed. Praesent arcu turpis, euismod eleifend magna nec, tristique luctus dolor. Maecenas ultrices nisl sed consequat posuere. Nunc sit amet facilisis sem. In in neque sollicitudin, volutpat quam dictum, aliquet ligula. Sed suscipit justo a massa pretium venenatis. Aenean ultrices est ac ultrices sagittis. Pellentesque in lorem interdum urna vestibulum ornare non quis odio. Ut quis ultricies nibh, at tincidunt purus. Sed a urna ac quam ullamcorper pellentesque in sed arcu. Aliquam erat volutpat. Nam commodo enim orci, sed congue sem commodo ac. Integer quis elit et magna sodales interdum non vitae erat. Vestibulum ut sagittis tortor.</p>", user: {username: "LNTien", img_url: "https://dummyimage.com/50/000/fff"}, createdAt: "2025-12-15T10:30:00Z" },
-        { id: 2, productId: 8935235226272, star: 5, content: "<p>Rating 2<p>", user: {username: "LNTien", img_url: "https://dummyimage.com/50/000/fff"}, createdAt: "2025-12-14T21:12:00Z" },
-        { id: 3, productId: 8935235226272, star: 1, content: "<p>Rating 3<p>", user: {username: "LNTien", img_url: "https://dummyimage.com/50/000/fff"}, createdAt: "2025-12-14T08:45:00Z" },
-        { id: 4, productId: 8935235226272, star: 2, content: "<p>Rating 4<p>", user: {username: "LNTien", img_url: "https://dummyimage.com/50/000/fff"}, createdAt: "2025-12-13T19:20:00Z" },
-        { id: 5, productId: 8935235226272, star: 4, content: "<p>Rating 5<p>", user: {username: "LNTien", img_url: "https://dummyimage.com/50/000/fff"}, createdAt: "2025-12-12T22:05:00Z" }
-    ]    
+    if (loadingProduct) return <Loading />;
+    if (isError) return <Loading error={true} message={error.message} />;
 
-    useEffect(() => {
-        // giả lập fetch server
-        const timer = setTimeout(() => {
-            setRatings(fakeRatings)
-            setCursor(fakeRatings[fakeRatings.length - 1].createdAt)
-            setHasMore(false)
-        }, 500)
+    // Gộp tất cả các trang review thành 1 mảng duy nhất
+    const allReviews = reviewData?.pages.flatMap(page => page.reviews) || [];
 
-        return () => clearTimeout(timer)
-    }, [])    
-
-    // Check login
-    const location = useLocation();
-    const { user } = useContext(AuthContext)
-
+    // Logic hiển thị khung đánh giá
     let show_rating;
     if (!user) {
         show_rating = (
@@ -92,76 +74,52 @@ export default function ProductInfo() {
         )
     } else {
         show_rating = (
-            <YourRating />
+            <YourRating onSubmit={handleSubmitReview} />
         )
     }
-
-    // if (product) {
-    //     console.log("Product tags:")
-    //     console.log(product.tags)
-    // }
-    
-    if (isLoading) return <Loading />;
-    if (isError) return <Loading error={true} message={error.message} />;
 
     return(
         <>
             <PageNameHeader pagename="Product"/>
                         
             <main className={styles.container}>
+                {/* --- PHẦN TOP PRODUCT (GIỮ NGUYÊN) --- */}
                 <div className={styles.topProduct}>
                     <img src={product.imgURL} alt="Product Picture" />
-
                     <div className={styles.information1st}>
                         <button className={styles.addLiked}><i className="fa-regular fa-heart fa-2x1" style={{ fontSize: "30px"}}></i></button>
 
                         <p className={styles.informationName}>{product.name}</p>
-                        <p className={styles.informationAuthor}>Tác giả: {product.author.AuthorName}</p>
+                        <p className={styles.informationAuthor}>Tác giả: {product.author?.AuthorName}</p>
 
                         <div className={styles.informationTag}>
                             {product.tags && product.tags.length > 0 ? (
                                 product.tags.map(tag => (
-                                <a href="#" key={tag._id}>
-                                    {tag.name}
-                                </a>
+                                <a href="#" key={tag._id}>{tag.name}</a>
                                 ))
-                            ) : (
-                                <span className={styles.noTag}>Không có thể loại</span>
-                            )}
+                            ) : (<span className={styles.noTag}>Không có thể loại</span>)}
                         </div>
 
                         <p className={styles.informationPrice}>{product.price.toLocaleString("vi-VN")} VND</p>
                         
                         <button 
                             className={styles.informationAdd}
-                            onClick={() => {!user ? navigate("/auth", { state: { from: location.pathname } }) :
-                                addCartMutation.mutate({ bookId: product._id, quantity: 1 })
-                            }}
+                            onClick={() => !user ? navigate("/auth", { state: { from: location.pathname } }) : addCartMutation.mutate({ bookId: product._id, quantity: 1 })}
                         >
                                 Thêm vào giỏ hàng
                         </button>
 
                         <div className={styles.informationDetails}>
+                            {/* ... (Giữ nguyên bảng chi tiết) ... */}
                             <p>Thông tin chi tiết</p>
-
                             <div>
                                 <ul style={{ width: "220px", padding: "7px"}}>
-                                    <li>Mã hàng</li>
-                                    <li>Tên nhà cung cấp</li>
-                                    <li>Tác giả</li>
-                                    <li>Người dịch</li>
-                                    <li>Nhà xuất bản</li>
-                                    <li>Năm xuất bản</li>
-                                    <li>Trọng lượng (gr)</li>
-                                    <li>Kích thước bao bì</li>
-                                    <li>Số trang</li>
-                                    <li>Hình thức</li>
+                                    <li>Mã hàng</li><li>Tên nhà cung cấp</li><li>Tác giả</li><li>Người dịch</li><li>Nhà xuất bản</li><li>Năm xuất bản</li><li>Trọng lượng (gr)</li><li>Kích thước bao bì</li><li>Số trang</li><li>Hình thức</li>
                                 </ul>
-
                                 <ul style={{width: "240px", padding: "7px"}}>
-                                    <li>{product._id}</li>
+                                    <li>{product._id.substring(0,8)}...</li>
                                     <li>{product.provider}</li>
-                                    <li>{product.author.AuthorName}</li>
+                                    <li>{product.author?.AuthorName}</li>
                                     <li>{product.translator}</li>
                                     <li>{product.publisher}</li>
                                     <li>{product.publicationYear}</li>
@@ -170,30 +128,45 @@ export default function ProductInfo() {
                                     <li>{product.page}</li>
                                     <li>{product.type}</li>
                                 </ul>
-                            </div>  
+                            </div>
                         </div>
                     </div>
                 </div>   
 
                 <div className={styles.middleProduct}>
                     <p className={styles.middleProductTitle}>Mô tả sản phẩm</p>
-
-                    <div className={styles.middleProductInformation} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(product.description)}} /> {/* render raw HTML*/}
+                    <div className={styles.middleProductInformation} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(product.description)}} />
                 </div> 
 
+                {/* --- PHẦN RATING (CẬP NHẬT) --- */}
                 <div className={styles.ratingSection}>
                     <p className={styles.ratingEditorTitle}>Đánh giá sản phẩm</p>
                     {show_rating}
-                    <br/>
-                    <p className={styles.ratingEditorTitle}>Đánh giá mới nhất</p>
                     
-                    {ratings.map(r => (
-                        <RatingItem key={r.id} rating={r} />
-                    ))}
-                    {hasMore && (
-                        <button onClick={fetchRatings}>
-                            Xem thêm đánh giá
-                        </button>
+                    <br/>
+                    <p className={styles.ratingEditorTitle}>Đánh giá từ khách hàng ({allReviews.length})</p>
+                    
+                    {loadingReviews ? (
+                        <p>Đang tải đánh giá...</p>
+                    ) : allReviews.length === 0 ? (
+                        <p style={{fontStyle: "italic", color: "gray"}}>Chưa có đánh giá nào.</p>
+                    ) : (
+                        allReviews.map(r => (
+                            <RatingItem key={r._id} rating={r} />
+                        ))
+                    )}
+
+                    {/* Nút Xem thêm */}
+                    {hasNextPage && (
+                        <div style={{textAlign: "center", marginTop: "10px"}}>
+                            <button 
+                                onClick={() => fetchNextPage()} 
+                                disabled={isFetchingNextPage}
+                                style={{padding: "8px 16px", cursor: "pointer"}}
+                            >
+                                {isFetchingNextPage ? "Đang tải..." : "Xem thêm đánh giá cũ hơn"}
+                            </button>
+                        </div>
                     )}
                 </div>
             </main>

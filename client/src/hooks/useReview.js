@@ -1,61 +1,53 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import * as reviewsApi from '../api/review';
 
 /**
- * useReviewsQuery(bookId)
- * useAddReview / useDeleteReview
+ * Hook lấy review vô tận (Infinite Scroll)
  */
-
-export function useReviews(bookId, options = {}) {
-  return useQuery({
+export function useReviews(bookId, limit = 5) {
+  return useInfiniteQuery({
     queryKey: ['reviews', bookId],
-    queryFn: () => reviewsApi.getReviewsForBook(bookId),
+    queryFn: ({ pageParam = null }) => 
+      reviewsApi.getReviewsForBook({ bookId, limit, pageParam }),
+    
+    // Xác định trang tiếp theo dựa trên cursor backend trả về
+    getNextPageParam: (lastPage) => {
+      if (lastPage && lastPage.hasMore) {
+        return lastPage.nextCursor;
+      }
+      return undefined;
+    },
     enabled: !!bookId,
-    staleTime: 1000 * 30, // 30 seconds
-    ...options,
+    staleTime: 1000 * 60, // 1 phút
   });
 }
 
 /**
- * Add a review
+ * Hook thêm review
  */
-export function useAddReview(options = {}) {
+export function useAddReview(bookId) {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: (payload) =>
-      reviewsApi.addReview(payload),
-
-    onSuccess: (data, variables) => {
-      const bookId = variables?.bookId ?? data?.book;
-      if (bookId) {
-        qc.invalidateQueries({ queryKey: ['reviews', bookId] });
-      }
-      options.onSuccess?.(data);
+    mutationFn: (payload) => reviewsApi.addReview({ ...payload, bookId }),
+    onSuccess: () => {
+      // Refresh lại list review sau khi add xong
+      qc.invalidateQueries({ queryKey: ['reviews', bookId] });
     },
-
-    ...options,
   });
 }
 
 /**
- * Delete a review (admin or owner)
+ * Hook xóa review
  */
-export function useDeleteReview(options = {}) {
+export function useDeleteReview() {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ reviewId }) =>
-      reviewsApi.deleteReview(reviewId, options.token),
-
-    onSuccess: (_data, variables) => {
-      const bookId = variables?.bookId;
-      if (bookId) {
-        qc.invalidateQueries({ queryKey: ['reviews', bookId] });
-      }
-      options.onSuccess?.();
+    mutationFn: (reviewId) => reviewsApi.deleteReview(reviewId),
+    onSuccess: () => {
+      // Xóa xong thì refresh lại toàn bộ review
+      qc.invalidateQueries({ queryKey: ['reviews'] });
     },
-
-    ...options,
   });
 }
