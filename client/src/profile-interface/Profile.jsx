@@ -7,6 +7,7 @@ import Information from './Infomation';
 import Favorites from './Favorites';
 import ChangePassword from './ChangePassword';
 import { useUpdateUser } from "../hooks/useAuth";
+import BillList from './BillList';
 
 export default function Profile() {
     const { user, refreshUser } = useContext(AuthContext)
@@ -104,9 +105,9 @@ export default function Profile() {
             {location.pathname ==="/profile/info" && <Information />}
             {location.pathname ==="/profile/password" && <ChangePassword />}
             {location.pathname ==="/profile/favorites" && <Favorites />}
+            {location.pathname ==="/profile/bills" && <BillList/>}
             {/* Placeholder cho các tab chưa làm */}
-            {location.pathname ==="/profile/bills" && <div>Lịch sử mua hàng đang phát triển...</div>}
             {location.pathname ==="/profile/notifications" && <div>Thông báo đang phát triển...</div>}
         </main>
-    </>)
-}
+    </>
+    )}
