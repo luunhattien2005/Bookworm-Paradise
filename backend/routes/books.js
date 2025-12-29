@@ -1,49 +1,46 @@
 const router = require('express').Router();
-const bookController = require('../controllers/bookController'); // Nhớ là controller này chứa tất cả logic nhé
+const bookController = require('../controllers/bookController');
 const upload = require('../middleware/uploadMiddleware');
 const { verifyAdmin } = require('../middleware/authMiddleware');
 
-
-// ==========================================
-// 1. ROUTES CHO TÁC GIẢ (AUTHORS)
-// Đường dẫn thực tế: /api/authors
-// ==========================================
+// 1. Authors & Tags
 router.get('/authors', bookController.getAllAuthors);
 router.post('/authors', verifyAdmin, bookController.createAuthor);
 
-// ==========================================
-// 2. ROUTES CHO THỂ LOẠI (TAGS)
-// Đường dẫn thực tế: /api/tags
-// ==========================================
 router.get('/tags', bookController.getAllTags);
 router.post('/tags', verifyAdmin, bookController.createTag);
 
 // ==========================================
-// 3. ROUTES CHO SÁCH (BOOKS)
-// Đường dẫn thực tế: /api/books
+// 2. ROUTES ĐẶC BIỆT CHO HOMEPAGE (QUAN TRỌNG: ĐẶT TRÊN CÙNG)
 // ==========================================
 
-// Tìm kiếm sách 
+// Bảng xếp hạng (Top Rated - Theo sao)
+router.get('/books/top-rated', bookController.getTopRatedBooks);
+
+// Bán chạy nhất (Best Seller - Theo số lượng bán)
+router.get('/books/best-sellers', bookController.getBestSellerBooks);
+
+// Theo mùa (Seasonal - Theo tag)
+router.get('/books/seasonal', bookController.getBooksByTagName);
+
+
+// ==========================================
+// 3. CÁC ROUTES SÁCH CƠ BẢN
+// ==========================================
+
+// Tìm kiếm chung
 router.get('/books', bookController.searchBooks);
 
-// Lấy sách theo slug
+// Lấy theo Slug (cho trang chi tiết ProductInfo)
 router.get('/books/slug/:slug', bookController.getBookBySlug);
 
-// Lấy chi tiết 1 sách
+// Lấy theo ID (QUAN TRỌNG: CÁI NÀY PHẢI NẰM DƯỚI CÙNG trong nhóm GET)
 router.get('/books/:id', bookController.getBookById);
 
-// Thêm sách (Admin Only + Upload ảnh)
-router.post('/books', verifyAdmin, bookController.createBook);
-
-// Sửa sách (Bỏ upload.single)
-router.put('/books/:id', verifyAdmin, bookController.updateBook);
-
-// Xóa sách (Soft delete)
+// --- CÁC ROUTES ADMIN (Thêm/Sửa/Xóa) ---
+// (Lưu ý: Nếu dùng Link ảnh thì không cần upload.single nữa, nhưng để đó cũng không sao)
+router.post('/books', verifyAdmin, upload.single('image'), bookController.createBook); 
+router.put('/books/:id', verifyAdmin, upload.single('image'), bookController.updateBook);
 router.delete('/books/:id', verifyAdmin, bookController.deleteBook);
-
-// Các hàm cho homepage
-router.get('/books/top-rated', bookController.getTopRatedBooks);
-router.get('/books/best-sellers', bookController.getBestSellerBooks);
-router.get('/books/seasonal', bookController.getBooksByTagName);
 
 module.exports = router;

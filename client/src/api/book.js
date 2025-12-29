@@ -1,11 +1,12 @@
 import api from './axios';
 
+// --- TAGS ---
 export async function getAllTags() {
   const res = await api.get('/api/tags');
   return res.data;
 }
 
-// q = search text (title/author) OR other params
+// --- SEARCH & FILTER ---
 export async function searchBooks(q, { limit = 20, page = 1, tag, author, min, max } = {}) {
   const params = { q, limit, page };
   if (tag) params.tag = tag;
@@ -16,6 +17,7 @@ export async function searchBooks(q, { limit = 20, page = 1, tag, author, min, m
   return res.data;
 }
 
+// --- GET SINGLE BOOK ---
 export async function getBookBySlug(slug) {
   const res = await api.get(`/api/books/slug/${slug}`);
   return res.data;
@@ -26,26 +28,7 @@ export async function getBook(id) {
   return res.data;
 }
 
-// create/update use FormData (for file upload)
-export async function createBook(data) {
-  // data bây giờ là object { name, imgURL, ... }
-  // Axios sẽ tự động gửi dưới dạng JSON
-  const res = await api.post('/api/books', data);
-  return res.data;
-}
-
-// 👇 SỬA HÀM updateBook
-export async function updateBook(id, data) {
-  const res = await api.put(`/api/books/${id}`, data);
-  return res.data;
-}
-
-export async function deleteBook(id, token) {
-  const res = await api.delete(`/api/books/${id}`, { headers: { Authorization: `Bearer ${token}` } });
-  return res.data;
-}
-
-
+// --- 👇 3 HÀM MỚI CHO HOMEPAGE ---
 export async function getTopRated() {
   const res = await api.get('/api/books/top-rated');
   return res.data;
@@ -57,6 +40,23 @@ export async function getBestSellers() {
 }
 
 export async function getSeasonal(tag) {
+  // Gửi kèm tag nếu muốn (ví dụ ?tag=Mùa Hè)
   const res = await api.get('/api/books/seasonal', { params: { tag } });
+  return res.data;
+}
+
+// --- ADMIN ACTIONS (JSON Mode) ---
+export async function createBook(data) {
+  const res = await api.post('/api/books', data);
+  return res.data;
+}
+
+export async function updateBook(id, data) {
+  const res = await api.put(`/api/books/${id}`, data);
+  return res.data;
+}
+
+export async function deleteBook(id) {
+  const res = await api.delete(`/api/books/${id}`);
   return res.data;
 }

@@ -12,10 +12,11 @@ import medal1 from "./img/medal1.png"
 import medal2 from "./img/medal2.png"
 import medal3 from "./img/medal3.png"
 
+
 export default function HomePage() {
     // 1. Lấy dữ liệu từ Backend
     const { data: topRated = [], isLoading: load1 } = useTopRatedBooks();
-    const { data: seasonal = [], isLoading: load2 } = useSeasonalBooks("Mùa Hè"); // Bạn có thể đổi tên mùa ở đây
+    const { data: seasonal = [], isLoading: load2 } = useSeasonalBooks("SEASON");
     const { data: bestSellers = [], isLoading: load3 } = useBestSellers();
 
     const [active, setActive] = useState(0)
