@@ -45,7 +45,7 @@ export default function ProductAdd() {
                     <div className={styles.imageUpload}>
                         <div className={styles.imagePlaceholder} style={{position: 'relative', overflow: 'hidden'}}>
                             {product.imgURL ? (
-                                <img src={product.imgURL} alt="Preview" style={{width: '100%', height: '100%', objectFit: 'cover'}} onError={(e) => e.target.src="https://via.placeholder.com/200?text=Lỗi+Link"} />
+                                <img src={product.imgURL} alt="Preview" style={{width: '100%', height: '100%', objectFit: 'cover'}} onError={(e) => e.target.src="https://dummyimage.com/600x800/000/fff"} />
                             ) : (
                                 <><span>🖼️</span><p>Ảnh Preview</p></>
                             )}
