@@ -94,7 +94,7 @@ export default function Profile() {
                             {item.label}
                         </p>
                     ))}
-                    <p>This is useless button</p>
+                    <p>None working button</p>
                     <p style={{color: "rgb(255, 0, 0)"}} onClick={() => { navigate("/logout")}}>Đăng xuất</p>
                 </div>
             </div>
