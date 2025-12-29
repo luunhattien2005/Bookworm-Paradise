@@ -136,10 +136,10 @@ export default function Header() {
                 <Link to="/profile/favorites">
                     <i className="fa-regular fa-heart" style={{fontSize: "30px"}}></i>
                 </Link>
-
+{/* 
                 <Link to="/gifts">
                     <i className="material-symbols-outlined" style={{fontSize: "31px"}}>featured_seasonal_and_gifts</i>
-                </Link>
+                </Link> */}
 
                 {profileIcon}
             </div>
