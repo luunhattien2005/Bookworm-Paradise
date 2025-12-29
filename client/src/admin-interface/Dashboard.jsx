@@ -124,7 +124,7 @@ export default function Dashboard() {
                     {/* ---------------- ORDERS TAB ---------------- */}
                     {activeTab === "orders" && (
                         <>
-                            <div className={styles.searchBar}>
+                            {/* <div className={styles.searchBar}>
                                 <div className={styles.searchBarField} style={{width: "100%"}}>
                                     <input type="text" placeholder="Tìm đơn hàng ..." className={styles.search} />
                                     <button>
@@ -132,7 +132,7 @@ export default function Dashboard() {
                                     </button>
                                 </div>
                 
-                            </div>
+                            </div> */}
 
                             <table className={styles.table}>
                                 <thead>
