@@ -68,7 +68,7 @@ export default function ProductEdit() {
     return (
         <div className={styles.content}>
             <div className={styles.formHeader}>
-                <h2>Chỉnh sửa sản phẩm: {product.name}</h2>
+                <h2>Chỉnh sửa sản phẩm: {product.name.substring(0, 30)}{(product.name?.length > 30)  && "..."}</h2>
                 <div className={styles.formActions}>
                     <button className={styles.submitButton} onClick={handleSubmit} disabled={updateBookMutation.isPending}>
                         {updateBookMutation.isPending ? "Đang lưu..." : "Lưu thay đổi"}
