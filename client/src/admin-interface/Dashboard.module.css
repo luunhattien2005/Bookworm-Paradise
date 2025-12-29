@@ -130,7 +130,7 @@
     background: #E5DDA2;
     border: none;
     border-radius: 10px;
-    outline: black 1px solid;
+    outline: black 2px solid;
     font-weight: bold;
     cursor: pointer;
 }
@@ -249,10 +249,6 @@
     color: #a7a16b;
     margin: 0;
 }
-
-
-
-
 
 
 /* Order Edit */
@@ -374,13 +370,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 0px;
     padding-bottom: 1rem;
-    border-bottom: 2px solid #333;
 }
 
 .formHeader h2 {
     margin: 0;
+    background:black;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 12px;
 }
 
 .formActions {
@@ -391,7 +390,9 @@
 .submitButton {
     background: #f4d03f;
     border: none;
-    padding: 0.75rem 2rem;
+    padding: 10px 50px;
+    border-radius: 12px;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
 }
@@ -399,6 +400,8 @@
 .productForm {
     display: grid;
     gap: 2rem;
+    outline: black 2px solid;
+    padding: 30px 30px;
 }
 
 .imageUpload {
@@ -444,13 +447,14 @@
 .formGroup input,
 .formGroup textarea {
     padding: 0.75rem;
-    border: 1px solid #ddd;
+    border: 1px solid #929292;
     font-size: 1rem;
     font-family: inherit;
 }
 
 .formGroup textarea {
     resize: vertical;
+    height: 300px;
 }
 
 .active {
