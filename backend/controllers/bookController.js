@@ -81,7 +81,7 @@ const bookController = {
                 stockQuantity: Number(stockQuantity),
                 author: authorId,
                 tags: tagIds,
-                imgURL: imgURL || "https://via.placeholder.com/300?text=No+Image",
+                imgURL: imgURL || "https://dummyimage.com/600x400/000/fff",
                 
                 // Các trường mới thêm vào Database
                 publisher: publisher || "N/A",
