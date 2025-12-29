@@ -39,7 +39,7 @@ export default function Profile() {
         { label: "Thay đổi mật khẩu", action: "password" },
         { label: "Sách yêu thích", action: "favorites" },
         { label: "Lịch sử mua hàng", action: "bills" },
-        { label: "Trung tâm thông báo", action: "notifications" }
+        // { label: "Trung tâm thông báo", action: "notifications" }
     ];
 
     function handleMenuClick(action) {
@@ -94,7 +94,7 @@ export default function Profile() {
                             {item.label}
                         </p>
                     ))}
-                    <p>None working button</p>
+                    {/* <p>None working button</p> */}
                     <p style={{color: "rgb(255, 0, 0)"}} onClick={() => { navigate("/logout")}}>Đăng xuất</p>
                 </div>
             </div>
@@ -103,7 +103,7 @@ export default function Profile() {
             {location.pathname ==="/profile/password" && <ChangePassword />}
             {location.pathname ==="/profile/favorites" && <Favorites />}
             {location.pathname ==="/profile/bills" && <BillList/>}
-            {location.pathname ==="/profile/notifications" && <Notification/>}
+            {/* {location.pathname ==="/profile/notifications" && <Notification/>} */}
             {/* Placeholder cho các tab chưa làm */}
         </main>
     </>
