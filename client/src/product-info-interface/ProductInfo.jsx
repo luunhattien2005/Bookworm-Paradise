@@ -115,7 +115,7 @@ export default function ProductInfo() {
                                 className={isLiked ? "fa-solid fa-heart" : "fa-regular fa-heart"} 
                                 style={{ 
                                     fontSize: "30px",
-                                    color: isLiked ? "red" : "white" // Đỏ nếu đã thích
+                                    color: isLiked ? "red" : "white" 
                                 }}
                             ></i>
                         </button>

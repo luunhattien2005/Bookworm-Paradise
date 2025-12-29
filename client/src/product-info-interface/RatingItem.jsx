@@ -9,7 +9,7 @@ export default function RatingItem({ rating }) {
   const deleteMutation = useDeleteReview();
 
   // Xử lý ngày tháng
-  const date = new Date(rating.createdAt); // Backend dùng createdAt
+  const date = new Date(rating.createdAt); 
   const time = date.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
   const day = date.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" });
 
@@ -56,7 +56,7 @@ export default function RatingItem({ rating }) {
                 <i
                 key={i}
                 className={
-                    i <= rating.star // Backend phải trả về field 'star'
+                    i <= rating.star 
                     ? `fa-solid fa-star ${styles.starFilled}`
                     : `fa-regular fa-star ${styles.starEmpty}`
                 }
@@ -65,7 +65,7 @@ export default function RatingItem({ rating }) {
         </div>
 
         <div className={styles.ratingHTML} dangerouslySetInnerHTML={{
-          __html: DOMPurify.sanitize(rating.content) // Backend phải trả về field 'content'
+          __html: DOMPurify.sanitize(rating.content) 
         }} />
       </div>
     </div>

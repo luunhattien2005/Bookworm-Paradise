@@ -2,7 +2,7 @@ const Book = require('../models/Book');
 const Author = require('../models/Author');
 const Tag = require('../models/Tag');
 
-// --- HÀM PHỤ TRỢ (GIỮ NGUYÊN) ---
+// HÀM PHỤ TRỢ TÌM AUTHOR VÀ TAG
 async function findOrCreateAuthor(name) {
     if (!name) return null;
     let author = await Author.findOne({ AuthorName: { $regex: new RegExp(`^${name}$`, 'i') } });
@@ -27,7 +27,6 @@ async function findOrCreateTags(categoryString) {
 }
 
 const bookController = {
-    // ... (Các hàm Search, Get giữ nguyên) ...
     searchBooks: async (req, res) => {
         try {
             const { q, tag, author, min, max, page = 1, limit = 20 } = req.query;
@@ -62,7 +61,6 @@ const bookController = {
         } catch (err) { res.status(500).json({ message: err.message }); }
     },
 
-    // 👇 SỬA HÀM CREATE: Thêm các trường mới
     createBook: async (req, res) => {
         try {
             const { 
@@ -101,7 +99,6 @@ const bookController = {
         }
     },
 
-    // 👇 SỬA HÀM UPDATE: Cập nhật các trường mới
     updateBook: async (req, res) => {
         try {
             const { 
@@ -140,7 +137,7 @@ const bookController = {
         }
     },
 
-    // ... (Các hàm Delete, Get others giữ nguyên) ...
+    // hàm Delete, Get others
     deleteBook: async (req, res) => {
         try { await Book.findByIdAndUpdate(req.params.id, { isDeleted: true }); res.json({ message: "Đã xóa" }); } 
         catch (err) { res.status(500).json({ message: err.message }); }

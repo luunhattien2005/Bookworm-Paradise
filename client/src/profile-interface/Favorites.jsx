@@ -5,10 +5,10 @@ import Loading from "../header-footer-interface/Loading";
 import { useWishlist, useRemoveFromWishlist } from "../hooks/useWishlist";
 
 export default function Favorites() {
-    // 1. Lấy dữ liệu wishlist
+    // Lấy dữ liệu wishlist
     const { data: wishlist, isLoading } = useWishlist();
     
-    // 2. Hook xóa sách
+    // Hook xóa sách
     const removeMutation = useRemoveFromWishlist({
         onSuccess: () => alert("Đã xóa khỏi danh sách yêu thích!")
     });

@@ -1,12 +1,10 @@
 import api from './axios';
 
-// --- TAGS ---
 export async function getAllTags() {
   const res = await api.get('/api/tags');
   return res.data;
 }
 
-// --- SEARCH & FILTER ---
 export async function searchBooks(q, { limit = 20, page = 1, tag, author, min, max } = {}) {
   const params = { q, limit, page };
   if (tag) params.tag = tag;
@@ -17,7 +15,6 @@ export async function searchBooks(q, { limit = 20, page = 1, tag, author, min, m
   return res.data;
 }
 
-// --- GET SINGLE BOOK ---
 export async function getBookBySlug(slug) {
   const res = await api.get(`/api/books/slug/${slug}`);
   return res.data;
@@ -28,7 +25,6 @@ export async function getBook(id) {
   return res.data;
 }
 
-// --- 👇 3 HÀM MỚI CHO HOMEPAGE ---
 export async function getTopRated() {
   const res = await api.get('/api/books/top-rated');
   return res.data;
@@ -40,12 +36,10 @@ export async function getBestSellers() {
 }
 
 export async function getSeasonal(tag) {
-  // Gửi kèm tag nếu muốn (ví dụ ?tag=Mùa Hè)
   const res = await api.get('/api/books/seasonal', { params: { tag } });
   return res.data;
 }
 
-// --- ADMIN ACTIONS (JSON Mode) ---
 export async function createBook(data) {
   const res = await api.post('/api/books', data);
   return res.data;

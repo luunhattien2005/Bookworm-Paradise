@@ -19,8 +19,8 @@ const reviewController = {
             const review = await Review.create({
                 user: userId,
                 book: bookId,
-                star,     // Sửa rating -> star
-                content   // Sửa comment -> content
+                star,     
+                content  
             });
 
             // Populate thông tin user để frontend hiển thị ngay lập tức (avatar, tên)
@@ -44,7 +44,7 @@ const reviewController = {
 
             let query = { book: bookId };
 
-            // LOGIC CURSOR: Nếu có cursor, chỉ lấy những review CŨ HƠN cursor (createdAt < cursor)
+            // Nếu có cursor, chỉ lấy những review cũ hơn
             if (cursor) {
                 query.createdAt = { $lt: new Date(cursor) };
             }
@@ -81,7 +81,7 @@ const reviewController = {
 
         let avgRating = 0;
         if (reviews.length > 0) {
-            const sum = reviews.reduce((acc, r) => acc + r.star, 0); // Sửa rating -> star
+            const sum = reviews.reduce((acc, r) => acc + r.star, 0); 
             avgRating = Math.round((sum / reviews.length) * 10) / 10;
         }
 

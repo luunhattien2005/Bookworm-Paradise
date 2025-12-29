@@ -2,7 +2,7 @@ const router = require('express').Router();
 const cartController = require('../controllers/cartController');
 const { verifyToken } = require('../middleware/authMiddleware');
 
-// BẮT BUỘC: Phải đăng nhập mới có giỏ hàng
+// Phải đăng nhập mới có giỏ hàng
 router.use(verifyToken);
 
 // Xem giỏ

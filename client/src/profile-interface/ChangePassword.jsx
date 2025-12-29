@@ -79,7 +79,6 @@ export default function ChangePassword() {
                     </div>
 
                     <div className={styles.passwordSecondDiv}>
-                        {/* Backend chưa check pass cũ, nhưng cứ để input đây cho UI đẹp */}
                         <input type="password" id="Old_Password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
                         <input type="password" id="New_Password" value={newPassword} ref={passwordRef} required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,14}$" onChange={(e) => setNewPassword(e.target.value)} />
                         <input type="password" id="New_Password_Repeat" value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)} />

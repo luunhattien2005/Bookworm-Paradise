@@ -1,7 +1,6 @@
 import styles from "./Dashboard.module.css"
 import { useNavigate, useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
-// Import hook lấy 1 sách và hook update
 import { useBook, useAdminUpdateBook } from "../hooks/useBooks"
 import Loading from "../header-footer-interface/Loading"
 
@@ -10,8 +9,6 @@ export default function ProductEdit() {
     const navigate = useNavigate()
 
     // 1. Lấy dữ liệu sách từ API
-    // (Lưu ý: Bạn cần chắc chắn trong useBooks.js có hook 'useBook' hoặc 'useGetBook'. 
-    // Nếu trong useBooks.js tên là useBookById thì sửa dòng này lại cho khớp)
     const { data: bookData, isLoading, isError } = useBook(id); 
 
     // 2. Hook Update

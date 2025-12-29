@@ -46,7 +46,7 @@ export default function Profile() {
         navigate(`/profile/${action}`);
     }
 
-    // Xử lý an toàn: Nếu user chưa load xong thì không render phần dưới để tránh crash
+    // Nếu user chưa load xong thì không render phần dưới để tránh crash
     if (!user) return <div style={{padding: "50px", textAlign:"center"}}>Đang tải thông tin...</div>;
 
     const BASE_URL = import.meta.env.VITE_API_URL;

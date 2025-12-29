@@ -23,7 +23,6 @@ const orderController = {
             // Kiểm tra tồn kho lần cuối (đề phòng lúc thêm vào giỏ thì còn, lúc mua thì hết)
             for (const item of cart.items) {
                 if (item.quantity > item.book.stockQuantity) {
-                    // SỬA: item.book.title -> item.book.name
                     return res.status(400).json({ 
                         message: `Sách "${item.book.name}" không đủ hàng (Còn: ${item.book.stockQuantity})` 
                     });
@@ -51,7 +50,6 @@ const orderController = {
             });
 
             // Trừ kho và Xóa giỏ hàng
-            // (Dùng Promise.all để chạy song song cho nhanh)
             await Promise.all([
                 newOrder.save(), // 1. Lưu đơn
                 Cart.findOneAndDelete({ user: userId }), // Xóa giỏ
@@ -76,7 +74,6 @@ const orderController = {
     getMyOrders: async (req, res) => {
         try {
             const orders = await Order.find({ user: req.user.id })
-                // SỬA: title -> name, coverImage -> imgURL
                 .populate('items.book', 'name imgURL') 
                 .sort({ createdAt: -1 });
             res.json(orders);
@@ -90,7 +87,6 @@ const orderController = {
         try {
             const order = await Order.findById(req.params.id)
                 .populate('user', 'fullname email phone')
-                // SỬA: title -> name, coverImage -> imgURL
                 .populate('items.book', 'name imgURL price'); 
             
             if (!order) return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
@@ -125,7 +121,7 @@ const orderController = {
                 return res.status(400).json({ message: "Đơn hàng đã được xử lý, không thể hủy!" });
             }
 
-            // 2. [QUAN TRỌNG] Hoàn lại số lượng tồn kho (Restock)
+            // 2. Hoàn lại số lượng tồn kho 
             // Vì lúc đặt hàng đã trừ đi, giờ hủy thì phải cộng lại
             for (const item of order.items) {
                 await Book.findByIdAndUpdate(item.book, { 
@@ -152,7 +148,7 @@ const orderController = {
             const order = await Order.findById(orderId);
             if (!order) return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
 
-            // 2. [QUAN TRỌNG] Nếu đã giao hàng thành công, TUYỆT ĐỐI KHÔNG cho đổi nữa
+            // 2.  Nếu đã giao hàng thành công, KHÔNG cho đổi nữa
             if (order.status === 'Delivered' || order.status === 'Cancelled') {
                 return res.status(400).json({ 
                     message: `Đơn hàng đã ${order.status}, không thể thay đổi trạng thái nữa!` 

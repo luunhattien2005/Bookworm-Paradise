@@ -7,7 +7,7 @@ import { AuthContext } from "./AuthContext";
 export default function LoginForm({ redirectTo }) {
     const [identity, setIdentity] = useState("") //identity could be username or email
     const [password, setPassword] = useState("")
-    // const [error, setError] = useState("") // thêm: để hiện thông báo lỗi
+    // const [error, setError] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const [showForgotPassword, setShowForgotPassword] = useState(false)
     
@@ -20,7 +20,7 @@ export default function LoginForm({ redirectTo }) {
         if (res.success) { //  chỉ chuyển trang khi thành công
             navigate(redirectTo, {replace: true})
         } else {
-            alert(res.message) // hiển thị lỗi từ backend (ví dụ: "Tài khoản bị khóa")
+            alert(res.message) 
         }
     }
 

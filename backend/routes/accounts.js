@@ -12,7 +12,7 @@ router.get("/me", verifyToken, accountController.getMe);
 
 // Xem profile
 router.get("/:id", verifyToken, accountController.getAccountById);
-router.put("/me", verifyToken, upload.single('avatar'), accountController.updateAccount);// Mới: Đổi thành /me và thêm upload ảnh
+router.put("/me", verifyToken, upload.single('avatar'), accountController.updateAccount);
 router.post("/check-password", verifyToken, accountController.checkPassword);
 
 // Khu admin

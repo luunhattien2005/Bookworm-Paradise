@@ -1,9 +1,9 @@
 import styles from "./Dashboard.module.css"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { useSearchBooks, useAdminDeleteBook } from "../hooks/useBooks" // Hook Sách
-import { useAllAccounts, useBanAccount } from "../hooks/useAuth"       // Hook Tài khoản
-import { useAllOrders } from "../hooks/useOrder"                       // Hook Đơn hàng
+import { useSearchBooks, useAdminDeleteBook } from "../hooks/useBooks" 
+import { useAllAccounts, useBanAccount } from "../hooks/useAuth"       
+import { useAllOrders } from "../hooks/useOrder"                       
 import Loading from "../header-footer-interface/Loading"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"
 
@@ -14,21 +14,16 @@ export default function Dashboard() {
     const [keyword, setKeyword] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
 
-
-    // --- 1. DATA PRODUCTS ---
     // q="" để lấy tất cả sách. Backend trả về { docs: [...] } hoặc [...] tùy API
     const { data: booksData, isLoading: loadingBooks, isError: errorBooks } = useSearchBooks(searchQuery, { limit: 1000 });
     const products = booksData?.docs || booksData || [];
     const deleteBookMutation = useAdminDeleteBook();
 
-    // --- 2. DATA ACCOUNTS ---
     const { data: accounts, isLoading: loadingAccounts } = useAllAccounts();
     const banAccountMutation = useBanAccount();
 
-    // --- 3. DATA ORDERS ---
     const { data: orders, isLoading: loadingOrders } = useAllOrders();
 
-    // --- 4. ANALYTICS (Tính toán từ data thật) ---
     const totalRevenue = orders?.reduce((sum, order) => {
         if (order.status === "Delivered") {
             return sum + (order.totalAmount || 0);

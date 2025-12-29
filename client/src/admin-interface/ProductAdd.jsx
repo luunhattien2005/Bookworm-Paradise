@@ -64,8 +64,6 @@ export default function ProductAdd() {
                         <div className={styles.formGroup}><label>Giá bán</label><input type="number" name="price" value={product.price} onChange={handleChange} /></div>
                         <div className={styles.formGroup}><label>Tồn kho</label><input type="number" name="stockQuantity" value={product.stockQuantity} onChange={handleChange} /></div>
                         <div className={styles.formGroup}><label>Thể loại (phẩy)</label><input name="category" value={product.category} onChange={handleChange} placeholder="Tiểu thuyết, Văn học..." /></div>
-                        
-                        {/* CÁC FIELD MỚI */}
                         <div className={styles.formGroup}><label>Nhà Xuất Bản</label><input name="publisher" value={product.publisher} onChange={handleChange} /></div>
                         <div className={styles.formGroup}><label>Nhà Cung Cấp</label><input name="provider" value={product.provider} onChange={handleChange} /></div>
                         <div className={styles.formGroup}><label>Dịch Giả</label><input name="translator" value={product.translator} onChange={handleChange} /></div>

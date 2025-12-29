@@ -1,7 +1,6 @@
 import { useQuery, useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import * as booksApi from '../api/book';
 
-// --- TAGS ---
 export function useTags(options = {}) {
   return useQuery({
     queryKey: ['tags'],
@@ -11,7 +10,6 @@ export function useTags(options = {}) {
   })
 }
 
-// --- SEARCH ---
 export function useSearchBooks(q, params = {}, options = {}) {
   return useQuery({
     queryKey: ['books', { q, ...params }],
@@ -22,7 +20,6 @@ export function useSearchBooks(q, params = {}, options = {}) {
   });
 }
 
-// --- SINGLE BOOK (BY ID) ---
 export function useBook(id) {
   return useQuery({
     queryKey: ['book', id],
@@ -31,7 +28,6 @@ export function useBook(id) {
   });
 }
 
-// --- SINGLE BOOK (BY SLUG) ---
 export function useGetBookBySlug(slug) {
   return useQuery({
     queryKey: ['book', 'slug', slug],
@@ -40,7 +36,6 @@ export function useGetBookBySlug(slug) {
   });
 }
 
-// --- 👇 3 HOOKS MỚI CHO HOMEPAGE ---
 export function useTopRatedBooks() {
   return useQuery({
     queryKey: ['books', 'top-rated'],
@@ -65,7 +60,6 @@ export function useSeasonalBooks(tag = "SEASON") {
   });
 }
 
-// --- ADMIN MUTATIONS ---
 export function useAdminCreateBook(options = {}) {
   const qc = useQueryClient();
   return useMutation({

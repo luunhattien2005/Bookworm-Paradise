@@ -1,9 +1,6 @@
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import * as reviewsApi from '../api/review';
 
-/**
- * Hook lấy review vô tận (Infinite Scroll)
- */
 export function useReviews(bookId, limit = 5) {
   return useInfiniteQuery({
     queryKey: ['reviews', bookId],
@@ -22,9 +19,6 @@ export function useReviews(bookId, limit = 5) {
   });
 }
 
-/**
- * Hook thêm review
- */
 export function useAddReview(bookId) {
   const qc = useQueryClient();
 
@@ -37,9 +31,6 @@ export function useAddReview(bookId) {
   });
 }
 
-/**
- * Hook xóa review
- */
 export function useDeleteReview() {
   const qc = useQueryClient();
 

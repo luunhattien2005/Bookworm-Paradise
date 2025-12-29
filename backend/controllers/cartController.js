@@ -33,7 +33,7 @@ const cartController = {
         }
     },
 
-    // 2. Thêm vào giỏ (Logic phức tạp nhất)
+    // 2. Thêm vào giỏ 
     addToCart: async (req, res) => {
         try {
             const userId = req.user.id;
@@ -95,7 +95,6 @@ const cartController = {
                     });
                 }
 
-                // e. TÍNH LẠI TỔNG TIỀN (QUAN TRỌNG)
                 // Cộng tổng tất cả subTotal của các item lại
                 cart.totalAmount = cart.items.reduce((acc, item) => acc + item.subTotal, 0);
             }
@@ -110,11 +109,11 @@ const cartController = {
         }
     },
 
-    // 3. Cập nhật số lượng (Khi user bấm nút + / - trong giỏ)
+    // 3. Cập nhật số lượng (Khi user bấm nút thêm/bớt số lượng trong giỏ)
     updateItemQuantity: async (req, res) => {
         try {
             const userId = req.user.id;
-            const { bookId, quantity } = req.body; // quantity là số lượng MỚI (ví dụ: đang 2 sửa thành 3)
+            const { bookId, quantity } = req.body; 
             const newQty = parseInt(quantity);
 
             if (newQty <= 0) return res.status(400).json({ message: "Số lượng không hợp lệ" });
@@ -160,7 +159,6 @@ const cartController = {
             cart.items = cart.items.filter(item => item.book.toString() !== bookId);
 
             // Tính lại tổng tiền
-            // (Phải check xem giỏ còn món nào không, nếu không thì total = 0)
             if (cart.items.length > 0) {
                 cart.totalAmount = cart.items.reduce((acc, item) => acc + item.subTotal, 0);
             } else {

@@ -53,10 +53,10 @@ export default function SignUpForm({ redirectTo }) {
         if (password !== confirmPassword) return alert("Mật khẩu không khớp")
 
         const res = await signup({ 
-            username: username, // thêm: lấy từ ô Tên đăng nhập
-            email: email,       // thêm: lấy từ ô Email
+            username: username, 
+            email: email,       
             password: password,
-            fullname: username  // thêm: tạm thời dùng username làm fullname
+            fullname: username  
         })
 
         if (res.success) {

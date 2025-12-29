@@ -208,13 +208,11 @@ const accountController = {
                 const filepath = path.join(uploadDir, filename);
 
                 await sharp(req.file.buffer)
-                    .resize(256, 256, { fit: 'cover' }) // avatar vuông
+                    .resize(256, 256, { fit: 'cover' }) 
                     .webp({ quality: 80 })
                     .toFile(filepath);
                 updateData.avatar = `uploads/${filename}`;
             } else {
-                // Nếu không có file -> Xóa field avatar khỏi updateData
-                // Để tránh trường hợp req.body có chứa avatar={} (rác) gây lỗi CastError
                 delete updateData.avatar;
             }
 

@@ -1,6 +1,5 @@
 import styles from "./Profile.module.css"
 import { href, useParams } from "react-router-dom"
-// 👇 1. Import thêm useCancelOrder
 import { useOrderById, useCancelOrder } from "../hooks/useOrder"
 import PageNameHeader from "../header-footer-interface/PageNameHeader"
 import Loading from "../header-footer-interface/Loading"
@@ -9,13 +8,13 @@ export default function BillInfo() {
     const { id } = useParams();
     const { data: order, isLoading, isError, error } = useOrderById(id);
     
-    // 👇 2. Khai báo mutation hủy đơn
+    // Khai báo mutation hủy đơn
     const cancelOrderMutation = useCancelOrder();
 
     if (isLoading) return <Loading />;
     if (isError || !order) return <Loading error={true} message={error.message} />
     
-    // 👇 3. Hàm xử lý khi bấm nút Hủy
+    // Hàm xử lý khi bấm nút Hủy
     const handleCancel = () => {
         if (confirm("Bạn có chắc chắn muốn hủy đơn hàng này không?")) {
             cancelOrderMutation.mutate(id, {
@@ -39,7 +38,6 @@ export default function BillInfo() {
                     <div>
                         <p>
                             <strong>Trạng thái:</strong>
-                            {/* Class CSS tự động map theo tên trạng thái: pending, delivered... */}
                             <span className={`${styles.status} ${styles[order.status.toLowerCase()]}`}>
                                 {order.status}
                             </span>
@@ -110,7 +108,7 @@ export default function BillInfo() {
                 </div>
             </div>
             
-            {/* 👇 4. Nút hủy (Chỉ hiện khi trạng thái là Pending) */}
+            {/* Nút hủy (Chỉ hiện khi trạng thái là Pending) */}
             {(order.status === "Pending") && (
                 <div className={styles.billDeletedContainer}>
                     <button 

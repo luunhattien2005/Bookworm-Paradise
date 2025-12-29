@@ -12,7 +12,6 @@ export default function ProtectedRoute({ children }) {
     return <div>Loading...</div>;   // Chờ load localStorage
   }
   if (!user) {
-    // Chuyển sang trang auth, nhưng nhớ lại vị trí cũ
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
