@@ -27,17 +27,16 @@ export async function getBook(id) {
 }
 
 // create/update use FormData (for file upload)
-export async function createBook(formData, token) {
-  const res = await api.post('/api/books', formData, {
-    headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` },
-  });
+export async function createBook(data) {
+  // data bây giờ là object { name, imgURL, ... }
+  // Axios sẽ tự động gửi dưới dạng JSON
+  const res = await api.post('/api/books', data);
   return res.data;
 }
 
-export async function updateBook(id, formData, token) {
-  const res = await api.put(`/api/books/${id}`, formData, {
-    headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` },
-  });
+// 👇 SỬA HÀM updateBook
+export async function updateBook(id, data) {
+  const res = await api.put(`/api/books/${id}`, data);
   return res.data;
 }
 

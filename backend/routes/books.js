@@ -33,10 +33,10 @@ router.get('/books/slug/:slug', bookController.getBookBySlug);
 router.get('/books/:id', bookController.getBookById);
 
 // Thêm sách (Admin Only + Upload ảnh)
-router.post('/books', verifyAdmin, upload.single('coverImage'), bookController.createBook);
+router.post('/books', verifyAdmin, bookController.createBook);
 
-// Sửa sách
-router.put('/books/:id', verifyAdmin, upload.single('coverImage'), bookController.updateBook);
+// Sửa sách (Bỏ upload.single)
+router.put('/books/:id', verifyAdmin, bookController.updateBook);
 
 // Xóa sách (Soft delete)
 router.delete('/books/:id', verifyAdmin, bookController.deleteBook);

@@ -11,9 +11,13 @@ export default function Dashboard() {
     const [activeTab, setActiveTab] = useState("products")
     const navigate = useNavigate()
 
+    const [keyword, setKeyword] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
+
+
     // --- 1. DATA PRODUCTS ---
     // q="" để lấy tất cả sách. Backend trả về { docs: [...] } hoặc [...] tùy API
-    const { data: booksData, isLoading: loadingBooks } = useSearchBooks("", { limit: 1000 });
+    const { data: booksData, isLoading: loadingBooks, isError: errorBooks } = useSearchBooks(searchQuery, { limit: 1000 });
     const products = booksData?.docs || booksData || [];
     const deleteBookMutation = useAdminDeleteBook();
 
@@ -31,6 +35,10 @@ export default function Dashboard() {
         }
         return sum;
     }, 0) || 0;
+
+    const handleSearch = () => {
+        setSearchQuery(keyword);
+    }
 
     const totalBooks = products.length;
     const totalOrders = orders?.length || 0;
@@ -58,8 +66,10 @@ export default function Dashboard() {
                         <>
                             <div className={styles.searchBar}>
                                 <div className={styles.searchBarField}>
-                                    <input type="text" placeholder="Tìm kiếm sách..." className={styles.search} />
-                                    <button>
+                                    <input type="text" placeholder="Tìm kiếm sách..." className={styles.search} value={keyword}
+                                        onChange={(e) => setKeyword(e.target.value)}
+                                        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}/>
+                                    <button onClick={handleSearch}>
                                         <i className="material-symbols-outlined"> search </i>
                                     </button>
                                 </div>

@@ -154,3 +154,11 @@ export function useSeasonalBooks(tag = "Mùa Hè") {
     staleTime: 1000 * 60 * 30,
   });
 }
+
+export function useBook(id) {
+  return useQuery({
+    queryKey: ['book', id],
+    queryFn: () => booksApi.getBook(id),
+    enabled: !!id,
+  });
+}
