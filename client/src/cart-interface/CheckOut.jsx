@@ -63,7 +63,7 @@ export default function Checkout() {
 
   // Minimum validate card info if payment method is card
   const isCardValid = useMemo(() => {
-    if (payment !== "card") return true;
+    if (payment !== "CARD") return true;
 
     return (
       cardInfo.number.trim() &&
