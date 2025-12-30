@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
+const uploadToCloudinary = require('../cloudinary/upload.js')
 
 function generatePassword() {
     const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -199,19 +200,35 @@ const accountController = {
             
             // XỬ LÝ ẢNH 
             if (req.file) {
-                const uploadDir = path.join(__dirname, '../uploads');
-                if (!fs.existsSync(uploadDir)) {
-                    fs.mkdirSync(uploadDir);
-                }
+                // ----- Local upload -----
+                // const uploadDir = path.join(__dirname, '../uploads');
+                // if (!fs.existsSync(uploadDir)) {
+                //     fs.mkdirSync(uploadDir);
+                // }
 
-                const filename = `${userId}.webp`;
-                const filepath = path.join(uploadDir, filename);
+                // const filename = `${userId}.webp`;
+                // const filepath = path.join(uploadDir, filename);
 
-                await sharp(req.file.buffer)
-                    .resize(256, 256, { fit: 'cover' }) 
-                    .webp({ quality: 80 })
-                    .toFile(filepath);
-                updateData.avatar = `uploads/${filename}`;
+                // await sharp(req.file.buffer)
+                //     .resize(256, 256, { fit: 'cover' }) 
+                //     .webp({ quality: 80 })
+                //     .toFile(filepath);
+                // updateData.avatar = `uploads/${filename}`;
+
+                // ----- Cloudinary upload (25 credits monthly :<) -----
+                const buffer = await sharp(req.file.buffer)
+                        .resize(256, 256, { fit: 'cover' })
+                        .webp({ quality: 80 })
+                        .toBuffer()
+                
+                const result = await uploadToCloudinary(buffer, {
+                    folder: 'avatar',
+                    public_id: userId, // file name on cloudinary
+                    overwrite: true,
+                    resource_type: 'image'
+                })
+                updateData.avatar = result.secure_url;
+
             } else {
                 delete updateData.avatar;
             }

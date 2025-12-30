@@ -2,6 +2,7 @@
   "name": "bookworm-paradise-backend",
   "version": "1.0.0",
   "dependencies": {
+    "cloudinary": "^2.8.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
