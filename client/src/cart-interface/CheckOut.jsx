@@ -162,7 +162,7 @@ export default function Checkout() {
             Thẻ tín dụng / ghi nợ
           </label>
 
-          {payment === "card" && (
+          {payment === "CARD" && (
             <div className={styles.cardForm}>
               <input 
                 placeholder="Số thẻ"
